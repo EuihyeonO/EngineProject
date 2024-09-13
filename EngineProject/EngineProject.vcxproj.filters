@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{73e9b5cb-bb82-4dad-bab1-8416ae6bc85b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Main">
+      <UniqueIdentifier>{475328f8-476f-4e9d-9153-5b83f0ac87a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\BaseHeader">
+      <UniqueIdentifier>{0974cadb-be96-4125-bf93-54461d4b4675}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Engine">
+      <UniqueIdentifier>{592c650d-2f84-49a4-a087-84ea9a0ef828}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GUIWindow">
+      <UniqueIdentifier>{5a880440-c519-4db3-9979-a381874743a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\MainWindow">
+      <UniqueIdentifier>{897e79c8-7ae9-41b3-8d8f-83f13cdf684a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Library">
+      <UniqueIdentifier>{e86cb84a-28e8-41cc-9234-a36517d6183d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Library\IMGUI">
+      <UniqueIdentifier>{d854daff-746f-4d3e-a4e8-784515a4eb30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\DirectX">
+      <UniqueIdentifier>{3a4bf178-b175-45c5-804d-940ca08ac46a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GUIWindow\Base">
+      <UniqueIdentifier>{1f935621-9d38-4912-94a4-32fbe4190c42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GUIWindow\Derived">
+      <UniqueIdentifier>{b45ecd4b-da69-40de-971c-8ce0d6914fe6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EngineProject.h">
+      <Filter>Source\BaseHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Source\BaseHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Source\BaseHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Source\BaseHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineWindow.h">
+      <Filter>Source\MainWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Source\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseHeader.h">
+      <Filter>Source\BaseHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\IMGUI\imgui.h">
+      <Filter>Source\Library\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\IMGUI\imgui_impl_dx11.h">
+      <Filter>Source\Library\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\IMGUI\imgui_internal.h">
+      <Filter>Source\Library\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\IMGUI\imstb_rectpack.h">
+      <Filter>Source\Library\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\IMGUI\imstb_textedit.h">
+      <Filter>Source\Library\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\IMGUI\imstb_truetype.h">
+      <Filter>Source\Library\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\IMGUI\imconfig.h">
+      <Filter>Source\Library\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\IMGUI\imgui_impl_win32.h">
+      <Filter>Source\Library\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineDirectX.h">
+      <Filter>Source\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineGUIWindow.h">
+      <Filter>Source\GUIWindow\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="TestWindow.h">
+      <Filter>Source\GUIWindow\Derived</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineWindow.cpp">
+      <Filter>Source\MainWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Source\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\IMGUI\imgui_demo.cpp">
+      <Filter>Source\Library\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\IMGUI\imgui_draw.cpp">
+      <Filter>Source\Library\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\IMGUI\imgui_impl_dx11.cpp">
+      <Filter>Source\Library\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\IMGUI\imgui_tables.cpp">
+      <Filter>Source\Library\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\IMGUI\imgui_widgets.cpp">
+      <Filter>Source\Library\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\IMGUI\imgui.cpp">
+      <Filter>Source\Library\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\IMGUI\imgui_impl_win32.cpp">
+      <Filter>Source\Library\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineDirectX.cpp">
+      <Filter>Source\DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineGUIWindow.cpp">
+      <Filter>Source\GUIWindow\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="TestWindow.cpp">
+      <Filter>Source\GUIWindow\Derived</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
