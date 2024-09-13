@@ -1,0 +1,8 @@
+1. Render 함수들 다 수정해야함
+   IMGUI 작동 잘 되는 것 까진 테스트 했음.
+
+2. DirectX 초기화 부분 리팩토링하기
+현재 테스트를 위해 IMGUI의 데모를 그대로 복붙했는데, 코드가 영 구리다
+
+3. Engine에 Render와 Update 분리
+그리고 Engine과 Window의 Loop 이름을 좀 다르게 ?

@@ -13,7 +13,8 @@ public:
 	TestWindow& operator=(const TestWindow& _Other) = delete;
 	TestWindow& operator=(TestWindow&& _Other) noexcept = delete;
 
-	void Update();
+	void Start() override;
+	void Update() override;
 
 protected:
 

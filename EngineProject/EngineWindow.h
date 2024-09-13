@@ -44,6 +44,11 @@ private:
 	ATOM RegisterWindow();
 	BOOL InitInstance(HINSTANCE hInstance, int nCmdShow);
 
+	static std::pair<int, int> GetWindowSize()
+	{
+		return { WindowWidth, WindowHeight };
+	}
+
 private:
 	static bool isWindowUpdate;
 
@@ -51,5 +56,8 @@ private:
 	HINSTANCE HInst;
 	std::wstring TitleName = L"MyEngine";
 	std::wstring WindowClass = L"MainWindow";
+
+	static int WindowWidth;
+	static int WindowHeight;
 };
 

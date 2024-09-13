@@ -32,8 +32,6 @@ void EngineGUIWindow::GUIStart()
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;     
 
-    ImGui::StyleColorsDark();
-
     ImGui_ImplWin32_Init(EngineWindow::GetInstance()->GetHWND());
     ImGui_ImplDX11_Init(EngineDirectX::GetInstance()->GetDevice(), EngineDirectX::GetInstance()->GetDeviceContext());
 }

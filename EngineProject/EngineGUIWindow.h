@@ -57,8 +57,8 @@ private:
 
 	static void GUIRender()
 	{
-		//ImGui::Render();
-		//ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+		ImGui::Render();
+		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	}
 
 private:

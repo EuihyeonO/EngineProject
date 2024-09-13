@@ -4,6 +4,9 @@
 
 bool EngineWindow::isWindowUpdate = true;
 
+int EngineWindow::WindowWidth = 1600;
+int EngineWindow::WindowHeight = 900;
+
 EngineWindow::EngineWindow()
 {
 }
@@ -126,7 +129,7 @@ BOOL EngineWindow::InitInstance(HINSTANCE hInstance, int nCmdShow)
     HInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
     HWND hWnd = CreateWindowW(WindowClass.c_str(), TitleName.c_str(), WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+        0, 0, WindowWidth, WindowHeight, nullptr, nullptr, hInstance, nullptr);
 
     if (!hWnd)
     {

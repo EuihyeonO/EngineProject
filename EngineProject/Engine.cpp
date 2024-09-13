@@ -48,7 +48,7 @@ void Engine::EngineLoop()
 
 void Engine::Update()
 {
-	EngineGUIWindow::GUIUpdate();
+	//EngineGUIWindow::GUIUpdate();
 	
 	//Render();
 	//EngineGUIWindow::GUIRender();
@@ -57,11 +57,11 @@ void Engine::Update()
 
 void Engine::Render()
 {
-	//const float clear_color_with_alpha[4] = { 0, 0, 0, 0 };
-	//
-	////수정
-	//EngineDirectX::GetInstance()->GetDeviceContext()->OMSetRenderTargets(1, EngineDirectX::GetInstance()->GetRenderTarget(), nullptr);
-	//EngineDirectX::GetInstance()->GetDeviceContext()->ClearRenderTargetView(EngineDirectX::GetInstance()->GetRenderT(), clear_color_with_alpha);
+	const float clear_color_with_alpha[4] = { 1.0, 1.0, 1.0, 1.0 };
+	
+	//수정
+	EngineDirectX::GetInstance()->GetDeviceContext()->OMSetRenderTargets(1, EngineDirectX::GetInstance()->GetRenderTarget(), nullptr);
+	EngineDirectX::GetInstance()->GetDeviceContext()->ClearRenderTargetView(EngineDirectX::GetInstance()->GetRenderT(), clear_color_with_alpha);
 }
 
 void Engine::EngineEnd()
