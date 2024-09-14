@@ -17,8 +17,5 @@ public:
 	void Update() override;
 
 protected:
-
-private:
-
 };
 

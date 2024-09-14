@@ -36,32 +36,55 @@ void Engine::EngineStart(HINSTANCE hInstance, int nCmdShow)
 	EngineWindow::Start(hInstance, nCmdShow);
 	EngineDirectX::Start();
 	EngineGUIWindow::GUIStart();
-
-	TestWindow::CreateGUIWIndow<TestWindow>();
+	
+	CreateEngineGUI();
 }
 
 void Engine::EngineLoop()
 {
-	std::function<void()> Func = std::bind(&Engine::Update, GetInstance());
+	std::function<void()> Func = std::bind(&Engine::Loop, GetInstance());
 	EngineWindow::Loop(Func);
 }
 
 void Engine::Update()
 {
-	//EngineGUIWindow::GUIUpdate();
-	
-	//Render();
-	//EngineGUIWindow::GUIRender();
-	//EngineDirectX::GetInstance()->GetSwapChain()->Present(1, 0);
+	EngineGUIWindow::GUIUpdate();
 }
 
 void Engine::Render()
 {
 	const float clear_color_with_alpha[4] = { 1.0, 1.0, 1.0, 1.0 };
-	
-	//¼öÁ¤
+
+	//·»´õÅ¸°Ù ¼¼ÆÃ
 	EngineDirectX::GetInstance()->GetDeviceContext()->OMSetRenderTargets(1, EngineDirectX::GetInstance()->GetRenderTarget(), nullptr);
 	EngineDirectX::GetInstance()->GetDeviceContext()->ClearRenderTargetView(EngineDirectX::GetInstance()->GetRenderT(), clear_color_with_alpha);
+
+	//GUI Renderring	
+	EngineGUIWindow::GUIRender();
+
+	//Present
+	EngineDirectX::GetInstance()->GetSwapChain()->Present(1, 0);
+}
+
+void Engine::Loop()
+{
+	Update();
+	Render();
+}
+
+void Engine::CreateEngineGUI()
+{
+	std::shared_ptr<EngineGUIWindow> LeftGUI = TestWindow::CreateGUIWIndow<TestWindow>("LeftGUI");
+	LeftGUI->SetWindowPos({ 0, 0 });
+	LeftGUI->SetWindowSize({ 300, 900 });
+
+	std::shared_ptr<EngineGUIWindow> DownGUI = TestWindow::CreateGUIWIndow<TestWindow>("DownGUI");
+	DownGUI->SetWindowPos({ 300, 600 });
+	DownGUI->SetWindowSize({ 1300, 300 });
+
+	std::shared_ptr<EngineGUIWindow> RightGUI = TestWindow::CreateGUIWIndow<TestWindow>("RightGUI");
+	RightGUI->SetWindowPos({ 1300, 0 });
+	RightGUI->SetWindowSize({ 300, 600 });
 }
 
 void Engine::EngineEnd()

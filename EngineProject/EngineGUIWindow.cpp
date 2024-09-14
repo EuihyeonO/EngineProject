@@ -6,7 +6,7 @@
 
 #include <d3d11.h>
 
-std::vector<std::shared_ptr<EngineGUIWindow>> EngineGUIWindow::GUIWindows;
+std::unordered_map<std::string, std::shared_ptr<EngineGUIWindow>> EngineGUIWindow::GUIWindows;
 
 EngineGUIWindow::EngineGUIWindow()
 {

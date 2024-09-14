@@ -27,27 +27,27 @@ public:
 
 	ID3D11Device* GetDevice()
 	{
-		return g_pd3dDevice;
+		return Device;
 	}
 
 	ID3D11DeviceContext* GetDeviceContext()
 	{
-		return g_pd3dDeviceContext;
+		return DeviceContext;
 	}
 
 	ID3D11RenderTargetView** GetRenderTarget()
 	{
-		return &g_mainRenderTargetView;
+		return &MainRenderTargetView;
 	}
 
 	ID3D11RenderTargetView* GetRenderT()
 	{
-		return g_mainRenderTargetView;
+		return MainRenderTargetView;
 	}
 
 	IDXGISwapChain* GetSwapChain()
 	{
-		return g_pSwapChain;
+		return SwapChain;
 	}
 protected:
 
@@ -55,11 +55,15 @@ private:
 	void CreateDeviceAndSwapChain();
 	void CreateRenderTarget();
 
-	ID3D11Device* g_pd3dDevice = nullptr;
-	ID3D11DeviceContext* g_pd3dDeviceContext = nullptr;
-	IDXGISwapChain* g_pSwapChain = nullptr;
-	bool                     g_SwapChainOccluded = false;
-	UINT                     g_ResizeWidth = 0, g_ResizeHeight = 0;
-	ID3D11RenderTargetView * g_mainRenderTargetView = nullptr;
+	ID3D11Device* Device = nullptr;
+	ID3D11DeviceContext* DeviceContext = nullptr;
+	IDXGISwapChain* SwapChain = nullptr;
+	ID3D11RenderTargetView* MainRenderTargetView = nullptr;
+
+	bool g_SwapChainOccluded = false;
+
+	UINT g_ResizeWidth = 0;
+	UINT g_ResizeHeight = 0;
+
 };
 

@@ -21,6 +21,9 @@ protected:
 private:
 	void Update();
 	void Render();
+	void Loop();
+
+	void CreateEngineGUI();
 
 	static Engine* GetInstance()
 	{

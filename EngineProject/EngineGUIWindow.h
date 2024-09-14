@@ -6,6 +6,9 @@
 
 #include <memory>
 #include <vector>
+#include <unordered_map>
+#include <string>
+#include <iostream>
 
 class EngineGUIWindow;
 
@@ -30,13 +33,35 @@ public:
 
 
 	template<typename Window> requires GUIWindow<Window>
-	static std::shared_ptr<EngineGUIWindow> CreateGUIWIndow()
+	static std::shared_ptr<EngineGUIWindow> CreateGUIWIndow(const std::string _GUIName)
 	{
+		if (GUIWindows.find(_GUIName) != GUIWindows.end())
+		{
+			std::cerr << _GUIName << " is already created" << std::endl;
+			return nullptr;
+		}
+
 		std::shared_ptr<Window> NewWindow = std::make_shared<Window>();
 		NewWindow->Start();
+		NewWindow->Name = _GUIName;
 
-		GUIWindows.push_back(NewWindow);
+		GUIWindows.insert({ _GUIName, NewWindow });
 		return NewWindow;
+	}
+
+	const std::string& GetName()
+	{
+		return Name;
+	}
+
+	void SetWindowSize(ImVec2 _Size)
+	{
+		WindowSize = _Size;
+	}
+
+	void SetWindowPos(ImVec2 _Pos)
+	{
+		WindowPos = _Pos;
 	}
 
 private:
@@ -49,9 +74,9 @@ private:
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
 
-		for (std::shared_ptr<EngineGUIWindow> Window : GUIWindows)
+		for (std::pair<std::string, std::shared_ptr<EngineGUIWindow>> GUIData : GUIWindows)
 		{
-			Window->Update();
+			GUIData.second->Update();
 		}
 	}
 
@@ -61,8 +86,14 @@ private:
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	}
 
-private:
-	static std::vector<std::shared_ptr<EngineGUIWindow>> GUIWindows;
+protected:
+	ImVec2 WindowSize = { 0, 0 };
+	ImVec2 WindowPos = { 0, 0 };
 
+private:
+	std::string Name = "";
+
+private:
+	static std::unordered_map<std::string, std::shared_ptr<EngineGUIWindow>> GUIWindows;
 };
 
