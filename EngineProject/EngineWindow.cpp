@@ -40,7 +40,6 @@ void EngineWindow::Loop(std::function<void()> _LoopFunc)
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
-
     }
 }
 

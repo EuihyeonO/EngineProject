@@ -1,5 +1,7 @@
 #pragma once
 #include <d3d11.h>
+#include "BaseHeader.h"
+
 #pragma comment(lib, "d3d11.lib")
 
 class EngineDirectX
@@ -21,49 +23,53 @@ public:
 
 	static void Start()
 	{
-		GetInstance()->CreateDeviceAndSwapChain();
-		GetInstance()->CreateRenderTarget();
+		GetInstance()->CreateDevice();
+		GetInstance()->CreateSwapChain();
 	}
 
-	ID3D11Device* GetDevice()
+	static MSComPtr<ID3D11Device> GetDevice()
 	{
-		return Device;
+		return GetInstance()->Device;
 	}
 
-	ID3D11DeviceContext* GetDeviceContext()
+	static MSComPtr<ID3D11DeviceContext> GetDeviceContext()
 	{
-		return DeviceContext;
+		return GetInstance()->DeviceContext;
 	}
 
-	ID3D11RenderTargetView** GetRenderTarget()
+	static MSComPtr<ID3D11RenderTargetView> GetMainRTV()
 	{
-		return &MainRenderTargetView;
+		return GetInstance()->MainRTV;
 	}
 
-	ID3D11RenderTargetView* GetRenderT()
+	static MSComPtr<ID3D11ShaderResourceView> GetMainSRV()
 	{
-		return MainRenderTargetView;
+		return GetInstance()->MainSRV;
 	}
 
-	IDXGISwapChain* GetSwapChain()
+	static MSComPtr<IDXGISwapChain> GetSwapChain()
 	{
-		return SwapChain;
+		return GetInstance()->SwapChain;
 	}
+
+	static std::pair<int, int> MainViewPortSize()
+	{
+		return { GetInstance()->MainViewPortWidth , GetInstance()->MainViewPortHeight };
+	}
+
 protected:
 
 private:
-	void CreateDeviceAndSwapChain();
-	void CreateRenderTarget();
+	void CreateDevice();
+	void CreateSwapChain();
 
-	ID3D11Device* Device = nullptr;
-	ID3D11DeviceContext* DeviceContext = nullptr;
-	IDXGISwapChain* SwapChain = nullptr;
-	ID3D11RenderTargetView* MainRenderTargetView = nullptr;
+	MSComPtr<ID3D11Device> Device = nullptr;
+	MSComPtr<ID3D11DeviceContext> DeviceContext = nullptr;
+	MSComPtr<IDXGISwapChain> SwapChain = nullptr;
+	MSComPtr<ID3D11RenderTargetView> MainRTV = nullptr;
+	MSComPtr<ID3D11ShaderResourceView> MainSRV = nullptr;
 
-	bool g_SwapChainOccluded = false;
-
-	UINT g_ResizeWidth = 0;
-	UINT g_ResizeHeight = 0;
-
+	int MainViewPortWidth = 1600;
+	int MainViewPortHeight = 900;
 };
 

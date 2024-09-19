@@ -16,6 +16,11 @@ public:
 		return &Instance;
 	}
 
+	static std::pair<int, int> GetWindowSize()
+	{
+		return { WindowWidth, WindowHeight };
+	}
+
 	EngineWindow(const EngineWindow& _Other) = delete;
 	EngineWindow(EngineWindow&& _Other) noexcept = delete;
 	EngineWindow& operator=(const EngineWindow& _Other) = delete;
@@ -25,9 +30,9 @@ public:
     static INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 public:
-	HWND GetHWND()
+	static HWND GetHWND()
 	{
-		return hWnd;
+		return GetInstance()->hWnd;
 	}
 
 protected:
@@ -44,10 +49,6 @@ private:
 	ATOM RegisterWindow();
 	BOOL InitInstance(HINSTANCE hInstance, int nCmdShow);
 
-	static std::pair<int, int> GetWindowSize()
-	{
-		return { WindowWidth, WindowHeight };
-	}
 
 private:
 	static bool isWindowUpdate;

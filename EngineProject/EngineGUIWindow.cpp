@@ -28,15 +28,15 @@ void EngineGUIWindow::GUIStart()
 {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;     
-
+    ImGuiIO& io = ImGui::GetIO();
+    
     ImGui_ImplWin32_Init(EngineWindow::GetInstance()->GetHWND());
-    ImGui_ImplDX11_Init(EngineDirectX::GetInstance()->GetDevice(), EngineDirectX::GetInstance()->GetDeviceContext());
+    ImGui_ImplDX11_Init(EngineDirectX::GetInstance()->GetDevice().Get(), EngineDirectX::GetInstance()->GetDeviceContext().Get());
 }
 
 void EngineGUIWindow::GUIEnd()
 {
-
+    ImGui_ImplDX11_Shutdown();
+    ImGui_ImplWin32_Shutdown();
+    ImGui::DestroyContext();
 }

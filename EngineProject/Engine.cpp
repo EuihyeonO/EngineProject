@@ -53,11 +53,11 @@ void Engine::Update()
 
 void Engine::Render()
 {
-	const float clear_color_with_alpha[4] = { 1.0, 1.0, 1.0, 1.0 };
+	const float clear_color_with_alpha[4] = { 0.0, 1.0, 1.0, 1.0 };
 
 	//·»´õÅ¸°Ù ¼¼ÆÃ
-	EngineDirectX::GetInstance()->GetDeviceContext()->OMSetRenderTargets(1, EngineDirectX::GetInstance()->GetRenderTarget(), nullptr);
-	EngineDirectX::GetInstance()->GetDeviceContext()->ClearRenderTargetView(EngineDirectX::GetInstance()->GetRenderT(), clear_color_with_alpha);
+	EngineDirectX::GetInstance()->GetDeviceContext()->OMSetRenderTargets(1, EngineDirectX::GetInstance()->GetMainRTV().GetAddressOf(), nullptr);
+	EngineDirectX::GetInstance()->GetDeviceContext()->ClearRenderTargetView(EngineDirectX::GetInstance()->GetMainRTV().Get(), clear_color_with_alpha);
 
 	//GUI Renderring	
 	EngineGUIWindow::GUIRender();
@@ -74,21 +74,21 @@ void Engine::Loop()
 
 void Engine::CreateEngineGUI()
 {
-	std::shared_ptr<EngineGUIWindow> LeftGUI = TestWindow::CreateGUIWIndow<TestWindow>("LeftGUI");
+	std::shared_ptr<EngineGUIWindow> LeftGUI = TestWindow::CreateGUIWindow<TestWindow>("LeftGUI");
 	LeftGUI->SetWindowPos({ 0, 0 });
 	LeftGUI->SetWindowSize({ 300, 900 });
 
-	std::shared_ptr<EngineGUIWindow> DownGUI = TestWindow::CreateGUIWIndow<TestWindow>("DownGUI");
+	std::shared_ptr<EngineGUIWindow> DownGUI = TestWindow::CreateGUIWindow<TestWindow>("DownGUI");
 	DownGUI->SetWindowPos({ 300, 600 });
 	DownGUI->SetWindowSize({ 1300, 300 });
-
-	std::shared_ptr<EngineGUIWindow> RightGUI = TestWindow::CreateGUIWIndow<TestWindow>("RightGUI");
+	
+	std::shared_ptr<EngineGUIWindow> RightGUI = TestWindow::CreateGUIWindow<TestWindow>("RightGUI");
 	RightGUI->SetWindowPos({ 1300, 0 });
 	RightGUI->SetWindowSize({ 300, 600 });
 }
 
 void Engine::EngineEnd()
 {
-
+	EngineGUIWindow::GUIEnd();
 }
 

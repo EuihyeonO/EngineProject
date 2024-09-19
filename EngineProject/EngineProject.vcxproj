@@ -71,16 +71,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\Library\IMGUI;$(IncludePath)</IncludePath>
+    <IncludePath>..\Library\IMGUI;..\Library\Assimp;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\Library\IMGUI;$(IncludePath)</IncludePath>
+    <IncludePath>..\Library\IMGUI;..\Library\Assimp;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>..\Library\IMGUI;$(IncludePath)</IncludePath>
+    <IncludePath>..\Library\IMGUI;..\Library\Assimp;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>..\Library\IMGUI;$(IncludePath)</IncludePath>
+    <IncludePath>..\Library\IMGUI;..\Library\Assimp;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -143,6 +143,88 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Library\Assimp\aabb.h" />
+    <ClInclude Include="..\Library\Assimp\ai_assert.h" />
+    <ClInclude Include="..\Library\Assimp\anim.h" />
+    <ClInclude Include="..\Library\Assimp\AssertHandler.h" />
+    <ClInclude Include="..\Library\Assimp\Base64.hpp" />
+    <ClInclude Include="..\Library\Assimp\BaseImporter.h" />
+    <ClInclude Include="..\Library\Assimp\Bitmap.h" />
+    <ClInclude Include="..\Library\Assimp\BlobIOSystem.h" />
+    <ClInclude Include="..\Library\Assimp\ByteSwapper.h" />
+    <ClInclude Include="..\Library\Assimp\camera.h" />
+    <ClInclude Include="..\Library\Assimp\cexport.h" />
+    <ClInclude Include="..\Library\Assimp\cfileio.h" />
+    <ClInclude Include="..\Library\Assimp\cimport.h" />
+    <ClInclude Include="..\Library\Assimp\ColladaMetaData.h" />
+    <ClInclude Include="..\Library\Assimp\color4.h" />
+    <ClInclude Include="..\Library\Assimp\commonMetaData.h" />
+    <ClInclude Include="..\Library\Assimp\Compiler\poppack1.h" />
+    <ClInclude Include="..\Library\Assimp\Compiler\pstdint.h" />
+    <ClInclude Include="..\Library\Assimp\Compiler\pushpack1.h" />
+    <ClInclude Include="..\Library\Assimp\CreateAnimMesh.h" />
+    <ClInclude Include="..\Library\Assimp\DefaultIOStream.h" />
+    <ClInclude Include="..\Library\Assimp\DefaultIOSystem.h" />
+    <ClInclude Include="..\Library\Assimp\DefaultLogger.hpp" />
+    <ClInclude Include="..\Library\Assimp\defs.h" />
+    <ClInclude Include="..\Library\Assimp\Exceptional.h" />
+    <ClInclude Include="..\Library\Assimp\Exporter.hpp" />
+    <ClInclude Include="..\Library\Assimp\fast_atof.h" />
+    <ClInclude Include="..\Library\Assimp\GenericProperty.h" />
+    <ClInclude Include="..\Library\Assimp\GltfMaterial.h" />
+    <ClInclude Include="..\Library\Assimp\Hash.h" />
+    <ClInclude Include="..\Library\Assimp\Importer.hpp" />
+    <ClInclude Include="..\Library\Assimp\importerdesc.h" />
+    <ClInclude Include="..\Library\Assimp\IOStream.hpp" />
+    <ClInclude Include="..\Library\Assimp\IOStreamBuffer.h" />
+    <ClInclude Include="..\Library\Assimp\IOSystem.hpp" />
+    <ClInclude Include="..\Library\Assimp\light.h" />
+    <ClInclude Include="..\Library\Assimp\LineSplitter.h" />
+    <ClInclude Include="..\Library\Assimp\LogAux.h" />
+    <ClInclude Include="..\Library\Assimp\Logger.hpp" />
+    <ClInclude Include="..\Library\Assimp\LogStream.hpp" />
+    <ClInclude Include="..\Library\Assimp\material.h" />
+    <ClInclude Include="..\Library\Assimp\MathFunctions.h" />
+    <ClInclude Include="..\Library\Assimp\matrix3x3.h" />
+    <ClInclude Include="..\Library\Assimp\matrix4x4.h" />
+    <ClInclude Include="..\Library\Assimp\MemoryIOWrapper.h" />
+    <ClInclude Include="..\Library\Assimp\mesh.h" />
+    <ClInclude Include="..\Library\Assimp\metadata.h" />
+    <ClInclude Include="..\Library\Assimp\NullLogger.hpp" />
+    <ClInclude Include="..\Library\Assimp\ObjMaterial.h" />
+    <ClInclude Include="..\Library\Assimp\ParsingUtils.h" />
+    <ClInclude Include="..\Library\Assimp\pbrmaterial.h" />
+    <ClInclude Include="..\Library\Assimp\port\AndroidJNI\AndroidJNIIOSystem.h" />
+    <ClInclude Include="..\Library\Assimp\port\AndroidJNI\BundledAssetIOSystem.h" />
+    <ClInclude Include="..\Library\Assimp\postprocess.h" />
+    <ClInclude Include="..\Library\Assimp\Profiler.h" />
+    <ClInclude Include="..\Library\Assimp\ProgressHandler.hpp" />
+    <ClInclude Include="..\Library\Assimp\qnan.h" />
+    <ClInclude Include="..\Library\Assimp\quaternion.h" />
+    <ClInclude Include="..\Library\Assimp\RemoveComments.h" />
+    <ClInclude Include="..\Library\Assimp\scene.h" />
+    <ClInclude Include="..\Library\Assimp\SceneCombiner.h" />
+    <ClInclude Include="..\Library\Assimp\SGSpatialSort.h" />
+    <ClInclude Include="..\Library\Assimp\SkeletonMeshBuilder.h" />
+    <ClInclude Include="..\Library\Assimp\SmallVector.h" />
+    <ClInclude Include="..\Library\Assimp\SmoothingGroups.h" />
+    <ClInclude Include="..\Library\Assimp\SpatialSort.h" />
+    <ClInclude Include="..\Library\Assimp\StandardShapes.h" />
+    <ClInclude Include="..\Library\Assimp\StreamReader.h" />
+    <ClInclude Include="..\Library\Assimp\StreamWriter.h" />
+    <ClInclude Include="..\Library\Assimp\StringComparison.h" />
+    <ClInclude Include="..\Library\Assimp\StringUtils.h" />
+    <ClInclude Include="..\Library\Assimp\Subdivision.h" />
+    <ClInclude Include="..\Library\Assimp\texture.h" />
+    <ClInclude Include="..\Library\Assimp\TinyFormatter.h" />
+    <ClInclude Include="..\Library\Assimp\types.h" />
+    <ClInclude Include="..\Library\Assimp\vector2.h" />
+    <ClInclude Include="..\Library\Assimp\vector3.h" />
+    <ClInclude Include="..\Library\Assimp\version.h" />
+    <ClInclude Include="..\Library\Assimp\Vertex.h" />
+    <ClInclude Include="..\Library\Assimp\XmlParser.h" />
+    <ClInclude Include="..\Library\Assimp\XMLTools.h" />
+    <ClInclude Include="..\Library\Assimp\ZipArchiveIOSystem.h" />
     <ClInclude Include="..\Library\IMGUI\imconfig.h" />
     <ClInclude Include="..\Library\IMGUI\imgui.h" />
     <ClInclude Include="..\Library\IMGUI\imgui_impl_dx11.h" />
@@ -156,11 +238,19 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EngineDebug.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EngineDirectX.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="EngineGUIWindow.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineLoader.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -189,11 +279,19 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="EngineDebug.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="EngineDirectX.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="EngineGUIWindow.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineLoader.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -209,6 +307,24 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="해야 할 일.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\Library\Assimp\assimp-vc143-mtd.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Library\Assimp\.editorconfig" />
+    <None Include="..\Library\Assimp\color4.inl" />
+    <None Include="..\Library\Assimp\config.h.in" />
+    <None Include="..\Library\Assimp\material.inl" />
+    <None Include="..\Library\Assimp\matrix3x3.inl" />
+    <None Include="..\Library\Assimp\matrix4x4.inl" />
+    <None Include="..\Library\Assimp\module.modulemap" />
+    <None Include="..\Library\Assimp\quaternion.inl" />
+    <None Include="..\Library\Assimp\revision.h.in" />
+    <None Include="..\Library\Assimp\SmoothingGroups.inl" />
+    <None Include="..\Library\Assimp\vector2.inl" />
+    <None Include="..\Library\Assimp\vector3.inl" />
+    <None Include="assimp-vc143-mtd.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -33,7 +33,7 @@ public:
 
 
 	template<typename Window> requires GUIWindow<Window>
-	static std::shared_ptr<EngineGUIWindow> CreateGUIWIndow(const std::string _GUIName)
+	static std::shared_ptr<EngineGUIWindow> CreateGUIWindow(const std::string _GUIName)
 	{
 		if (GUIWindows.find(_GUIName) != GUIWindows.end())
 		{
