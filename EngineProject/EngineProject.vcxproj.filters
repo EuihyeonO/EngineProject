@@ -49,6 +49,18 @@
     <Filter Include="Source\Base\Library\Assimp">
       <UniqueIdentifier>{03052844-ede4-48e7-91eb-bc8351ff305d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Resource\Path">
+      <UniqueIdentifier>{7253ac93-b0f3-4bee-ad08-6ce2bf72f177}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Resource\Loader">
+      <UniqueIdentifier>{0e02d0be-3ea3-4d37-860b-5090d196ec9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Resource\File">
+      <UniqueIdentifier>{9b4d1ea8-d0b0-4847-9740-2b868e431452}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Base\Util">
+      <UniqueIdentifier>{57a9e6cf-94cc-426e-ab44-c74a5fc55863}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineProject.h">
@@ -354,8 +366,17 @@
     <ClInclude Include="..\Library\Assimp\AssertHandler.h">
       <Filter>Source\Base\Library\Assimp</Filter>
     </ClInclude>
+    <ClInclude Include="EnginePath.h">
+      <Filter>Source\Resource\Path</Filter>
+    </ClInclude>
     <ClInclude Include="EngineLoader.h">
-      <Filter>Source\Resource</Filter>
+      <Filter>Source\Resource\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineFile.h">
+      <Filter>Source\Resource\File</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineString.h">
+      <Filter>Source\Base\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -401,8 +422,17 @@
     <ClCompile Include="EngineDebug.cpp">
       <Filter>Source\Base\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="EnginePath.cpp">
+      <Filter>Source\Resource\Path</Filter>
+    </ClCompile>
     <ClCompile Include="EngineLoader.cpp">
-      <Filter>Source\Resource</Filter>
+      <Filter>Source\Resource\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineFile.cpp">
+      <Filter>Source\Resource\File</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineString.cpp">
+      <Filter>Source\Base\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

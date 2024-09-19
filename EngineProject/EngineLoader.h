@@ -1,5 +1,12 @@
 #pragma once
 
+enum ExtensionType
+{
+	FBX,
+	DDS,
+	PNG,
+};
+
 class EngineLoader
 {
 
@@ -13,10 +20,10 @@ public:
 	EngineLoader& operator=(const EngineLoader& _Other) = delete;
 	EngineLoader& operator=(EngineLoader&& _Other) noexcept = delete;
 
-	void Test();
+	void LoadAllFile(ExtensionType _Extension);
 protected:
 
 private:
-
+	void LoadAllFBX();
 };
 
