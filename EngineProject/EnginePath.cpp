@@ -49,6 +49,8 @@ bool EnginePath::FindFile(std::string_view _FileName, __out EngineFile& _FileDat
 
 void EnginePath::FindAllFile(std::string_view _Extension, __out std::vector<EngineFile>& _AllFileData)
 {
+	_AllFileData.clear();
+
 	//CurrentPath를 Resources로 이동
 	std::filesystem::path CurrentPath = std::filesystem::current_path();
 	CurrentPath = CurrentPath.parent_path();
@@ -94,13 +96,28 @@ void EnginePath::FindAllFile(std::string_view _Extension, __out std::vector<Engi
 	}
 }
 
-std::string_view EnginePath::GetExtension(std::string_view _FileName)
+std::string EnginePath::GetFileName(std::string_view _Path)
 {
-	if (_FileName.find(".") == std::string::npos)
+	std::filesystem::path Path = std::filesystem::path(_Path.data());
+
+	if (Path.has_filename() == false)
 	{
 		return "";
 	}
 
-	std::string_view FileExtension = _FileName.substr(_FileName.find("."), _FileName.size() - _FileName.find("."));
+	std::string FileName = Path.filename().string();
+	return FileName;
+}
+
+std::string EnginePath::GetExtension(std::string_view _FileName)
+{
+	std::filesystem::path Path = std::filesystem::path(_FileName.data());
+	
+	if (Path.has_extension() == false)
+	{
+		return "";
+	}
+
+	std::string FileExtension = Path.extension().string();
 	return FileExtension;
 }

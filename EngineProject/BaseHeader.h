@@ -9,6 +9,3 @@
 #include <comdef.h>
 #include <wrl.h>
 #include <iostream>
-
-template <typename T>
-using MSComPtr = Microsoft::WRL::ComPtr<T>;

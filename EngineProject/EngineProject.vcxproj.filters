@@ -61,6 +61,27 @@
     <Filter Include="Source\Base\Util">
       <UniqueIdentifier>{57a9e6cf-94cc-426e-ab44-c74a5fc55863}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Base\Library\Assimp\lib">
+      <UniqueIdentifier>{74683c42-bc7e-4af3-9425-eada979bbd00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Base\Library\Assimp\dll">
+      <UniqueIdentifier>{8329bec7-4404-4c21-a545-c7a435496091}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Base\Library\Assimp\lib\Debug">
+      <UniqueIdentifier>{560a9db7-bc8a-4d82-ac9d-93e47b474909}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Base\Library\Assimp\dll\Debug">
+      <UniqueIdentifier>{7591c259-3faf-4eb2-8dec-cbfcf5af7b75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Base\Library\Assimp\lib\Release">
+      <UniqueIdentifier>{341e1065-6012-40e9-b0d2-9a61dc3dd7ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Base\Library\Assimp\dll\Release">
+      <UniqueIdentifier>{31b725ef-dbac-4931-80ec-6e1b7a3a3588}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Resource\Resource">
+      <UniqueIdentifier>{9336a1a2-3d0f-4e17-8543-cb96a358967b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineProject.h">
@@ -378,6 +399,24 @@
     <ClInclude Include="EngineString.h">
       <Filter>Source\Base\Util</Filter>
     </ClInclude>
+    <ClInclude Include="..\Library\Assimp\revision.h">
+      <Filter>Source\Base\Library\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Assimp\config.h">
+      <Filter>Source\Base\Library\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceStruct.h">
+      <Filter>Source\Resource\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineMath.h">
+      <Filter>Source\Base\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXHeader.h">
+      <Filter>Source\Base\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineResourceManager.h">
+      <Filter>Source\Resource\Resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -434,14 +473,15 @@
     <ClCompile Include="EngineString.cpp">
       <Filter>Source\Base\Util</Filter>
     </ClCompile>
+    <ClCompile Include="EngineMath.cpp">
+      <Filter>Source\Base\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineResourceManager.cpp">
+      <Filter>Source\Resource\Resource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="해야 할 일.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="..\Library\Assimp\assimp-vc143-mtd.lib">
-      <Filter>Source\Base\Library\Assimp</Filter>
-    </Library>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Library\Assimp\color4.inl">
@@ -480,8 +520,19 @@
     <None Include="..\Library\Assimp\.editorconfig">
       <Filter>Source\Base\Library\Assimp</Filter>
     </None>
-    <None Include="assimp-vc143-mtd.dll">
-      <Filter>Source\Base\Library\Assimp</Filter>
+    <None Include="..\Library\Assimp\dll\Debug\assimp-vc143-mtd.dll">
+      <Filter>Source\Base\Library\Assimp\dll\Debug</Filter>
     </None>
+    <None Include="..\Library\Assimp\dll\Release\assimp-vc143-mt.dll">
+      <Filter>Source\Base\Library\Assimp\dll\Release</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\Library\Assimp\lib\Release\assimp-vc143-mt.lib">
+      <Filter>Source\Base\Library\Assimp\lib\Release</Filter>
+    </Library>
+    <Library Include="..\Library\Assimp\lib\Debug\assimp-vc143-mtd.lib">
+      <Filter>Source\Base\Library\Assimp\lib\Debug</Filter>
+    </Library>
   </ItemGroup>
 </Project>

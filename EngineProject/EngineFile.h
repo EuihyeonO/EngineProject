@@ -22,6 +22,27 @@ public:
 	EngineFile& operator=(const EngineFile& _Other) = delete;
 	EngineFile& operator=(EngineFile&& _Other) noexcept = delete;
 
+public:
+	const std::string& GetFileName()
+	{
+		return FileName;
+	}
+
+	const std::string& GetExtension()
+	{
+		return Extension;
+	}
+
+	const std::string& GetAbsolutePath()
+	{
+		return AbsolutePath;
+	}
+
+	const std::string& GetRelativePath()
+	{
+		return RelativePath;
+	}
+
 protected:
 
 private:

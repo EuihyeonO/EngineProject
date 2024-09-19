@@ -1,8 +1,5 @@
 #pragma once
-#include <d3d11.h>
-#include "BaseHeader.h"
-
-#pragma comment(lib, "d3d11.lib")
+#include "DirectXHeader.h"
 
 class EngineDirectX
 {

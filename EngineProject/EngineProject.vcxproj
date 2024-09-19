@@ -71,16 +71,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\Library\IMGUI;..\Library\Assimp;$(IncludePath)</IncludePath>
+    <IncludePath>..\Library\IMGUI;..\Library\Assimp;..\Library;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\Library\IMGUI;..\Library\Assimp;$(IncludePath)</IncludePath>
+    <IncludePath>..\Library\IMGUI;..\Library\Assimp;..\Library;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>..\Library\IMGUI;..\Library\Assimp;$(IncludePath)</IncludePath>
+    <IncludePath>..\Library\IMGUI;..\Library\Assimp;..\Library;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>..\Library\IMGUI;..\Library\Assimp;$(IncludePath)</IncludePath>
+    <IncludePath>..\Library\IMGUI;..\Library\Assimp;..\Library;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -162,6 +162,7 @@
     <ClInclude Include="..\Library\Assimp\Compiler\poppack1.h" />
     <ClInclude Include="..\Library\Assimp\Compiler\pstdint.h" />
     <ClInclude Include="..\Library\Assimp\Compiler\pushpack1.h" />
+    <ClInclude Include="..\Library\Assimp\config.h" />
     <ClInclude Include="..\Library\Assimp\CreateAnimMesh.h" />
     <ClInclude Include="..\Library\Assimp\DefaultIOStream.h" />
     <ClInclude Include="..\Library\Assimp\DefaultIOSystem.h" />
@@ -202,6 +203,7 @@
     <ClInclude Include="..\Library\Assimp\qnan.h" />
     <ClInclude Include="..\Library\Assimp\quaternion.h" />
     <ClInclude Include="..\Library\Assimp\RemoveComments.h" />
+    <ClInclude Include="..\Library\Assimp\revision.h" />
     <ClInclude Include="..\Library\Assimp\scene.h" />
     <ClInclude Include="..\Library\Assimp\SceneCombiner.h" />
     <ClInclude Include="..\Library\Assimp\SGSpatialSort.h" />
@@ -234,6 +236,7 @@
     <ClInclude Include="..\Library\IMGUI\imstb_textedit.h" />
     <ClInclude Include="..\Library\IMGUI\imstb_truetype.h" />
     <ClInclude Include="BaseHeader.h" />
+    <ClInclude Include="DirectXHeader.h" />
     <ClInclude Include="Engine.h">
       <SubType>
       </SubType>
@@ -258,11 +261,19 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EngineMath.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EnginePath.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="EngineProject.h" />
+    <ClInclude Include="EngineResourceManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EngineString.h">
       <SubType>
       </SubType>
@@ -273,6 +284,7 @@
     </ClInclude>
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResourceStruct.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestWindow.h">
       <SubType>
@@ -311,7 +323,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="EngineMath.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="EnginePath.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineResourceManager.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -333,12 +353,27 @@
     <Text Include="해야 할 일.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\Library\Assimp\assimp-vc143-mtd.lib" />
+    <Library Include="..\Library\Assimp\lib\Debug\assimp-vc143-mtd.lib">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Library>
+    <Library Include="..\Library\Assimp\lib\Release\assimp-vc143-mt.lib">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Library>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Library\Assimp\.editorconfig" />
     <None Include="..\Library\Assimp\color4.inl" />
     <None Include="..\Library\Assimp\config.h.in" />
+    <None Include="..\Library\Assimp\dll\Debug\assimp-vc143-mtd.dll">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\Library\Assimp\dll\Release\assimp-vc143-mt.dll">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
     <None Include="..\Library\Assimp\material.inl" />
     <None Include="..\Library\Assimp\matrix3x3.inl" />
     <None Include="..\Library\Assimp\matrix4x4.inl" />
@@ -348,7 +383,6 @@
     <None Include="..\Library\Assimp\SmoothingGroups.inl" />
     <None Include="..\Library\Assimp\vector2.inl" />
     <None Include="..\Library\Assimp\vector3.inl" />
-    <None Include="assimp-vc143-mtd.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
