@@ -52,11 +52,6 @@ public:
 		return GetInstance()->SwapChain;
 	}
 
-	static std::pair<int, int> MainViewPortSize()
-	{
-		return { GetInstance()->MainViewPortWidth , GetInstance()->MainViewPortHeight };
-	}
-
 protected:
 
 private:
@@ -68,8 +63,5 @@ private:
 	MSComPtr<IDXGISwapChain> SwapChain = nullptr;
 	MSComPtr<ID3D11RenderTargetView> MainRTV = nullptr;
 	MSComPtr<ID3D11ShaderResourceView> MainSRV = nullptr;
-
-	int MainViewPortWidth = 1600;
-	int MainViewPortHeight = 900;
 };
 
