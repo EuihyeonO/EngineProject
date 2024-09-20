@@ -70,6 +70,24 @@ public:
 		return ReturnValue;
 	}
 
+	static Float4x4 AddFloat4x4(const Float4x4 _Left, const Float4x4 _Right)
+	{
+		Matrix4x4 LeftMatrix = DirectX::XMLoadFloat4x4(&_Left);
+		Matrix4x4 RightMatrix = DirectX::XMLoadFloat4x4(&_Right);
+
+		Matrix4x4 AddResult;
+
+		for (int i = 0; i < 4; i++)
+		{
+			AddResult.r[i] = DirectX::XMVectorAdd(LeftMatrix.r[i], RightMatrix.r[i]);
+		}
+
+		Float4x4 ReturnValue;
+		DirectX::XMStoreFloat4x4(&ReturnValue, AddResult);
+
+		return ReturnValue;
+	}
+
 	//
 	static void Normalize(Float2& _Float2)
 	{
