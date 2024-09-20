@@ -3,6 +3,7 @@
 #include "EngineFile.h"
 #include "EngineResourceManager.h"
 #include "EngineMath.h"
+#include "EngineDirectX.h"
 
 #include "Importer.hpp"
 #include "scene.h"
@@ -69,6 +70,8 @@ void EngineLoader::LoadFBX(EngineFile& _FileData)
 	//메쉬 로드
 	if(Scene->HasMeshes() == true)
 	{
+		std::list<SMeshData> MeshList;
+
 		if (EngineResourceManager::FindMesh(_FileData.GetFileName()) != nullptr)
 		{
 			std::cerr << "Error : Mesh(Name : " + _FileData.GetFileName() + ") is already loaded." << std::endl;
@@ -79,25 +82,20 @@ void EngineLoader::LoadFBX(EngineFile& _FileData)
 			Matrix4x4 IdentifyMat = DirectX::XMMatrixIdentity();
 			DirectX::XMStoreFloat4x4(&Transform, IdentifyMat);
 
-			std::list<SMesh> MeshList;
-
 			ProcessMeshNode(Scene->mRootNode, Scene, Transform, MeshList);
-			//버텍스버퍼, 인덱스버퍼 만들기
 		}
+
+		EngineResourceManager::AddLoadedMesh(_FileData.GetFileName(), std::move(MeshList));
 	}
 
 	if (Scene->HasAnimations() == true)
 	{
 		//애니메이션 로드
 	}
-
-	//DirectX::SimpleMath::Matrix Transform;
-	//
-	//ProcessNode(Scene->mRootNode, Scene, LoadedMeshes[_FileName], Transform);
 }
 
 
-void EngineLoader::ProcessMeshNode(aiNode* _Node, const aiScene* _Scene, Float4x4 _Transform, std::list<SMesh>& _MeshList)
+void EngineLoader::ProcessMeshNode(aiNode* _Node, const aiScene* _Scene, Float4x4 _Transform, std::list<SMeshData>& _MeshList)
 {
 	Float4x4 Transform;
 	ai_real* Temp = &_Node->mTransformation.a1;
@@ -117,25 +115,19 @@ void EngineLoader::ProcessMeshNode(aiNode* _Node, const aiScene* _Scene, Float4x
 		aiMesh* Mesh = _Scene->mMeshes[_Node->mMeshes[i]];
 		SMaterial Material;
 
-		ProcessMesh(Mesh, _Scene, _MeshList, Material);
-		
-		SMesh& NewMesh = _MeshList.back();
-
-		for (SVertex& Vertex : NewMesh.Vertices)
-		{
-			Vertex.Position = EngineMath::Transform(Vertex.Position, Transform);
-		}
+		ProcessMesh(Mesh, _Scene, Transform, _MeshList);
 	}
 
 	for (UINT i = 0; i < _Node->mNumChildren; i++)
 	{
-		ProcessMeshNode(_Node->mChildren[i], _Scene, _Transform, _MeshList);
+		ProcessMeshNode(_Node->mChildren[i], _Scene, Transform, _MeshList);
 	}
 }
 
-void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, std::list<SMesh>& _MeshList, SMaterial& _Meterial)
+void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, Float4x4 _Transform, std::list<SMeshData>& _MeshList)
 {
 	SMesh NewMesh;
+	SMeshData NewMeshData;
 
 	UINT IndicesCount = 0;
 	for (UINT i = 0; i < _Mesh->mNumFaces; i++)
@@ -166,6 +158,8 @@ void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, std::list<S
 			NewVertex.Texcoord.y = (float)_Mesh->mTextureCoords[0][i].y;
 		}
 
+		NewVertex.Position = EngineMath::Transform(NewVertex.Position, _Transform);
+		
 		NewMesh.Vertices.push_back(NewVertex);
 	}
 
@@ -179,6 +173,12 @@ void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, std::list<S
 		}
 	}
 
+	std::pair<MSComPtr<ID3D11Buffer>, MSComPtr<ID3D11Buffer>> BufferPair
+		= EngineDirectX::CreateVertexBufferAndIndexBuffer(NewMesh);
+
+	NewMeshData.VertexBuffer = BufferPair.first;
+	NewMeshData.IndexBuffer = BufferPair.second;
+
 	if (_Mesh->mMaterialIndex >= 0)
 	{
 		aiMaterial* Material = _Scene->mMaterials[_Mesh->mMaterialIndex];
@@ -190,7 +190,7 @@ void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, std::list<S
 
 			std::string TextureName = EnginePath::GetFileName(TexturePath.C_Str()); 
 			
-			_Meterial.DiffuseTexture = TextureName;
+			NewMeshData.Material.DiffuseTexture = TextureName;
 
 			//텍스쳐로드
 			//if (LoadedTextures.find(TextureName) == LoadedTextures.end())
@@ -200,5 +200,5 @@ void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, std::list<S
 		}
 	}
 
-	_MeshList.push_back(NewMesh);
+	_MeshList.push_back(NewMeshData);
 }

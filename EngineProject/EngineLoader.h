@@ -34,7 +34,7 @@ protected:
 private:
 	static void LoadAllFBX();
 
-	static void ProcessMeshNode(struct aiNode* _Node, const struct aiScene* _Scene, Float4x4 _Transform, std::list<SMesh>& _MeshList);
-	static void ProcessMesh(struct aiMesh* _Mesh, const struct aiScene* _Scene, std::list<SMesh>& _MeshList, SMaterial& _Meterial);
+	static void ProcessMeshNode(struct aiNode* _Node, const struct aiScene* _Scene, Float4x4 _Transform, std::list<SMeshData>& _MeshList);
+	static void ProcessMesh(struct aiMesh* _Mesh, const struct aiScene* _Scene, Float4x4 _Transform, std::list<SMeshData>& _MeshList);
 };
 

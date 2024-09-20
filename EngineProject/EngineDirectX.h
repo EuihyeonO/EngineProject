@@ -49,6 +49,8 @@ public:
 		return GetInstance()->SwapChain;
 	}
 
+	static std::pair<MSComPtr<ID3D11Buffer>, MSComPtr<ID3D11Buffer>> CreateVertexBufferAndIndexBuffer(const struct SMesh& _Mesh);
+
 protected:
 
 private:

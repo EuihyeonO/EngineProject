@@ -31,21 +31,20 @@ public:
 		return &LoadedMeshes[_Name.data()];
 	}
 
-	static void AddLoadedMesh(std::string& _Name, const std::list<SMeshData>& _MeshData)
+	static void AddLoadedMesh(const std::string& _Name, std::list<SMeshData>&& _MeshData)
 	{
-		if (FindMesh(_Name) == nullptr)
+		if (FindMesh(_Name) != nullptr)
 		{
 			std::cerr << "Error : Mesh(Name : " + _Name + ") is already loaded." << std::endl;
 			return;
 		}
 
-		LoadedMeshes[_Name] = std::move(_MeshData);
+		LoadedMeshes[_Name] = _MeshData;
 	}
 
 protected:
 	
 private:
-	//메시 이름, 버텍스 버퍼
 	static std::unordered_map<std::string, std::list<SMeshData>> LoadedMeshes;
 };
 

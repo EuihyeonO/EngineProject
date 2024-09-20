@@ -1,6 +1,7 @@
 #include "EngineDirectX.h"
 #include "EngineWindow.h"
 #include "EngineDebug.h"
+#include "ResourceStruct.h"
 
 #include <iostream>
 
@@ -10,6 +11,55 @@ EngineDirectX::EngineDirectX()
 
 EngineDirectX::~EngineDirectX()
 {
+}
+
+std::pair<MSComPtr<ID3D11Buffer>, MSComPtr<ID3D11Buffer>> EngineDirectX::CreateVertexBufferAndIndexBuffer(const SMesh& _Mesh)
+{
+    const std::vector<SVertex>& Vertices = _Mesh.Vertices;
+    const std::vector<uint32_t>& Indices = _Mesh.Indices;
+    
+    MSComPtr<ID3D11Buffer> VertexBuffer;
+    MSComPtr<ID3D11Buffer> IndexBuffer;
+
+    //VertexBuffer
+    {
+        D3D11_BUFFER_DESC BufferDesc = { 0, };
+        ZeroMemory(&BufferDesc, sizeof(BufferDesc));
+
+        BufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
+        BufferDesc.ByteWidth = UINT(sizeof(SVertex) * Vertices.size());
+        BufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+        BufferDesc.CPUAccessFlags = 0;
+        BufferDesc.StructureByteStride = sizeof(SVertex);
+
+        D3D11_SUBRESOURCE_DATA VertexBufferData = { 0, };
+        VertexBufferData.pSysMem = _Mesh.Vertices.data();
+        VertexBufferData.SysMemPitch = 0;
+        VertexBufferData.SysMemSlicePitch = 0;
+
+        const HRESULT Result = GetInstance()->GetDevice()->CreateBuffer(&BufferDesc, &VertexBufferData, VertexBuffer.GetAddressOf());
+        EngineDebug::CheckResult(Result);
+    }
+
+    //IndexBuffer
+    {
+        D3D11_BUFFER_DESC BufferDesc = { 0, };
+        BufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
+        BufferDesc.ByteWidth = UINT(sizeof(uint32_t) * Indices.size());
+        BufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+        BufferDesc.CPUAccessFlags = 0;
+        BufferDesc.StructureByteStride = sizeof(uint32_t);
+
+        D3D11_SUBRESOURCE_DATA IndexBufferData = { 0 };
+        IndexBufferData.pSysMem = Indices.data();
+        IndexBufferData.SysMemPitch = 0;
+        IndexBufferData.SysMemSlicePitch = 0;
+
+        HRESULT Result = GetInstance()->GetDevice()->CreateBuffer(&BufferDesc, &IndexBufferData, IndexBuffer.GetAddressOf());
+        EngineDebug::CheckResult(Result);
+    }
+
+    return { VertexBuffer, IndexBuffer };
 }
 
 void EngineDirectX::CreateDevice()
