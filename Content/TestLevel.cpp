@@ -1,4 +1,6 @@
 #include "TestLevel.h"
+#include "TestActor.h"
+
 #include <iostream>
 TestLevel::TestLevel()
 {
@@ -14,6 +16,7 @@ void TestLevel::OnCreated()
 
 void TestLevel::Start()
 {
+	CreateActor<TestActor>("TestActor");
 }
 
 void TestLevel::Update()

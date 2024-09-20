@@ -7,14 +7,14 @@
     <Filter Include="Source">
       <UniqueIdentifier>{1ea72979-ccf2-414d-8ce4-b71a65b503ec}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Actor">
-      <UniqueIdentifier>{6cc43130-26df-402e-a9c9-313d5c8665e9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\LevelManager">
       <UniqueIdentifier>{de9b1ba3-2a0b-4179-b72a-021883b8b37f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Level">
       <UniqueIdentifier>{86ef074d-27f4-4f40-8697-195326d288fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Actor">
+      <UniqueIdentifier>{6cc43130-26df-402e-a9c9-313d5c8665e9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -27,6 +27,9 @@
     <ClCompile Include="TestLevel.cpp">
       <Filter>Source\Level</Filter>
     </ClCompile>
+    <ClCompile Include="TestActor.cpp">
+      <Filter>Source\Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentLevelManager.h">
@@ -34,6 +37,9 @@
     </ClInclude>
     <ClInclude Include="TestLevel.h">
       <Filter>Source\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="TestActor.h">
+      <Filter>Source\Actor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

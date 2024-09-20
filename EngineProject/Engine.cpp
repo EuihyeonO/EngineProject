@@ -34,6 +34,8 @@ void Engine::EngineLoop()
 void Engine::Update()
 {
 	LevelManager->Update();
+	LevelManager->LevelUpdate();
+
 	EngineGUIWindow::GUIUpdate();
 }
 

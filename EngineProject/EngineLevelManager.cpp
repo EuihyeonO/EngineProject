@@ -8,10 +8,8 @@ EngineLevelManager::~EngineLevelManager()
 {
 }
 
-void EngineLevelManager::Update()
+void EngineLevelManager::LevelUpdate()
 {
-	for (const std::pair<std::string, std::shared_ptr<EngineLevel>>& Level : Levels)
-	{
-		Level.second->Update();
-	}
+	CurrentLevel->Update();
+	CurrentLevel->ActorUpdate();
 }

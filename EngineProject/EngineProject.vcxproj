@@ -241,6 +241,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EngineActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineComponent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EngineDebug.h">
       <SubType>
       </SubType>
@@ -312,6 +320,14 @@
     <ClCompile Include="..\Library\IMGUI\imgui_tables.cpp" />
     <ClCompile Include="..\Library\IMGUI\imgui_widgets.cpp" />
     <ClCompile Include="Engine.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineComponent.cpp">
       <SubType>
       </SubType>
     </ClCompile>

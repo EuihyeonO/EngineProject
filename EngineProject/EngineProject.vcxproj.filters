@@ -423,6 +423,12 @@
     <ClInclude Include="EngineObjectBase.h">
       <Filter>Source\Object\Base</Filter>
     </ClInclude>
+    <ClInclude Include="EngineActor.h">
+      <Filter>Source\Object\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineComponent.h">
+      <Filter>Source\Object\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineWindow.cpp">
@@ -490,6 +496,12 @@
     </ClCompile>
     <ClCompile Include="EngineObjectBase.cpp">
       <Filter>Source\Object\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineActor.cpp">
+      <Filter>Source\Object\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineComponent.cpp">
+      <Filter>Source\Object\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

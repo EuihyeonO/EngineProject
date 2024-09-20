@@ -9,7 +9,7 @@
 
 class EngineLevelManager : public EngineObjectBase
 {
-
+	friend class Engine;
 public:
 	EngineLevelManager();
 	~EngineLevelManager();
@@ -35,12 +35,42 @@ public:
 		Levels[_LevelName.data()] = NewLevel;
 	}
 
-	void Update() override final;
+	void LevelChange(std::string_view _NextLevelName)
+	{
+		std::unordered_map<std::string, std::shared_ptr<EngineLevel>>::iterator FindIter = Levels.find(_NextLevelName.data());
+
+		if (FindIter == Levels.end())
+		{
+			std::string NextLevelName = _NextLevelName.data();
+			std::cerr << "Level that you try to change is not been created. tried LevelName is " + NextLevelName << std::endl;
+
+			return;
+		}
+
+		if (FindIter->second == CurrentLevel)
+		{
+			std::string NextLevelName = _NextLevelName.data();
+			std::cerr << "Level that you try to change is same currentlevel. tried LevelName is " + NextLevelName << std::endl;
+
+			return;
+		}
+
+		if (CurrentLevel != nullptr)
+		{
+			CurrentLevel->End();
+		}
+
+		CurrentLevel = FindIter->second;
+		CurrentLevel->Start();
+	}
+
 protected:
 
 private:
+	void LevelUpdate();
 	void OnCreated() override final {}
 
+	std::shared_ptr<EngineLevel> CurrentLevel = nullptr;
 	std::unordered_map<std::string, std::shared_ptr<EngineLevel>> Levels;
 };
 
