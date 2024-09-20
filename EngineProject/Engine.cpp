@@ -5,7 +5,7 @@
 #include "TestWindow.h"
 
 bool Engine::isEngineOn = false;
-
+std::shared_ptr<EngineLevelManager> Engine::LevelManager = nullptr;
 
 Engine::Engine()
 {
@@ -15,28 +15,13 @@ Engine::~Engine()
 {
 }
 
-void Engine::PlayEngine(HINSTANCE hInstance, int nCmdShow)
-{
-	//혹시나 main함수 말고 다른데서 호출하면 안된다
-	if (isEngineOn == true)
-	{
-		std::cerr << "Why do you call \"PlayEngine\"?" << std::endl;
-		return;
-	}
-
-	isEngineOn = true;
-
-	GetInstance()->EngineStart(hInstance, nCmdShow);
-	GetInstance()->EngineLoop();
-	GetInstance()->EngineEnd();
-}
-
 void Engine::EngineStart(HINSTANCE hInstance, int nCmdShow)
 {
 	EngineWindow::Start(hInstance, nCmdShow);
 	EngineDirectX::Start();
 	EngineGUIWindow::GUIStart();
 	
+	LevelManager->Start();
 	CreateEngineGUI();
 }
 
@@ -48,6 +33,7 @@ void Engine::EngineLoop()
 
 void Engine::Update()
 {
+	LevelManager->Update();
 	EngineGUIWindow::GUIUpdate();
 }
 
@@ -77,7 +63,7 @@ void Engine::CreateEngineGUI()
 	std::shared_ptr<EngineGUIWindow> LeftGUI = TestWindow::CreateGUIWindow<TestWindow>("LeftGUI");
 	LeftGUI->SetWindowPos({ 0, 0 });
 	LeftGUI->SetWindowSize({ 250, 900 });
-
+	
 	std::shared_ptr<EngineGUIWindow> DownGUI = TestWindow::CreateGUIWindow<TestWindow>("DownGUI");
 	DownGUI->SetWindowPos({ 250, 650 });
 	DownGUI->SetWindowSize({ 1350, 250 });
@@ -90,5 +76,6 @@ void Engine::CreateEngineGUI()
 void Engine::EngineEnd()
 {
 	EngineGUIWindow::GUIEnd();
+	LevelManager->End();
 }
 

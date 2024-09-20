@@ -1,4 +1,5 @@
 ﻿#include "Engine.h"
+#include "ContentLevelManager.h"
 
 #pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
 #pragma comment(lib, "EngineProject.lib")
@@ -8,6 +9,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                       _In_ LPWSTR lpCmdLine, 
                       _In_ int nCmdShow)
 {
-    Engine::PlayEngine(hInstance, nCmdShow);
+    Engine::PlayEngine<ContentLevelManager>(hInstance, nCmdShow);
     return 0;
 }

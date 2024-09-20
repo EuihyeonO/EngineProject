@@ -61,6 +61,24 @@
     <Filter Include="Source\Resource\Resource">
       <UniqueIdentifier>{9336a1a2-3d0f-4e17-8543-cb96a358967b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Object">
+      <UniqueIdentifier>{000f7708-d1be-4f1c-af65-7df6691250cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Object\Component">
+      <UniqueIdentifier>{c415cb81-3c28-40ca-8883-3e4cee89dbff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Object\Level">
+      <UniqueIdentifier>{8021e679-6023-441e-aae4-f285009cdf80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Object\LevelManager">
+      <UniqueIdentifier>{4e4023de-5844-4229-85b9-e5b2ba6c206a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Object\Actor">
+      <UniqueIdentifier>{123bf1cd-2706-402e-8cab-048a518d1d0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Object\Base">
+      <UniqueIdentifier>{b1ed1be4-a1fe-429d-a13e-c13f5f366bba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineProject.h">
@@ -396,6 +414,15 @@
     <ClInclude Include="EngineResourceManager.h">
       <Filter>Source\Resource\Resource</Filter>
     </ClInclude>
+    <ClInclude Include="EngineLevelManager.h">
+      <Filter>Source\Object\LevelManager</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineLevel.h">
+      <Filter>Source\Object\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineObjectBase.h">
+      <Filter>Source\Object\Base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineWindow.cpp">
@@ -454,6 +481,15 @@
     </ClCompile>
     <ClCompile Include="EngineResourceManager.cpp">
       <Filter>Source\Resource\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineLevelManager.cpp">
+      <Filter>Source\Object\LevelManager</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineLevel.cpp">
+      <Filter>Source\Object\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineObjectBase.cpp">
+      <Filter>Source\Object\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
