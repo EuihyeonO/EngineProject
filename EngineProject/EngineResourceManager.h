@@ -5,7 +5,7 @@
 #include <iostream>
 #include <list>
 
-#include "ResourceStruct.h"
+#include "ResourceHeader.h"
 #include "DirectXHeader.h"
 
 class EngineResourceManager

@@ -5,13 +5,7 @@
 #include "EngineMath.h"
 #include "EngineDirectX.h"
 
-#include "Importer.hpp"
-#include "scene.h"
-
-#include "postprocess.h"
-
 #include <iostream>
-#pragma comment (lib, "assimp-vc143-mtd.lib")
 
 EngineLoader::EngineLoader()
 {

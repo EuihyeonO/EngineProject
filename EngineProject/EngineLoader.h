@@ -1,9 +1,15 @@
 #pragma once
 #include "DirectXHeader.h"
-#include "ResourceStruct.h"
+#include "ResourceHeader.h"
+
+#include "Importer.hpp"
+#include "scene.h"
+#include "postprocess.h"
 
 #include <string_view>
 #include <list>
+
+#pragma comment(lib, "assimp-vc143-mtd.lib")
 
 enum ExtensionType
 {

@@ -1,7 +1,7 @@
 #include "EngineDirectX.h"
 #include "EngineWindow.h"
 #include "EngineDebug.h"
-#include "ResourceStruct.h"
+#include "ResourceHeader.h"
 
 #include <iostream>
 

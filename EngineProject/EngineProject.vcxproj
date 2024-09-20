@@ -27,26 +27,26 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -284,7 +284,7 @@
     </ClInclude>
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="ResourceStruct.h" />
+    <ClInclude Include="ResourceHeader.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestWindow.h">
       <SubType>
@@ -343,7 +343,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Main.cpp" />
     <ClCompile Include="TestWindow.cpp">
       <SubType>
       </SubType>
@@ -353,27 +352,9 @@
     <Text Include="해야 할 일.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\Library\Assimp\lib\Debug\assimp-vc143-mtd.lib">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </Library>
-    <Library Include="..\Library\Assimp\lib\Release\assimp-vc143-mt.lib">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </Library>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\Library\Assimp\.editorconfig" />
     <None Include="..\Library\Assimp\color4.inl" />
     <None Include="..\Library\Assimp\config.h.in" />
-    <None Include="..\Library\Assimp\dll\Debug\assimp-vc143-mtd.dll">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </None>
-    <None Include="..\Library\Assimp\dll\Release\assimp-vc143-mt.dll">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </None>
     <None Include="..\Library\Assimp\material.inl" />
     <None Include="..\Library\Assimp\matrix3x3.inl" />
     <None Include="..\Library\Assimp\matrix4x4.inl" />

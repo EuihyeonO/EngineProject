@@ -76,15 +76,15 @@ void Engine::CreateEngineGUI()
 {
 	std::shared_ptr<EngineGUIWindow> LeftGUI = TestWindow::CreateGUIWindow<TestWindow>("LeftGUI");
 	LeftGUI->SetWindowPos({ 0, 0 });
-	LeftGUI->SetWindowSize({ 300, 900 });
+	LeftGUI->SetWindowSize({ 250, 900 });
 
 	std::shared_ptr<EngineGUIWindow> DownGUI = TestWindow::CreateGUIWindow<TestWindow>("DownGUI");
-	DownGUI->SetWindowPos({ 300, 600 });
-	DownGUI->SetWindowSize({ 1300, 300 });
+	DownGUI->SetWindowPos({ 250, 650 });
+	DownGUI->SetWindowSize({ 1350, 250 });
 	
 	std::shared_ptr<EngineGUIWindow> RightGUI = TestWindow::CreateGUIWindow<TestWindow>("RightGUI");
-	RightGUI->SetWindowPos({ 1300, 0 });
-	RightGUI->SetWindowSize({ 300, 600 });
+	RightGUI->SetWindowPos({ 1350, 0 });
+	RightGUI->SetWindowSize({ 250, 650 });
 }
 
 void Engine::EngineEnd()
