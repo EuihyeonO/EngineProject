@@ -13,6 +13,13 @@ struct SVertex
 	Float2 Texcoord;
 };
 
+enum VertexOffset
+{
+	POSITION = 0,
+	NORMAL = 12,
+	TEXCOORED = 24,
+};
+
 struct SMesh
 {
 	std::vector<SVertex> Vertices;

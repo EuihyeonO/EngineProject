@@ -75,7 +75,7 @@ void EnginePath::FindAllFile(std::string_view _Extension, __out std::vector<Engi
 			std::string FileExtension = GetExtension(FileName).data();
 			EngineString::ToUpper(FileExtension);
 			
-			std::string InputExtension = GetExtension(_Extension).data();
+			std::string InputExtension = _Extension.data();
 			EngineString::ToUpper(InputExtension);
 
 			if (FileExtension == InputExtension)

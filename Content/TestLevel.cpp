@@ -26,3 +26,7 @@ void TestLevel::Update()
 void TestLevel::End()
 {
 }
+
+void TestLevel::OnDestroyed()
+{
+}

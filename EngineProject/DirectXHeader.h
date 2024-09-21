@@ -20,3 +20,16 @@ using Float4x4 = DirectX::XMFLOAT4X4;
 using Vector4 = DirectX::XMVECTOR;
 using Matrix4x4 = DirectX::XMMATRIX;
 
+enum class ShaderType
+{
+	Vertex,
+	Geometry,
+	Compute,
+	Pixel,
+};
+
+struct VertexShaderData
+{
+	MSComPtr<ID3D11VertexShader> VertexShader;
+	MSComPtr<ID3D11InputLayout> InputLayOut;
+};

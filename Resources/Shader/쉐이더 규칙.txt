@@ -1,0 +1,14 @@
+1. 파일 이름에 접두사로 쉐이더 타입과 언더바를 붙인다. (안붙이면 쉐이더 컴파일 안됨)
+Ex) VS_SkinningMesh.hlsl
+    PS_Merge.hlsl
+
+접두사 :
+버텍스 쉐이더는 VS
+지오메트리 쉐이더는 GS
+컴퓨트 쉐이더는 CS
+픽셀 쉐이더는 PS
+
+2. 진입점 이름은 반드시 Main으로 한다. 
+MainFunc, FuncMain, EntryMain 등등 안되고, Main이어야 함.
+
+3. VertexShader의 인풋 레이아웃 구조체는 VS_Input으로 이름을 통일한다.

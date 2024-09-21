@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <algorithm>
+#include <Windows.h>
 
 class EngineString
 {
@@ -15,6 +16,17 @@ public:
 
 		std::transform(_String.begin(), _String.end(), _String.begin(), ::toupper);
 	}
+
+	static std::wstring StringToWString(const std::string& _string)
+	{
+		int StrSize = MultiByteToWideChar(CP_UTF8, 0, _string.c_str(), (int)_string.size(), NULL, 0);
+		std::wstring Wstr(StrSize, 0);
+
+		MultiByteToWideChar(CP_UTF8, 0, _string.c_str(), (int)_string.size(), &Wstr[0], StrSize);
+
+		return Wstr;
+	}
+
 
 protected:
 

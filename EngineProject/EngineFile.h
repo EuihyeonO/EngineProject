@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include <iostream>
+#include <filesystem>
 
 class EngineFile
 {
@@ -23,22 +25,50 @@ public:
 	EngineFile& operator=(EngineFile&& _Other) noexcept = delete;
 
 public:
-	const std::string& GetFileName()
+	//파일 내부에 담긴 내용을 문자열로 반환해줍니다.
+	std::string GetFileString() const
+	{
+		FILE* FilePtr = nullptr;
+		std::string PathString = GetAbsolutePath();
+
+		fopen_s(&FilePtr, PathString.c_str(), "rt");
+
+		if (nullptr == FilePtr)
+		{
+			std::cerr << "File Opening is failed. FilePath : " + PathString << std::endl;
+			return "";
+		}
+
+		size_t FileSize = std::filesystem::file_size(std::filesystem::path(PathString));
+		std::vector<unsigned char> Buffer(FileSize);
+
+		fread_s(&Buffer[0], Buffer.size(), FileSize, 1, FilePtr);
+
+		if (nullptr != FilePtr)
+		{
+			fclose(FilePtr);
+		}
+
+		const char* Return = reinterpret_cast<const char*>(&Buffer[0]);
+		return Return;
+	}
+
+	const std::string& GetFileName() const
 	{
 		return FileName;
 	}
 
-	const std::string& GetExtension()
+	const std::string& GetExtension() const
 	{
 		return Extension;
 	}
 
-	const std::string& GetAbsolutePath()
+	const std::string& GetAbsolutePath() const
 	{
 		return AbsolutePath;
 	}
 
-	const std::string& GetRelativePath()
+	const std::string& GetRelativePath() const
 	{
 		return RelativePath;
 	}

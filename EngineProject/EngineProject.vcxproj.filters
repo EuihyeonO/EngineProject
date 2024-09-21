@@ -79,6 +79,15 @@
     <Filter Include="Source\Object\Base">
       <UniqueIdentifier>{b1ed1be4-a1fe-429d-a13e-c13f5f366bba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Object\Component\Base">
+      <UniqueIdentifier>{691086b5-ad02-4d6c-821d-166fbe11229f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Object\Component\Derived">
+      <UniqueIdentifier>{4c14cafc-2a52-462c-9258-499a01369dfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Render">
+      <UniqueIdentifier>{6fc3d76f-a537-4153-ba74-8996dab15398}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineProject.h">
@@ -427,7 +436,13 @@
       <Filter>Source\Object\Actor</Filter>
     </ClInclude>
     <ClInclude Include="EngineComponent.h">
-      <Filter>Source\Object\Component</Filter>
+      <Filter>Source\Object\Component\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="SkeletalMeshComponent.h">
+      <Filter>Source\Object\Component\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineRenderUnit.h">
+      <Filter>Source\Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -501,7 +516,13 @@
       <Filter>Source\Object\Actor</Filter>
     </ClCompile>
     <ClCompile Include="EngineComponent.cpp">
-      <Filter>Source\Object\Component</Filter>
+      <Filter>Source\Object\Component\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="SkeletalMeshComponent.cpp">
+      <Filter>Source\Object\Component\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineRenderUnit.cpp">
+      <Filter>Source\Render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

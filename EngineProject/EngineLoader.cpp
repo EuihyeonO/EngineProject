@@ -4,6 +4,7 @@
 #include "EngineResourceManager.h"
 #include "EngineMath.h"
 #include "EngineDirectX.h"
+#include "EngineString.h"
 
 #include <iostream>
 
@@ -44,10 +45,65 @@ void EngineLoader::LoadFile(std::string_view _FileName)
 	}
 }
 
+void EngineLoader::ShaderLoad(std::string_view _FileName)
+{
+	EngineFile File;
+	EnginePath::FindFile(_FileName, File);
+
+	if (File.GetFileName() == "")
+	{
+		return;
+	}
+
+	ShaderLoad(File);
+}
+
+void EngineLoader::ShaderLoad(EngineFile& _ShaderFile)
+{
+	std::string ShaderType = _ShaderFile.GetFileName().substr(0, 2);
+	EngineString::ToUpper(ShaderType);
+
+	if (ShaderType == "VS")
+	{
+		VertexShaderLoad(_ShaderFile);
+	}
+	else if (ShaderType == "PS")
+	{
+		
+	}
+}
+
+void EngineLoader::VertexShaderLoad(EngineFile& _ShaderFile)
+{
+	std::string ShaderType = _ShaderFile.GetFileName().substr(0, 2).data();
+	EngineString::ToUpper(ShaderType);
+
+	VertexShaderData Data = EngineDirectX::VertexShaderCompile(_ShaderFile);
+
+	EngineResourceManager::AddLoadedVertexShader(_ShaderFile.GetFileName(), Data.VertexShader);
+	EngineResourceManager::AddLoadedInputLayout(_ShaderFile.GetFileName(), Data.InputLayOut);
+}
+
 void EngineLoader::LoadAllFBX()
 {
 	std::vector<EngineFile> AllFBX;
 	EnginePath::FindAllFile(".FBX", AllFBX);
+
+	for(EngineFile& File : AllFBX)
+	{
+		LoadFBX(File);
+	}
+}
+
+void EngineLoader::AllShaderLoad()
+{
+	std::vector<EngineFile> AllShader;
+	EnginePath::FindAllFile(".hlsl", AllShader);
+
+	for (EngineFile& File : AllShader)
+	{
+		ShaderLoad(File);
+	}
 }
 
 void EngineLoader::LoadFBX(EngineFile& _FileData)

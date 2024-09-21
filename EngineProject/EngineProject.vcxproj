@@ -282,6 +282,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="EngineProject.h" />
+    <ClInclude Include="EngineRenderUnit.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EngineResourceManager.h">
       <SubType>
       </SubType>
@@ -305,6 +309,10 @@
     </ClInclude>
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceHeader.h" />
+    <ClInclude Include="SkeletalMeshComponent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestWindow.h">
       <SubType>
@@ -363,6 +371,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="EngineRenderUnit.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="EngineResourceManager.cpp">
       <SubType>
       </SubType>
@@ -380,6 +392,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="EngineObjectBase.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="SkeletalMeshComponent.cpp">
       <SubType>
       </SubType>
     </ClCompile>

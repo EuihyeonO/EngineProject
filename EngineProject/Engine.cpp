@@ -20,7 +20,7 @@ void Engine::EngineStart(HINSTANCE hInstance, int nCmdShow)
 	EngineWindow::Start(hInstance, nCmdShow);
 	EngineDirectX::Start();
 	EngineGUIWindow::GUIStart();
-	
+
 	LevelManager->Start();
 	CreateEngineGUI();
 }

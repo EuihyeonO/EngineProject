@@ -33,12 +33,18 @@ public:
 
 	static void LoadAllFile(ExtensionType _Extension);
 	static void LoadFile(std::string_view _FileName);
-
+	
+	static void LoadAllFBX();
 	static void LoadFBX(class EngineFile& _FileData);
+
+	static void AllShaderLoad();
+	static void ShaderLoad(std::string_view _FileName);
+	static void ShaderLoad(class EngineFile& _ShaderFile);
+
 protected:
 
 private:
-	static void LoadAllFBX();
+	static void VertexShaderLoad(class EngineFile& _ShaderFile);
 
 	static void ProcessMeshNode(struct aiNode* _Node, const struct aiScene* _Scene, Float4x4 _Transform, std::list<SMeshData>& _MeshList);
 	static void ProcessMesh(struct aiMesh* _Mesh, const struct aiScene* _Scene, Float4x4 _Transform, std::list<SMeshData>& _MeshList);

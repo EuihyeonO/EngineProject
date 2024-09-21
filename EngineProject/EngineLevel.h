@@ -20,19 +20,22 @@ public:
 	EngineLevel& operator=(EngineLevel&& _Other) noexcept = delete;
 	
 	template<typename ActorType, typename = std::enable_if_t<std::is_base_of_v<EngineActor, ActorType>>>
-	void CreateActor(std::string_view _ActorName)
+	std::shared_ptr<ActorType> CreateActor(std::string_view _ActorName)
 	{
 		if (Actors.find(_ActorName.data()) != Actors.end())
 		{
 			std::string ActorName = _ActorName.data();
 			std::cerr << "Error : Actor(ActorName : " + ActorName + ") is already created." << std::endl;
-			return;
+			return nullptr;
 		}
 
 		std::shared_ptr<ActorType> NewActor = std::make_shared<ActorType>();
 		NewActor->OnCreated();
+		NewActor->SetActivate(true);
 
 		Actors[_ActorName.data()] = NewActor;
+
+		return NewActor;
 	}
 
 
