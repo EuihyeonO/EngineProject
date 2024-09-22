@@ -1,5 +1,4 @@
-1. 텍스쳐 로드 추가해야함
-추가하면 EngineLoader::ProcessMesh에 코드 추가해야됨
+1. 렌더링 관련 컴포넌트->렌더링 구조 구축
 
 2. SkeletalMeshComponent::SetMesh(std::string_view _Name)
 메쉬를 세팅할 때, 기존에 세팅되어 있던 것이 있다면? 무엇을 해야하는지 처리 코드 추가
@@ -7,3 +6,9 @@
 
 3. 픽셀 쉐이더 컴파일
 
+4. EngineLevel, EngineActor에 테스트코드 제거
+
+5. EngineResourceManger의 MEsh에서 메모리 누수 발견
+
+6. ShaderReflection 기능 구현하기 
+EngineDirectX::CreateVSResource

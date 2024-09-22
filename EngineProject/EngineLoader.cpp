@@ -5,6 +5,7 @@
 #include "EngineMath.h"
 #include "EngineDirectX.h"
 #include "EngineString.h"
+#include "EngineVertexShader.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -79,28 +80,27 @@ void EngineLoader::LoadShader(EngineFile& _ShaderFile)
 
 void EngineLoader::LoadVertexShader(EngineFile& _ShaderFile)
 {
-	if (EngineResourceManager::FindShader<ID3D11VertexShader>(_ShaderFile.GetFileName()) != nullptr)
+	if (EngineResourceManager::FindShader<EngineVertexShader>(_ShaderFile.GetFileName()) != nullptr)
 	{
 		std::cerr << "Error : Shader that try to compile is already compiled." << std::endl;
 		return;
 	}
 
-	VertexShaderData Data = EngineDirectX::VertexShaderCompile(_ShaderFile);
+	std::shared_ptr<EngineVertexShader> LoadedVertexShader = EngineDirectX::CreateVertexShader(_ShaderFile);
 
-	EngineResourceManager::AddLoadedVertexShader(_ShaderFile.GetFileName(), Data.VertexShader);
-	EngineResourceManager::AddLoadedInputLayout(_ShaderFile.GetFileName(), Data.InputLayOut);
+	EngineResourceManager::AddLoadedVertexShader(_ShaderFile.GetFileName(), LoadedVertexShader);
 }
 
 void EngineLoader::LoadPixelShader(class EngineFile& _ShaderFile)
 {
 	const std::string& ShaderName = _ShaderFile.GetFileName();
-	if (EngineResourceManager::FindShader<ID3D11PixelShader>(ShaderName) != nullptr)
+	if (EngineResourceManager::FindShader<EnginePixelShader>(ShaderName) != nullptr)
 	{
 		std::cerr << "Error : Shader that try to compile is already compiled." << std::endl;
 		return;
 	}
 
-	MSComPtr<ID3D11PixelShader> PixelShader = EngineDirectX::PixelShaderCompile(_ShaderFile);
+	std::shared_ptr<EnginePixelShader> PixelShader = EngineDirectX::CreatePixelShader(_ShaderFile);
 	EngineResourceManager::AddLoadedPixelShader(ShaderName, PixelShader);
 }
 

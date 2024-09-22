@@ -39,8 +39,8 @@ struct SMaterial
 
 struct SMeshData
 {
-	MSComPtr<ID3D11Buffer> VertexBuffer;
-	MSComPtr<ID3D11Buffer> IndexBuffer;
+	MSComPtr<ID3D11Buffer> VertexBuffer = nullptr;
+	MSComPtr<ID3D11Buffer> IndexBuffer = nullptr;
 	
 	SMaterial Material;
 };

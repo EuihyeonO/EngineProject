@@ -1,8 +1,9 @@
-﻿#include "Engine.h"
+﻿#pragma comment(lib, "EngineProject.lib")
+
+#include "Engine.h"
 #include "ContentLevelManager.h"
 
 #pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
-#pragma comment(lib, "EngineProject.lib")
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, 
                       _In_opt_ HINSTANCE hPrevInstance, 

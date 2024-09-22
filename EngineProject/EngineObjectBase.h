@@ -1,6 +1,7 @@
 #pragma once
+#include <memory>
 
-class EngineObjectBase
+class EngineObjectBase : public std::enable_shared_from_this<EngineObjectBase>
 {
 
 public:
@@ -35,10 +36,20 @@ public:
 		bIsActivated = _bIsActivate;
 	}
 
+	void SetOwner(std::shared_ptr<EngineObjectBase> _Owner)
+	{
+		Owner = _Owner;
+	}
+
+	std::shared_ptr<EngineObjectBase> GetOwner()
+	{
+		return Owner;
+	}
+
 protected:
 
 private:
 	unsigned int bIsActivated : 1 = false;
-
+	std::shared_ptr<EngineObjectBase> Owner = nullptr;
 };
 

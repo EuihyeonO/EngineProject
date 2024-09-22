@@ -30,6 +30,8 @@ public:
 		}
 
 		std::shared_ptr<ActorType> NewActor = std::make_shared<ActorType>();
+		NewActor->SetOwner(shared_from_this());
+
 		NewActor->OnCreated();
 		NewActor->SetActivate(true);
 
@@ -38,12 +40,20 @@ public:
 		return NewActor;
 	}
 
+	//테스트
+	void AddRenderComps(std::shared_ptr<class SkeletalMeshComponent> _Comp)
+	{
+		RenderComps.push_back(_Comp);
+	}
+
+	//테스트
+	std::vector<std::shared_ptr<class SkeletalMeshComponent>> RenderComps;
 
 protected:
 
 private:
-	void ActorUpdate();
 
+	void ActorUpdate();
 	std::unordered_map<std::string, std::shared_ptr<class EngineActor>> Actors;
 };
 

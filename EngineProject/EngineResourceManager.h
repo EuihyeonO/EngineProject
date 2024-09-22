@@ -8,10 +8,12 @@
 #include "EngineString.h"
 #include "ResourceHeader.h"
 #include "DirectXHeader.h"
+#include "EngineVertexShader.h"
+#include "EnginePixelShader.h"
 
 template <typename T>
-concept ShaderTemplate = std::is_same_v<T, ID3D11VertexShader>  ||
-                         std::is_same_v<T, ID3D11PixelShader>   ||
+concept ShaderTemplate = std::is_same_v<T, class EngineVertexShader>  ||
+                         std::is_same_v<T, class EnginePixelShader>   ||
                          std::is_same_v<T, ID3D11GeometryShader>||
                          std::is_same_v<T, ID3D11ComputeShader>;
 
@@ -51,18 +53,18 @@ public:
 			return;
 		}
 
-		LoadedMeshes[UpperName] = _MeshData;
+		LoadedMeshes[UpperName] = std::move(_MeshData);
 	}
 
 	//Shader
 	template<typename Shader> requires ShaderTemplate<Shader>
-	static MSComPtr<Shader> FindShader(std::string_view _Name)
+	static std::shared_ptr<Shader> FindShader(std::string_view _Name)
 	{
-		if constexpr (std::is_same_v<Shader,ID3D11VertexShader>)
+		if constexpr (std::is_same_v<Shader, class EngineVertexShader>)
 		{
 			return FindVertexShader(_Name);
 		}
-		else if constexpr (std::is_same_v<Shader, ID3D11PixelShader>)
+		else if constexpr (std::is_same_v<Shader, class EnginePixelShader>)
 		{
 			return FindPixelShader(_Name);
 		}
@@ -81,7 +83,7 @@ public:
 		}
 	}
 
-	static MSComPtr<ID3D11VertexShader> FindVertexShader(std::string_view _Name)
+	static std::shared_ptr<class EngineVertexShader> FindVertexShader(std::string_view _Name)
 	{
 		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
 
@@ -93,26 +95,13 @@ public:
 		return nullptr;
 	}
 
-	static MSComPtr<ID3D11PixelShader> FindPixelShader(std::string_view _Name)
+	static std::shared_ptr<class EnginePixelShader> FindPixelShader(std::string_view _Name)
 	{
 		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
 
 		if (LoadedPixelShaders.find(UpperName) != LoadedPixelShaders.end())
 		{
 			return LoadedPixelShaders[UpperName];
-		}
-
-		return nullptr;
-	}
-
-	//Vertex Shader의 이름을 인자로 대입하면 된다.
-	static MSComPtr<ID3D11InputLayout> FindInputLayOut(std::string_view _Name)
-	{
-		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
-
-		if (LoadedInputLayout.find(UpperName) != LoadedInputLayout.end())
-		{
-			return LoadedInputLayout[UpperName];
 		}
 
 		return nullptr;
@@ -130,11 +119,11 @@ public:
 		return TextureData{ nullptr, nullptr };
 	}
 
-	static void AddLoadedVertexShader(std::string_view _Name, const  MSComPtr<ID3D11VertexShader>& _VertexShader)
+	static void AddLoadedVertexShader(std::string_view _Name, const std::shared_ptr<class EngineVertexShader> _VertexShader)
 	{
 		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
 
-		if (FindShader<ID3D11VertexShader>(UpperName) != nullptr)
+		if (FindShader<class EngineVertexShader>(UpperName) != nullptr)
 		{
 			std::cerr << "Error : Shader(Name : " + UpperName + ") is already loaded." << std::endl;
 			return;
@@ -143,30 +132,17 @@ public:
 		LoadedVertexShaders[UpperName] = _VertexShader;
 	}
 
-	static void AddLoadedPixelShader(std::string_view _Name, const MSComPtr<ID3D11PixelShader>& _PixelShader)
+	static void AddLoadedPixelShader(std::string_view _Name, const std::shared_ptr<EnginePixelShader> _PixelShader)
 	{
 		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
 
-		if (FindShader<ID3D11PixelShader>(UpperName) != nullptr)
+		if (FindShader<EnginePixelShader>(UpperName) != nullptr)
 		{
 			std::cerr << "Error : Shader(Name : " + UpperName + ") is already loaded." << std::endl;
 			return;
 		}
 
 		LoadedPixelShaders[UpperName] = _PixelShader;
-	}
-
-	static void AddLoadedInputLayout(std::string_view _Name, const  MSComPtr<ID3D11InputLayout>& _InputLayOut)
-	{
-		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
-
-		if (LoadedInputLayout.find(UpperName) != LoadedInputLayout.end())
-		{
-			std::cerr << "Error : InputLayout(Name : " + UpperName + ") is already loaded." << std::endl;
-			return;
-		}
-
-		LoadedInputLayout[UpperName] = _InputLayOut;
 	}
 
 	static void AddLoadedTexture(std::string_view _Name, const TextureData& _TextureData)
@@ -181,6 +157,8 @@ public:
 
 		LoadedTexture[UpperName] = _TextureData;
 	}
+
+
 protected:
 	
 private:
@@ -189,10 +167,9 @@ private:
 private:
 	static std::unordered_map<std::string, std::list<SMeshData>> LoadedMeshes;
 
-	static std::unordered_map<std::string, MSComPtr<ID3D11VertexShader>> LoadedVertexShaders;
-	static std::unordered_map<std::string, MSComPtr<ID3D11InputLayout>> LoadedInputLayout;
+	static std::unordered_map<std::string, std::shared_ptr<class EngineVertexShader>> LoadedVertexShaders;
+	static std::unordered_map<std::string, std::shared_ptr<class EnginePixelShader>> LoadedPixelShaders;
 
-	static std::unordered_map<std::string, MSComPtr<ID3D11PixelShader>> LoadedPixelShaders;
 	static std::unordered_map<std::string, TextureData> LoadedTexture;
 };
 

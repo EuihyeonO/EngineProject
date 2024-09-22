@@ -6,12 +6,19 @@
 #include "EnginePath.h"
 #include "EngineString.h"
 #include "EngineResourceManager.h"
+#include "EngineVertexShader.h"
+#include "EngineString.h"
+#include "EnginePixelShader.h"
 
-#include <d3dcompiler.h>
 #include <vector>
 #include <string>
 #include <iostream>
 #include <algorithm>
+
+#pragma comment(lib, "d3d11.lib")
+#pragma comment(lib, "d3dcompiler")
+#pragma comment(lib, "dxguid")
+#pragma comment(lib, "DXGI")
 
 EngineDirectX::EngineDirectX()
 {
@@ -21,7 +28,7 @@ EngineDirectX::~EngineDirectX()
 {
 }
 
-VertexShaderData EngineDirectX::VertexShaderCompile(const EngineFile& _Shader)
+std::shared_ptr<EngineVertexShader> EngineDirectX::CreateVertexShader(const EngineFile& _Shader)
 {
 	MSComPtr<ID3DBlob> ShaderBlob;
 	MSComPtr<ID3DBlob> ErrorBlob;
@@ -49,7 +56,7 @@ VertexShaderData EngineDirectX::VertexShaderCompile(const EngineFile& _Shader)
 			std::cout << "Shader Compile Error\n" << (char*)ErrorBlob->GetBufferPointer() << std::endl;
 		}
 
-		return { nullptr,nullptr };
+		return nullptr;
 	}
 
 	MSComPtr<ID3D11VertexShader> NewVertextShader;
@@ -58,12 +65,18 @@ VertexShaderData EngineDirectX::VertexShaderCompile(const EngineFile& _Shader)
 	if (Result != S_OK)
 	{
 		std::cout << "Error : Vertexbuffer Creation failed." << std::endl;
-		return { nullptr,nullptr };
+		return nullptr;
 	}
 
 	MSComPtr<ID3D11InputLayout> InputLayOut = CreateInputLayOut(_Shader, ShaderBlob);
+	
+	std::shared_ptr<EngineVertexShader> NewEngineVertexShader = std::make_shared<EngineVertexShader>();
+	NewEngineVertexShader->VertexShader = NewVertextShader;
+	NewEngineVertexShader->InputLayOut = InputLayOut;
 
-	return { NewVertextShader, InputLayOut };
+	//CreateVSResource(NewEngineVertexShader, ShaderBlob);
+
+	return NewEngineVertexShader;
 }
 
 MSComPtr<ID3D11InputLayout> EngineDirectX::CreateInputLayOut(const EngineFile& _ShaderFile, MSComPtr<ID3DBlob> _ShaderBlob)
@@ -110,8 +123,6 @@ MSComPtr<ID3D11InputLayout> EngineDirectX::CreateInputLayOut(const EngineFile& _
 	{
 		InputLayOutDatas.push_back({ TexcoordIndex, "TEXCOORD" });
 	}
-
-	std::sort(InputLayOutDatas.begin(), InputLayOutDatas.end());
 
 	std::vector<D3D11_INPUT_ELEMENT_DESC> inputElements(InputLayOutDatas.size());
 	
@@ -180,7 +191,7 @@ TextureData EngineDirectX::CreateTexture(unsigned char* _LoadedImage, int _Width
 	return NewTextureData;
 }
 
-MSComPtr<ID3D11PixelShader> EngineDirectX::PixelShaderCompile(const EngineFile& _Shader)
+std::shared_ptr<EnginePixelShader> EngineDirectX::CreatePixelShader(const EngineFile& _Shader)
 {
 	Microsoft::WRL::ComPtr<ID3DBlob> ShaderBlob;
 	Microsoft::WRL::ComPtr<ID3DBlob> ErrorBlob;
@@ -212,8 +223,7 @@ MSComPtr<ID3D11PixelShader> EngineDirectX::PixelShaderCompile(const EngineFile& 
 
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> NewPixelShader;
 
-	Result =
-		GetDevice()->CreatePixelShader(ShaderBlob->GetBufferPointer(), ShaderBlob->GetBufferSize(), NULL, &NewPixelShader);
+	Result = GetDevice()->CreatePixelShader(ShaderBlob->GetBufferPointer(), ShaderBlob->GetBufferSize(), NULL, &NewPixelShader);
 
 	if (Result != S_OK)
 	{
@@ -221,7 +231,10 @@ MSComPtr<ID3D11PixelShader> EngineDirectX::PixelShaderCompile(const EngineFile& 
 		return nullptr;
 	}
 
-	return NewPixelShader;
+	std::shared_ptr<EnginePixelShader> NewEnginePixelShader = std::make_shared<EnginePixelShader>();
+	NewEnginePixelShader->PixelShader = NewPixelShader;
+
+	return NewEnginePixelShader;
 }
 
 
@@ -272,6 +285,73 @@ std::pair<MSComPtr<ID3D11Buffer>, MSComPtr<ID3D11Buffer>> EngineDirectX::CreateV
 	}
 
 	return { VertexBuffer, IndexBuffer };
+}
+
+void EngineDirectX::CreateVSResource(std::shared_ptr<EngineVertexShader> _Shader, MSComPtr<ID3DBlob> _ShaderBlob)
+{
+	if (_Shader == nullptr || _ShaderBlob == nullptr)
+	{
+		std::cerr << "Error : VSResource Creation is failed. (Nullptr)" << std::endl;
+		return;
+	}
+
+	ID3D11ShaderReflection* CompileInfo = nullptr;
+
+	HRESULT Result = D3DReflect(_ShaderBlob->GetBufferPointer(), _ShaderBlob->GetBufferSize(), IID_ID3D11ShaderReflection, reinterpret_cast<void**>(&CompileInfo));
+	EngineDebug::CheckResult(Result);
+
+	D3D11_SHADER_DESC Info;
+	CompileInfo->GetDesc(&Info);
+
+	D3D11_SHADER_INPUT_BIND_DESC ResDesc;
+
+	for (UINT i = 0; i < Info.BoundResources; i++)
+	{
+		CompileInfo->GetResourceBindingDesc(i, &ResDesc);
+
+		std::string Name = ResDesc.Name;
+		D3D_SHADER_INPUT_TYPE Type = ResDesc.Type;
+
+		std::string UpperName = EngineString::ToUpperReturn(ResDesc.Name);
+
+		switch (Type)
+		{
+		case D3D_SIT_CBUFFER:
+		{
+			ID3D11ShaderReflectionConstantBuffer* CBufferPtr = CompileInfo->GetConstantBufferByName(ResDesc.Name);
+
+			D3D11_SHADER_BUFFER_DESC BufferDesc;
+			CBufferPtr->GetDesc(&BufferDesc);
+
+			//std::shared_ptr<GameEngineConstantBuffer> Res = GameEngineConstantBuffer::CreateAndFind(BufferDesc.Size, UpperName, BufferDesc);
+			//
+			//GameEngineConstantBufferSetter Setter;
+			//
+			//Setter.ParentShader = this;
+			//Setter.Name = UpperName;
+			//Setter.BindPoint = ResDesc.BindPoint;
+			//Setter.Res = Res;
+			//
+			//ResHelper.CreateConstantBufferSetter(Setter);
+			//
+			//
+			//int a = 0;
+
+			break;
+		}
+		case D3D_SIT_TEXTURE:
+		{
+			break;
+		}
+		case D3D_SIT_SAMPLER:
+		{
+			break;
+		}
+		default:
+			break;
+		}
+
+	}
 }
 
 void EngineDirectX::CreateDevice()

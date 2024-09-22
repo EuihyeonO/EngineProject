@@ -91,6 +91,9 @@
     <Filter Include="Source\Base\Library\STB">
       <UniqueIdentifier>{46acc353-17b1-40aa-a25d-26d8b70556b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Base\DirectX\Shader">
+      <UniqueIdentifier>{d7a89508-52aa-45ab-84ce-ed11903d4dd0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineProject.h">
@@ -137,9 +140,6 @@
     </ClInclude>
     <ClInclude Include="..\Library\IMGUI\imgui_impl_win32.h">
       <Filter>Source\Base\Library\IMGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="EngineDirectX.h">
-      <Filter>Source\Base\DirectX</Filter>
     </ClInclude>
     <ClInclude Include="EngineGUIWindow.h">
       <Filter>Source\Window\GUIWindow\Base</Filter>
@@ -507,6 +507,18 @@
     <ClInclude Include="..\Library\STB\stb_divide.h">
       <Filter>Source\Base\Library\STB</Filter>
     </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Source\Object\Component\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineVertexShader.h">
+      <Filter>Source\Base\DirectX\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="EnginePixelShader.h">
+      <Filter>Source\Base\DirectX\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineDirectX.h">
+      <Filter>Source\Base\DirectX</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineWindow.cpp">
@@ -589,6 +601,15 @@
     </ClCompile>
     <ClCompile Include="..\Library\STB\stb_vorbis.c">
       <Filter>Source\Base\Library\STB</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformComponent.cpp">
+      <Filter>Source\Object\Component\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineVertexShader.cpp">
+      <Filter>Source\Base\DirectX\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="EnginePixelShader.cpp">
+      <Filter>Source\Base\DirectX\Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

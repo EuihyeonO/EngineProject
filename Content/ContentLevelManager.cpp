@@ -13,7 +13,7 @@ ContentLevelManager::~ContentLevelManager()
 
 void ContentLevelManager::Start()
 {
-	EngineLoader::LoadAllShader();
+	//EngineLoader::LoadAllShader();
 
 	EngineLoader::LoadAllFile(ExtensionType::FBX);
 	
