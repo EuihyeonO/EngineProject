@@ -13,7 +13,8 @@ ContentLevelManager::~ContentLevelManager()
 
 void ContentLevelManager::Start()
 {
-	EngineLoader::AllShaderLoad();
+	EngineLoader::LoadAllShader();
+
 	EngineLoader::LoadAllFile(ExtensionType::FBX);
 	
 	CreateLevel<TestLevel>("TestLevel");

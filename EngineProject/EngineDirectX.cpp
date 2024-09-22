@@ -23,12 +23,6 @@ EngineDirectX::~EngineDirectX()
 
 VertexShaderData EngineDirectX::VertexShaderCompile(const EngineFile& _Shader)
 {
-	if (EngineResourceManager::FindShader<ID3D11VertexShader>(_Shader.GetFileName()) != nullptr)
-	{
-		std::cerr << "Error : Shader that try to compile is already compiled." << std::endl;
-		return { nullptr,nullptr };
-	}
-
 	MSComPtr<ID3DBlob> ShaderBlob;
 	MSComPtr<ID3DBlob> ErrorBlob;
 
@@ -46,7 +40,7 @@ VertexShaderData EngineDirectX::VertexShaderCompile(const EngineFile& _Shader)
 		// 파일이 없을 경우
 		if ((Result & D3D11_ERROR_FILE_NOT_FOUND) != 0)
 		{
-			std::wcout << "Error : Shader that try to compile is not found. File Path+ Name : " << WShaderPath << std::endl;
+			std::wcout << "Error : Shader that try to compile is not found. File Path : " << WShaderPath << std::endl;
 		}
 
 		// 에러 메시지가 있으면 출력
@@ -155,9 +149,79 @@ MSComPtr<ID3D11InputLayout> EngineDirectX::CreateInputLayOut(const EngineFile& _
 	return InputLayOut;
 }
 
-void EngineDirectX::PixelShaderCompile(const EngineFile& _Shader)
+TextureData EngineDirectX::CreateTexture(unsigned char* _LoadedImage, int _Width, int _Height, int _Channels)
 {
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> Texture;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> SRV;
 
+	D3D11_TEXTURE2D_DESC TexDesc = {};
+	TexDesc.Width = _Width;
+	TexDesc.Height = _Height;
+	TexDesc.MipLevels = TexDesc.ArraySize = 1;
+	TexDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	TexDesc.SampleDesc.Count = 1;
+	TexDesc.Usage = D3D11_USAGE_IMMUTABLE;
+	TexDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+
+	D3D11_SUBRESOURCE_DATA InitData;
+	InitData.pSysMem = _LoadedImage;
+	InitData.SysMemPitch = TexDesc.Width * sizeof(uint8_t) * _Channels;
+
+	HRESULT Result = GetInstance()->GetDevice()->CreateTexture2D(&TexDesc, &InitData, Texture.GetAddressOf());
+	EngineDebug::CheckResult(Result);
+
+	Result = GetInstance()->GetDevice()->CreateShaderResourceView(Texture.Get(), nullptr, SRV.GetAddressOf());
+	EngineDebug::CheckResult(Result);
+
+	TextureData NewTextureData;
+	NewTextureData.Texture2D = Texture;
+	NewTextureData.SRV = SRV;
+
+	return NewTextureData;
+}
+
+MSComPtr<ID3D11PixelShader> EngineDirectX::PixelShaderCompile(const EngineFile& _Shader)
+{
+	Microsoft::WRL::ComPtr<ID3DBlob> ShaderBlob;
+	Microsoft::WRL::ComPtr<ID3DBlob> ErrorBlob;
+
+	UINT CompileFlag = 0;
+#if defined(DEBUG) || defined(_DEBUG)
+	CompileFlag = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
+#endif
+
+	std::wstring WShaderPath = EngineString::StringToWString(_Shader.GetAbsolutePath());
+	HRESULT Result = D3DCompileFromFile(WShaderPath.c_str(), 0, D3D_COMPILE_STANDARD_FILE_INCLUDE, "main", "ps_5_0", CompileFlag, 0, &ShaderBlob, &ErrorBlob);
+
+	if (Result != S_OK)
+	{
+		// 파일이 없을 경우
+		if ((Result & D3D11_ERROR_FILE_NOT_FOUND) != 0)
+		{
+			std::wcout << "Error : Shader that try to compile is not found. File Path : " << WShaderPath << std::endl;
+		}
+
+		// 에러 메시지가 있으면 출력
+		if (ErrorBlob)
+		{
+			std::cout << "Shader compile error\n" << (char*)ErrorBlob->GetBufferPointer() << std::endl;
+		}
+
+		return FALSE;
+	}
+
+	Microsoft::WRL::ComPtr<ID3D11PixelShader> NewPixelShader;
+
+	Result =
+		GetDevice()->CreatePixelShader(ShaderBlob->GetBufferPointer(), ShaderBlob->GetBufferSize(), NULL, &NewPixelShader);
+
+	if (Result != S_OK)
+	{
+		std::cout << "Error : Vertexbuffer Creation failed." << std::endl;
+		return nullptr;
+	}
+
+	return NewPixelShader;
 }
 
 

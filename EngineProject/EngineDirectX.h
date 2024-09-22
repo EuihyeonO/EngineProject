@@ -1,5 +1,6 @@
 #pragma once
 #include "DirectXHeader.h"
+#include "ResourceHeader.h"
 
 class EngineDirectX
 {
@@ -50,8 +51,9 @@ public:
 	}
 
 	static VertexShaderData VertexShaderCompile(const class EngineFile& _ShaderFile);
+	static MSComPtr<ID3D11PixelShader> PixelShaderCompile(const class EngineFile& _ShaderFile);
 	static MSComPtr<ID3D11InputLayout> CreateInputLayOut(const class EngineFile& _ShaderFile, MSComPtr<ID3DBlob> _ShaderBlob);
-	
+	static TextureData CreateTexture(unsigned char* _LoadedImage, int _Width, int _Height, int _Channels);
 	static std::pair<MSComPtr<ID3D11Buffer>, MSComPtr<ID3D11Buffer>> CreateVertexBufferAndIndexBuffer(const struct SMesh& _Mesh);
 
 protected:
@@ -59,8 +61,6 @@ protected:
 private:
 	void CreateDevice();
 	void CreateSwapChain();
-	
-	void PixelShaderCompile(const class EngineFile& _ShaderFile);
 
 	MSComPtr<ID3D11Device> Device = nullptr;
 	MSComPtr<ID3D11DeviceContext> DeviceContext = nullptr;

@@ -73,20 +73,20 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ExternalIncludePath>$(ExternalIncludePath)</ExternalIncludePath>
     <LibraryPath>..\x64\Debug;..\Library\Assimp\lib\Debug;$(LibraryPath)</LibraryPath>
-    <IncludePath>..\EngineProject;..\Content;..\Library\Assimp;..\Library</IncludePath>
+    <IncludePath>..\EngineProject;..\Content;..\Library\Assimp;..\Library;..\Library\STB</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>$(LibraryPath)</LibraryPath>
-    <IncludePath>..\EngineProject;..\Content;..\Library\Assimp;..\Library</IncludePath>
+    <IncludePath>..\EngineProject;..\Content;..\Library\Assimp;..\Library;..\Library\STB</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ExternalIncludePath>$(ExternalIncludePath)</ExternalIncludePath>
     <LibraryPath>..\x64\Debug;..\Library\Assimp\lib\Debug;$(LibraryPath)</LibraryPath>
-    <IncludePath>..\EngineProject;..\Content;..\Library\Assimp;..\Library</IncludePath>
+    <IncludePath>..\EngineProject;..\Content;..\Library\Assimp;..\Library;..\Library\STB</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LibraryPath>$(LibraryPath)</LibraryPath>
-    <IncludePath>..\EngineProject;..\Content;..\Library\Assimp;..\Library</IncludePath>
+    <IncludePath>..\EngineProject;..\Content;..\Library\Assimp;..\Library;..\Library\STB</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

@@ -5,7 +5,6 @@
 
 #include "DirectXHeader.h"
 
-
 struct SVertex
 {
 	Float3 Position;
@@ -26,10 +25,16 @@ struct SMesh
 	std::vector<uint32_t> Indices;
 };
 
+struct TextureData
+{
+	MSComPtr<ID3D11Texture2D> Texture2D = nullptr;
+	MSComPtr<ID3D11ShaderResourceView> SRV = nullptr;
+};
+
 struct SMaterial
 {
-	std::string DiffuseTexture = "";
-	std::string NormalTexture = "";
+	TextureData DiffuseTexture;
+	TextureData NormalTexture;
 };
 
 struct SMeshData
@@ -45,12 +50,3 @@ struct AnimData
 
 };
 
-struct TextureData
-{
-
-};
-
-struct MaterialData
-{
-
-};

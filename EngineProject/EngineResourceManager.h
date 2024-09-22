@@ -5,6 +5,7 @@
 #include <iostream>
 #include <list>
 
+#include "EngineString.h"
 #include "ResourceHeader.h"
 #include "DirectXHeader.h"
 
@@ -30,23 +31,27 @@ public:
 	//Mesh
 	static const std::list<SMeshData>* FindMesh(std::string_view _Name)
 	{
-		if (LoadedMeshes.find(_Name.data()) == LoadedMeshes.end())
+		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+		if (LoadedMeshes.find(UpperName) == LoadedMeshes.end())
 		{
 			return nullptr;
 		}
 
-		return &LoadedMeshes[_Name.data()];
+		return &LoadedMeshes[UpperName];
 	}
 
 	static void AddLoadedMesh(const std::string& _Name, std::list<SMeshData>&& _MeshData)
 	{
-		if (FindMesh(_Name) != nullptr)
+		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+		if (FindMesh(UpperName) != nullptr)
 		{
-			std::cerr << "Error : Mesh(Name : " + _Name + ") is already loaded." << std::endl;
+			std::cerr << "Error : Mesh(Name : " + UpperName + ") is already loaded." << std::endl;
 			return;
 		}
 
-		LoadedMeshes[_Name] = _MeshData;
+		LoadedMeshes[UpperName] = _MeshData;
 	}
 
 	//Shader
@@ -78,9 +83,11 @@ public:
 
 	static MSComPtr<ID3D11VertexShader> FindVertexShader(std::string_view _Name)
 	{
-		if (LoadedVertexShaders.find(_Name.data()) != LoadedVertexShaders.end())
+		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+		if (LoadedVertexShaders.find(UpperName) != LoadedVertexShaders.end())
 		{
-			return LoadedVertexShaders[_Name.data()];
+			return LoadedVertexShaders[UpperName];
 		}
 
 		return nullptr;
@@ -88,36 +95,92 @@ public:
 
 	static MSComPtr<ID3D11PixelShader> FindPixelShader(std::string_view _Name)
 	{
-		if (LoadedPixelShaders.find(_Name.data()) != LoadedPixelShaders.end())
+		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+		if (LoadedPixelShaders.find(UpperName) != LoadedPixelShaders.end())
 		{
-			return LoadedPixelShaders[_Name.data()];
+			return LoadedPixelShaders[UpperName];
 		}
 
 		return nullptr;
 	}
 
-	static void AddLoadedVertexShader(const std::string& _Name, const  MSComPtr<ID3D11VertexShader>& _VertexShader)
+	//Vertex Shader의 이름을 인자로 대입하면 된다.
+	static MSComPtr<ID3D11InputLayout> FindInputLayOut(std::string_view _Name)
 	{
-		if (FindShader<ID3D11VertexShader>(_Name) != nullptr)
+		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+		if (LoadedInputLayout.find(UpperName) != LoadedInputLayout.end())
 		{
-			std::cerr << "Error : Shader(Name : " + _Name + ") is already loaded." << std::endl;
+			return LoadedInputLayout[UpperName];
+		}
+
+		return nullptr;
+	}
+
+	static const TextureData FindTexture(std::string_view _Name)
+	{
+		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+		if (LoadedTexture.find(UpperName) != LoadedTexture.end())
+		{
+			return LoadedTexture[UpperName];
+		}
+
+		return TextureData{ nullptr, nullptr };
+	}
+
+	static void AddLoadedVertexShader(std::string_view _Name, const  MSComPtr<ID3D11VertexShader>& _VertexShader)
+	{
+		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+		if (FindShader<ID3D11VertexShader>(UpperName) != nullptr)
+		{
+			std::cerr << "Error : Shader(Name : " + UpperName + ") is already loaded." << std::endl;
 			return;
 		}
 
-		LoadedVertexShaders[_Name] = _VertexShader;
+		LoadedVertexShaders[UpperName] = _VertexShader;
 	}
 
-	static void AddLoadedInputLayout(const std::string& _Name, const  MSComPtr<ID3D11InputLayout>& _InputLayOut)
+	static void AddLoadedPixelShader(std::string_view _Name, const MSComPtr<ID3D11PixelShader>& _PixelShader)
 	{
-		if (LoadedInputLayout.find(_Name.data()) != LoadedInputLayout.end())
+		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+		if (FindShader<ID3D11PixelShader>(UpperName) != nullptr)
 		{
-			std::cerr << "Error : Shader(Name : " + _Name + ") is already loaded." << std::endl;
+			std::cerr << "Error : Shader(Name : " + UpperName + ") is already loaded." << std::endl;
 			return;
 		}
 
-		LoadedInputLayout[_Name] = _InputLayOut;
+		LoadedPixelShaders[UpperName] = _PixelShader;
 	}
 
+	static void AddLoadedInputLayout(std::string_view _Name, const  MSComPtr<ID3D11InputLayout>& _InputLayOut)
+	{
+		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+		if (LoadedInputLayout.find(UpperName) != LoadedInputLayout.end())
+		{
+			std::cerr << "Error : InputLayout(Name : " + UpperName + ") is already loaded." << std::endl;
+			return;
+		}
+
+		LoadedInputLayout[UpperName] = _InputLayOut;
+	}
+
+	static void AddLoadedTexture(std::string_view _Name, const TextureData& _TextureData)
+	{
+		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+		if (LoadedTexture.find(UpperName) != LoadedTexture.end())
+		{
+			std::cerr << "Error : Texture(Name : " + UpperName + ") is already loaded." << std::endl;
+			return;
+		}
+
+		LoadedTexture[UpperName] = _TextureData;
+	}
 protected:
 	
 private:
@@ -130,5 +193,6 @@ private:
 	static std::unordered_map<std::string, MSComPtr<ID3D11InputLayout>> LoadedInputLayout;
 
 	static std::unordered_map<std::string, MSComPtr<ID3D11PixelShader>> LoadedPixelShaders;
+	static std::unordered_map<std::string, TextureData> LoadedTexture;
 };
 

@@ -88,6 +88,9 @@
     <Filter Include="Source\Render">
       <UniqueIdentifier>{6fc3d76f-a537-4153-ba74-8996dab15398}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Base\Library\STB">
+      <UniqueIdentifier>{46acc353-17b1-40aa-a25d-26d8b70556b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineProject.h">
@@ -444,6 +447,66 @@
     <ClInclude Include="EngineRenderUnit.h">
       <Filter>Source\Render</Filter>
     </ClInclude>
+    <ClInclude Include="..\Library\STB\stb_ds.h">
+      <Filter>Source\Base\Library\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\STB\stb_dxt.h">
+      <Filter>Source\Base\Library\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\STB\stb_easy_font.h">
+      <Filter>Source\Base\Library\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\STB\stb_herringbone_wang_tile.h">
+      <Filter>Source\Base\Library\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\STB\stb_hexwave.h">
+      <Filter>Source\Base\Library\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\STB\stb_image.h">
+      <Filter>Source\Base\Library\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\STB\stb_image_resize2.h">
+      <Filter>Source\Base\Library\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\STB\stb_image_write.h">
+      <Filter>Source\Base\Library\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\STB\stb_include.h">
+      <Filter>Source\Base\Library\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\STB\stb_leakcheck.h">
+      <Filter>Source\Base\Library\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\STB\stb_perlin.h">
+      <Filter>Source\Base\Library\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\STB\stb_rect_pack.h">
+      <Filter>Source\Base\Library\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\STB\stb_sprintf.h">
+      <Filter>Source\Base\Library\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\STB\stb_textedit.h">
+      <Filter>Source\Base\Library\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\STB\stb_tilemap_editor.h">
+      <Filter>Source\Base\Library\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\STB\stb_truetype.h">
+      <Filter>Source\Base\Library\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\STB\stb_voxel_render.h">
+      <Filter>Source\Base\Library\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\STB\stb_c_lexer.h">
+      <Filter>Source\Base\Library\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\STB\stb_connected_components.h">
+      <Filter>Source\Base\Library\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\STB\stb_divide.h">
+      <Filter>Source\Base\Library\STB</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineWindow.cpp">
@@ -523,6 +586,9 @@
     </ClCompile>
     <ClCompile Include="EngineRenderUnit.cpp">
       <Filter>Source\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\STB\stb_vorbis.c">
+      <Filter>Source\Base\Library\STB</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

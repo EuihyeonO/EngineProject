@@ -71,16 +71,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\Library\IMGUI;..\Library\Assimp;..\Library;$(IncludePath)</IncludePath>
+    <IncludePath>..\Library\IMGUI;..\Library\Assimp;..\Library;..\Library\STB</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\Library\IMGUI;..\Library\Assimp;..\Library;$(IncludePath)</IncludePath>
+    <IncludePath>..\Library\IMGUI;..\Library\Assimp;..\Library;..\Library\STB</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>..\Library\IMGUI;..\Library\Assimp;..\Library;$(IncludePath)</IncludePath>
+    <IncludePath>..\Library\IMGUI;..\Library\Assimp;..\Library;..\Library\STB</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>..\Library\IMGUI;..\Library\Assimp;..\Library;$(IncludePath)</IncludePath>
+    <IncludePath>..\Library\IMGUI;..\Library\Assimp;..\Library;..\Library\STB</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -235,6 +235,26 @@
     <ClInclude Include="..\Library\IMGUI\imstb_rectpack.h" />
     <ClInclude Include="..\Library\IMGUI\imstb_textedit.h" />
     <ClInclude Include="..\Library\IMGUI\imstb_truetype.h" />
+    <ClInclude Include="..\Library\STB\stb_connected_components.h" />
+    <ClInclude Include="..\Library\STB\stb_c_lexer.h" />
+    <ClInclude Include="..\Library\STB\stb_divide.h" />
+    <ClInclude Include="..\Library\STB\stb_ds.h" />
+    <ClInclude Include="..\Library\STB\stb_dxt.h" />
+    <ClInclude Include="..\Library\STB\stb_easy_font.h" />
+    <ClInclude Include="..\Library\STB\stb_herringbone_wang_tile.h" />
+    <ClInclude Include="..\Library\STB\stb_hexwave.h" />
+    <ClInclude Include="..\Library\STB\stb_image.h" />
+    <ClInclude Include="..\Library\STB\stb_image_resize2.h" />
+    <ClInclude Include="..\Library\STB\stb_image_write.h" />
+    <ClInclude Include="..\Library\STB\stb_include.h" />
+    <ClInclude Include="..\Library\STB\stb_leakcheck.h" />
+    <ClInclude Include="..\Library\STB\stb_perlin.h" />
+    <ClInclude Include="..\Library\STB\stb_rect_pack.h" />
+    <ClInclude Include="..\Library\STB\stb_sprintf.h" />
+    <ClInclude Include="..\Library\STB\stb_textedit.h" />
+    <ClInclude Include="..\Library\STB\stb_tilemap_editor.h" />
+    <ClInclude Include="..\Library\STB\stb_truetype.h" />
+    <ClInclude Include="..\Library\STB\stb_voxel_render.h" />
     <ClInclude Include="BaseHeader.h" />
     <ClInclude Include="DirectXHeader.h" />
     <ClInclude Include="Engine.h">
@@ -327,6 +347,7 @@
     <ClCompile Include="..\Library\IMGUI\imgui_impl_win32.cpp" />
     <ClCompile Include="..\Library\IMGUI\imgui_tables.cpp" />
     <ClCompile Include="..\Library\IMGUI\imgui_widgets.cpp" />
+    <ClCompile Include="..\Library\STB\stb_vorbis.c" />
     <ClCompile Include="Engine.cpp">
       <SubType>
       </SubType>

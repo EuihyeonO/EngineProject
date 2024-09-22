@@ -29,7 +29,10 @@ bool EnginePath::FindFile(std::string_view _FileName, __out EngineFile& _FileDat
 
 	while (FindIter != EndIter)
 	{
-		if (FindIter->path().has_filename() == true && FindIter->path().filename() == _FileName)
+		std::string UpperName = FindIter->path().filename().string();
+		EngineString::ToUpper(UpperName);
+
+		if (FindIter->path().has_filename() == true && UpperName == _FileName)
 		{
 			_FileData.FileName = FindIter->path().filename().string();
 			_FileData.AbsolutePath = FindIter->path().string();

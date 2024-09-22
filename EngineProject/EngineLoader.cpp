@@ -6,6 +6,9 @@
 #include "EngineDirectX.h"
 #include "EngineString.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 #include <iostream>
 
 EngineLoader::EngineLoader()
@@ -26,6 +29,7 @@ void EngineLoader::LoadAllFile(ExtensionType _Extension)
 	case DDS:
 		break;
 	case PNG:
+		LoadAllPNG();
 		break;
 	default:
 		break;
@@ -45,7 +49,7 @@ void EngineLoader::LoadFile(std::string_view _FileName)
 	}
 }
 
-void EngineLoader::ShaderLoad(std::string_view _FileName)
+void EngineLoader::LoadShader(std::string_view _FileName)
 {
 	EngineFile File;
 	EnginePath::FindFile(_FileName, File);
@@ -55,33 +59,49 @@ void EngineLoader::ShaderLoad(std::string_view _FileName)
 		return;
 	}
 
-	ShaderLoad(File);
+	LoadShader(File);
 }
 
-void EngineLoader::ShaderLoad(EngineFile& _ShaderFile)
+void EngineLoader::LoadShader(EngineFile& _ShaderFile)
 {
 	std::string ShaderType = _ShaderFile.GetFileName().substr(0, 2);
 	EngineString::ToUpper(ShaderType);
 
 	if (ShaderType == "VS")
 	{
-		VertexShaderLoad(_ShaderFile);
+		LoadVertexShader(_ShaderFile);
 	}
 	else if (ShaderType == "PS")
 	{
-		
+		LoadPixelShader(_ShaderFile);
 	}
 }
 
-void EngineLoader::VertexShaderLoad(EngineFile& _ShaderFile)
+void EngineLoader::LoadVertexShader(EngineFile& _ShaderFile)
 {
-	std::string ShaderType = _ShaderFile.GetFileName().substr(0, 2).data();
-	EngineString::ToUpper(ShaderType);
+	if (EngineResourceManager::FindShader<ID3D11VertexShader>(_ShaderFile.GetFileName()) != nullptr)
+	{
+		std::cerr << "Error : Shader that try to compile is already compiled." << std::endl;
+		return;
+	}
 
 	VertexShaderData Data = EngineDirectX::VertexShaderCompile(_ShaderFile);
 
 	EngineResourceManager::AddLoadedVertexShader(_ShaderFile.GetFileName(), Data.VertexShader);
 	EngineResourceManager::AddLoadedInputLayout(_ShaderFile.GetFileName(), Data.InputLayOut);
+}
+
+void EngineLoader::LoadPixelShader(class EngineFile& _ShaderFile)
+{
+	const std::string& ShaderName = _ShaderFile.GetFileName();
+	if (EngineResourceManager::FindShader<ID3D11PixelShader>(ShaderName) != nullptr)
+	{
+		std::cerr << "Error : Shader that try to compile is already compiled." << std::endl;
+		return;
+	}
+
+	MSComPtr<ID3D11PixelShader> PixelShader = EngineDirectX::PixelShaderCompile(_ShaderFile);
+	EngineResourceManager::AddLoadedPixelShader(ShaderName, PixelShader);
 }
 
 void EngineLoader::LoadAllFBX()
@@ -95,15 +115,28 @@ void EngineLoader::LoadAllFBX()
 	}
 }
 
-void EngineLoader::AllShaderLoad()
+void EngineLoader::LoadAllShader()
 {
 	std::vector<EngineFile> AllShader;
 	EnginePath::FindAllFile(".hlsl", AllShader);
 
 	for (EngineFile& File : AllShader)
 	{
-		ShaderLoad(File);
+		LoadShader(File);
 	}
+}
+
+void EngineLoader::LoadFBX(std::string_view _FileName)
+{
+	EngineFile File;
+	EnginePath::FindFile(_FileName, File);
+
+	if (File.GetFileName() == "")
+	{
+		return;
+	}
+
+	LoadFBX(File);
 }
 
 void EngineLoader::LoadFBX(EngineFile& _FileData)
@@ -142,6 +175,56 @@ void EngineLoader::LoadFBX(EngineFile& _FileData)
 	{
 		//애니메이션 로드
 	}
+}
+
+void EngineLoader::LoadAllPNG()
+{
+	std::vector<EngineFile> AllPNG;
+	EnginePath::FindAllFile(".PNG", AllPNG);
+
+	for (EngineFile& File : AllPNG)
+	{
+		LoadPNG(File);
+	}
+}
+
+void EngineLoader::LoadPNG(std::string_view _FileName)
+{
+	EngineFile File;
+	EnginePath::FindFile(_FileName, File);
+
+	if (File.GetFileName() == "")
+	{
+		return;
+	}
+
+	LoadPNG(File);
+}
+
+void EngineLoader::LoadPNG(EngineFile& _FileData)
+{
+	int Width = 0;
+	int Height = 0;
+	int Channels = 0;
+	
+	unsigned char* LoadedImage = stbi_load(_FileData.GetAbsolutePath().c_str(), &Width, &Height, &Channels, 0);
+	if (LoadedImage == nullptr)
+	{
+		std::cout << "Image Load Failed" << std::endl;
+		return;
+	}
+	
+	std::vector<uint8_t> Image;
+	
+	Image.resize(Width * Height * Channels);
+	memcpy(Image.data(), LoadedImage, Image.size() * sizeof(uint8_t));
+
+	TextureData NewTexture = EngineDirectX::CreateTexture(LoadedImage, Width, Height, Channels);
+	stbi_image_free(LoadedImage);
+
+	EngineResourceManager::AddLoadedTexture(_FileData.GetFileName(), NewTexture);
+
+	return;
 }
 
 
@@ -239,14 +322,43 @@ void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, Float4x4 _T
 			Material->GetTexture(aiTextureType_DIFFUSE, 0, &TexturePath);
 
 			std::string TextureName = EnginePath::GetFileName(TexturePath.C_Str()); 
+			std::string Extension = EnginePath::GetExtension(TextureName);
 			
-			NewMeshData.Material.DiffuseTexture = TextureName;
+			EngineString::ToUpper(TextureName);
+			EngineString::ToUpper(Extension);
 
-			//텍스쳐로드
-			//if (LoadedTextures.find(TextureName) == LoadedTextures.end())
-			//{
-			//	LoadTexture(TextureName);
-			//}
+			TextureData FindTexture = EngineResourceManager::FindTexture(TextureName);
+			if (FindTexture.Texture2D == nullptr)
+			{
+				if (Extension == ".PNG")
+				{
+					LoadPNG(TextureName);
+				}
+			}
+	
+			NewMeshData.Material.DiffuseTexture = EngineResourceManager::FindTexture(TextureName);
+		}
+		else if (Material->GetTextureCount(aiTextureType_NORMALS) > 0)
+		{
+			aiString TexturePath;
+			Material->GetTexture(aiTextureType_NORMALS, 0, &TexturePath);
+
+			std::string TextureName = EnginePath::GetFileName(TexturePath.C_Str());
+			std::string Extension = EnginePath::GetExtension(TextureName);
+
+			EngineString::ToUpper(TextureName);
+			EngineString::ToUpper(Extension);
+
+			TextureData FindTexture = EngineResourceManager::FindTexture(TextureName);
+			if (FindTexture.Texture2D == nullptr)
+			{
+				if (Extension == ".PNG")
+				{
+					LoadPNG(TextureName);
+				}
+			}
+
+			NewMeshData.Material.NormalTexture = EngineResourceManager::FindTexture(TextureName);
 		}
 	}
 
