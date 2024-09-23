@@ -2,6 +2,10 @@
 
 #include <vector>
 #include <string>
+#include <memory>
+
+#include "EngineVertexShader.h"
+#include "EnginePixelShader.h"
 
 #include "DirectXHeader.h"
 
@@ -25,7 +29,7 @@ struct SMesh
 	std::vector<uint32_t> Indices;
 };
 
-struct TextureData
+struct STextureData
 {
 	MSComPtr<ID3D11Texture2D> Texture2D = nullptr;
 	MSComPtr<ID3D11ShaderResourceView> SRV = nullptr;
@@ -33,8 +37,14 @@ struct TextureData
 
 struct SMaterial
 {
-	TextureData DiffuseTexture;
-	TextureData NormalTexture;
+	MSComPtr<ID3D11Buffer> VertexBuffer;
+	MSComPtr<ID3D11Buffer> IndexBuffer;
+
+	std::shared_ptr<EngineVertexShader> VertexShader;
+	std::shared_ptr<EnginePixelShader> PixelShader;
+
+	std::shared_ptr<STextureData> DiffuseTexture;
+	std::shared_ptr<STextureData> NormalTexture;
 };
 
 struct SMeshData
@@ -42,7 +52,8 @@ struct SMeshData
 	MSComPtr<ID3D11Buffer> VertexBuffer = nullptr;
 	MSComPtr<ID3D11Buffer> IndexBuffer = nullptr;
 	
-	SMaterial Material;
+	std::shared_ptr<STextureData> DiffuseTexture;
+	std::shared_ptr<STextureData> NormalTexture;
 };
 
 struct AnimData

@@ -18,7 +18,10 @@ void TestActor::OnCreated()
 void TestActor::Start()
 {
 	std::shared_ptr<SkeletalMeshComponent> SMComp = CreateComponent<SkeletalMeshComponent>("Body");
+	
 	SMComp->SetMesh("zeldaPosed001.fbx");
+	SMComp->SetVertexShader("VS_Test.hlsl");
+	SMComp->SetConstantBuffer("DATA", &TestData);
 }
 
 void TestActor::Update()

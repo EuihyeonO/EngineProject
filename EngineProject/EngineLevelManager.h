@@ -71,7 +71,19 @@ protected:
 private:
 	void LevelUpdate();
 	void OnCreated() override final {}
-	void OnDestroyed() override final {}
+
+	void OnDestroyed() override final{}
+	
+	void Destroy() override final
+	{
+		for (const std::pair< std::string, std::shared_ptr<EngineLevel>> Level : Levels)
+		{
+			Level.second->Destroy();
+		}
+
+		OnDestroyed();
+		Levels.clear();
+	}
 
 	std::shared_ptr<EngineLevel> CurrentLevel = nullptr;
 	std::unordered_map<std::string, std::shared_ptr<EngineLevel>> Levels;

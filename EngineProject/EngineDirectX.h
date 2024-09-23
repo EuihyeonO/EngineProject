@@ -55,13 +55,14 @@ public:
 	static std::shared_ptr<class EngineVertexShader> CreateVertexShader(const class EngineFile& _ShaderFile);
 	static std::shared_ptr<class EnginePixelShader> CreatePixelShader(const class EngineFile& _ShaderFile);
 	static MSComPtr<ID3D11InputLayout> CreateInputLayOut(const class EngineFile& _ShaderFile, MSComPtr<ID3DBlob> _ShaderBlob);
-	static TextureData CreateTexture(unsigned char* _LoadedImage, int _Width, int _Height, int _Channels);
+	static std::shared_ptr<STextureData> CreateTexture(unsigned char* _LoadedImage, int _Width, int _Height, int _Channels);
 	static std::pair<MSComPtr<ID3D11Buffer>, MSComPtr<ID3D11Buffer>> CreateVertexBufferAndIndexBuffer(const struct SMesh& _Mesh);
 
 protected:
 
 private:
-	static void CreateVSResource(std::shared_ptr<EngineVertexShader> _Shader, MSComPtr<ID3DBlob> _ShaderBlob);
+	static void CreateVertexShaderResource(std::shared_ptr<EngineVertexShader> _Shader, MSComPtr<ID3DBlob> _ShaderBlob);
+	static MSComPtr<ID3D11Buffer> CreateConstantBuffer(D3D11_SHADER_BUFFER_DESC& _Desc);
 
 	void CreateDevice();
 	void CreateSwapChain();

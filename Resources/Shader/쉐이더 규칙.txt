@@ -8,7 +8,7 @@ Ex) VS_SkinningMesh.hlsl
 컴퓨트 쉐이더는 CS
 픽셀 쉐이더는 PS
 
-2. 진입점 이름은 반드시 Main으로 한다. 
-MainFunc, FuncMain, EntryMain 등등 안되고, Main이어야 함.
+2. 진입점 이름은 반드시 main으로 한다. 
+MainFunc, FuncMain, EntryMain 등등 안되고, main이어야 함.
 
 3. VertexShader의 인풋 레이아웃 구조체는 VS_Input으로 이름을 통일한다.

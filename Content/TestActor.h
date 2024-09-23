@@ -1,5 +1,14 @@
 #pragma once
 #include "EngineActor.h"
+#include "DirectXHeader.h"
+
+struct TestStr
+{
+	Float4 ABCD;
+	Float4 BEFG;
+	Float4 CFDG;
+	Float4 DASD;
+};
 
 class TestActor : public EngineActor
 {
@@ -22,6 +31,6 @@ public:
 protected:
 
 private:
-	
+	TestStr TestData;
 };
 

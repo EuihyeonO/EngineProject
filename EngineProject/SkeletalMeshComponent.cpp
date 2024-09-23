@@ -12,7 +12,7 @@ SkeletalMeshComponent::~SkeletalMeshComponent()
 
 void SkeletalMeshComponent::SetMesh(std::string_view _Name)
 {
-	const std::list<SMeshData>* FindedMesh = EngineResourceManager::FindMesh(_Name);
+	std::shared_ptr<std::list<SMeshData>> FindedMesh = EngineResourceManager::FindMesh(_Name);
 
 	if (FindedMesh == nullptr)
 	{

@@ -28,8 +28,10 @@ enum class ShaderType
 	Pixel,
 };
 
-struct VertexShaderData
+struct SConstantBuffer
 {
-	MSComPtr<ID3D11VertexShader> VertexShader;
-	MSComPtr<ID3D11InputLayout> InputLayOut;
+	MSComPtr<ID3D11Buffer> ConstantBuffer;
+	size_t BindPoint;
+	size_t Size;
+	void* Data;
 };

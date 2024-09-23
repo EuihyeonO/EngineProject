@@ -153,7 +153,7 @@ void EngineLoader::LoadFBX(EngineFile& _FileData)
 	//메쉬 로드
 	if(Scene->HasMeshes() == true)
 	{
-		std::list<SMeshData> MeshList;
+		std::shared_ptr<std::list<SMeshData>> MeshList = std::make_shared<std::list<SMeshData>>();
 
 		if (EngineResourceManager::FindMesh(_FileData.GetFileName()) != nullptr)
 		{
@@ -168,7 +168,7 @@ void EngineLoader::LoadFBX(EngineFile& _FileData)
 			ProcessMeshNode(Scene->mRootNode, Scene, Transform, MeshList);
 		}
 
-		EngineResourceManager::AddLoadedMesh(_FileData.GetFileName(), std::move(MeshList));
+		EngineResourceManager::AddLoadedMesh(_FileData.GetFileName(), MeshList);
 	}
 
 	if (Scene->HasAnimations() == true)
@@ -219,7 +219,7 @@ void EngineLoader::LoadPNG(EngineFile& _FileData)
 	Image.resize(Width * Height * Channels);
 	memcpy(Image.data(), LoadedImage, Image.size() * sizeof(uint8_t));
 
-	TextureData NewTexture = EngineDirectX::CreateTexture(LoadedImage, Width, Height, Channels);
+	std::shared_ptr<STextureData> NewTexture = EngineDirectX::CreateTexture(LoadedImage, Width, Height, Channels);
 	stbi_image_free(LoadedImage);
 
 	EngineResourceManager::AddLoadedTexture(_FileData.GetFileName(), NewTexture);
@@ -228,7 +228,7 @@ void EngineLoader::LoadPNG(EngineFile& _FileData)
 }
 
 
-void EngineLoader::ProcessMeshNode(aiNode* _Node, const aiScene* _Scene, Float4x4 _Transform, std::list<SMeshData>& _MeshList)
+void EngineLoader::ProcessMeshNode(aiNode* _Node, const aiScene* _Scene, Float4x4 _Transform, std::shared_ptr<std::list<SMeshData>> _MeshList)
 {
 	Float4x4 Transform;
 	ai_real* Temp = &_Node->mTransformation.a1;
@@ -246,7 +246,6 @@ void EngineLoader::ProcessMeshNode(aiNode* _Node, const aiScene* _Scene, Float4x
 	for (UINT i = 0; i < _Node->mNumMeshes; i++)
 	{
 		aiMesh* Mesh = _Scene->mMeshes[_Node->mMeshes[i]];
-		SMaterial Material;
 
 		ProcessMesh(Mesh, _Scene, Transform, _MeshList);
 	}
@@ -257,7 +256,7 @@ void EngineLoader::ProcessMeshNode(aiNode* _Node, const aiScene* _Scene, Float4x
 	}
 }
 
-void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, Float4x4 _Transform, std::list<SMeshData>& _MeshList)
+void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, Float4x4 _Transform, std::shared_ptr<std::list<SMeshData>> _MeshList)
 {
 	SMesh NewMesh;
 	SMeshData NewMeshData;
@@ -327,8 +326,8 @@ void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, Float4x4 _T
 			EngineString::ToUpper(TextureName);
 			EngineString::ToUpper(Extension);
 
-			TextureData FindTexture = EngineResourceManager::FindTexture(TextureName);
-			if (FindTexture.Texture2D == nullptr)
+			std::shared_ptr<STextureData> FindTexture = EngineResourceManager::FindTexture(TextureName);
+			if (FindTexture == nullptr)
 			{
 				if (Extension == ".PNG")
 				{
@@ -336,7 +335,7 @@ void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, Float4x4 _T
 				}
 			}
 	
-			NewMeshData.Material.DiffuseTexture = EngineResourceManager::FindTexture(TextureName);
+			NewMeshData.DiffuseTexture = EngineResourceManager::FindTexture(TextureName);
 		}
 		else if (Material->GetTextureCount(aiTextureType_NORMALS) > 0)
 		{
@@ -349,8 +348,8 @@ void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, Float4x4 _T
 			EngineString::ToUpper(TextureName);
 			EngineString::ToUpper(Extension);
 
-			TextureData FindTexture = EngineResourceManager::FindTexture(TextureName);
-			if (FindTexture.Texture2D == nullptr)
+			std::shared_ptr<STextureData> FindTexture = EngineResourceManager::FindTexture(TextureName);
+			if (FindTexture->Texture2D == nullptr)
 			{
 				if (Extension == ".PNG")
 				{
@@ -358,9 +357,9 @@ void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, Float4x4 _T
 				}
 			}
 
-			NewMeshData.Material.NormalTexture = EngineResourceManager::FindTexture(TextureName);
+			NewMeshData.NormalTexture = EngineResourceManager::FindTexture(TextureName);
 		}
 	}
 
-	_MeshList.push_back(NewMeshData);
+	_MeshList->push_back(NewMeshData);
 }

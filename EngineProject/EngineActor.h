@@ -1,7 +1,7 @@
 #pragma once
 #include "EngineObjectBase.h"
 #include "EngineString.h"
-#include "EngineLevel.h"
+#include "EngineComponent.h"
 
 #include <iostream>
 #include <memory>
@@ -39,16 +39,16 @@ public:
 		NewComp->OnCreated();
 		NewComp->SetActivate(true);
 
-		//테스트
-		std::shared_ptr<EngineLevel> OwnerLevel = std::dynamic_pointer_cast<EngineLevel>(GetOwner());
-		OwnerLevel->AddRenderComps(NewComp);
+		////테스트
+		//std::shared_ptr<EngineLevel> OwnerLevel = std::dynamic_pointer_cast<EngineLevel>(GetOwner());
+		//OwnerLevel->AddRenderComps(NewComp);
 
 		Components[UpperName] = NewComp;
 
 		return NewComp;
 	}
 
-	std::shared_ptr<class EngineComponent> GetComponent(std::string_view _Name)
+	std::shared_ptr<EngineComponent> GetComponent(std::string_view _Name)
 	{
 		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
 
@@ -60,11 +60,13 @@ public:
 		return Components[UpperName];
 	}
 
+	void Destroy() override final;
+
 protected:
 
 private:
 	void ComponentUpdate();
 
-	std::unordered_map<std::string, std::shared_ptr<class EngineComponent>> Components;
+	std::unordered_map<std::string, std::shared_ptr<EngineComponent>> Components;
 };
 

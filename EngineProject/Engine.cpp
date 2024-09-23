@@ -80,6 +80,6 @@ void Engine::CreateEngineGUI()
 void Engine::EngineEnd()
 {
 	EngineGUIWindow::GUIEnd();
-	LevelManager->End();
+	LevelManager->Destroy();
 }
 

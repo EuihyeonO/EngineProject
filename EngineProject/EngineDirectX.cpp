@@ -74,7 +74,7 @@ std::shared_ptr<EngineVertexShader> EngineDirectX::CreateVertexShader(const Engi
 	NewEngineVertexShader->VertexShader = NewVertextShader;
 	NewEngineVertexShader->InputLayOut = InputLayOut;
 
-	//CreateVSResource(NewEngineVertexShader, ShaderBlob);
+	CreateVertexShaderResource(NewEngineVertexShader, ShaderBlob);
 
 	return NewEngineVertexShader;
 }
@@ -160,7 +160,7 @@ MSComPtr<ID3D11InputLayout> EngineDirectX::CreateInputLayOut(const EngineFile& _
 	return InputLayOut;
 }
 
-TextureData EngineDirectX::CreateTexture(unsigned char* _LoadedImage, int _Width, int _Height, int _Channels)
+std::shared_ptr<STextureData> EngineDirectX::CreateTexture(unsigned char* _LoadedImage, int _Width, int _Height, int _Channels)
 {
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> Texture;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> SRV;
@@ -184,9 +184,9 @@ TextureData EngineDirectX::CreateTexture(unsigned char* _LoadedImage, int _Width
 	Result = GetInstance()->GetDevice()->CreateShaderResourceView(Texture.Get(), nullptr, SRV.GetAddressOf());
 	EngineDebug::CheckResult(Result);
 
-	TextureData NewTextureData;
-	NewTextureData.Texture2D = Texture;
-	NewTextureData.SRV = SRV;
+	std::shared_ptr<STextureData> NewTextureData = std::make_shared<STextureData>();
+	NewTextureData->Texture2D = Texture;
+	NewTextureData->SRV = SRV;
 
 	return NewTextureData;
 }
@@ -287,7 +287,7 @@ std::pair<MSComPtr<ID3D11Buffer>, MSComPtr<ID3D11Buffer>> EngineDirectX::CreateV
 	return { VertexBuffer, IndexBuffer };
 }
 
-void EngineDirectX::CreateVSResource(std::shared_ptr<EngineVertexShader> _Shader, MSComPtr<ID3DBlob> _ShaderBlob)
+void EngineDirectX::CreateVertexShaderResource(std::shared_ptr<EngineVertexShader> _Shader, MSComPtr<ID3DBlob> _ShaderBlob)
 {
 	if (_Shader == nullptr || _ShaderBlob == nullptr)
 	{
@@ -323,35 +323,42 @@ void EngineDirectX::CreateVSResource(std::shared_ptr<EngineVertexShader> _Shader
 			D3D11_SHADER_BUFFER_DESC BufferDesc;
 			CBufferPtr->GetDesc(&BufferDesc);
 
-			//std::shared_ptr<GameEngineConstantBuffer> Res = GameEngineConstantBuffer::CreateAndFind(BufferDesc.Size, UpperName, BufferDesc);
-			//
-			//GameEngineConstantBufferSetter Setter;
-			//
-			//Setter.ParentShader = this;
-			//Setter.Name = UpperName;
-			//Setter.BindPoint = ResDesc.BindPoint;
-			//Setter.Res = Res;
-			//
-			//ResHelper.CreateConstantBufferSetter(Setter);
-			//
-			//
-			//int a = 0;
+			if(_Shader->HasConstantBuffer(UpperName) == true)
+			{
+				continue;
+			}
 
-			break;
-		}
-		case D3D_SIT_TEXTURE:
-		{
-			break;
-		}
-		case D3D_SIT_SAMPLER:
-		{
+			MSComPtr<ID3D11Buffer> NewCBuffer = CreateConstantBuffer(BufferDesc);
+			
+			SConstantBuffer NewBufferData;
+			NewBufferData.ConstantBuffer = NewCBuffer;
+			NewBufferData.BindPoint = ResDesc.BindPoint;
+			NewBufferData.Size = BufferDesc.Size;
+			
+			_Shader->AddConstantBuffer(UpperName, NewBufferData);
+
 			break;
 		}
 		default:
 			break;
 		}
-
 	}
+}
+
+MSComPtr<ID3D11Buffer> EngineDirectX::CreateConstantBuffer(D3D11_SHADER_BUFFER_DESC& _Desc)
+{
+	D3D11_BUFFER_DESC CBufferDesc = { 0, };
+
+	CBufferDesc.ByteWidth = _Desc.Size;
+	CBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	CBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	CBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+
+	MSComPtr<ID3D11Buffer> NewCBuffer;
+	HRESULT Result = GetInstance()->GetDevice()->CreateBuffer(&CBufferDesc, nullptr, NewCBuffer.GetAddressOf());
+	EngineDebug::CheckResult(Result);
+
+	return NewCBuffer;
 }
 
 void EngineDirectX::CreateDevice()

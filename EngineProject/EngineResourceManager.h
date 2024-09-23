@@ -31,7 +31,7 @@ public:
 	EngineResourceManager& operator=(EngineResourceManager&& _Other) noexcept = delete;
 	
 	//Mesh
-	static const std::list<SMeshData>* FindMesh(std::string_view _Name)
+	static const std::shared_ptr<std::list<SMeshData>> FindMesh(std::string_view _Name)
 	{
 		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
 
@@ -40,10 +40,10 @@ public:
 			return nullptr;
 		}
 
-		return &LoadedMeshes[UpperName];
+		return LoadedMeshes[UpperName];
 	}
 
-	static void AddLoadedMesh(const std::string& _Name, std::list<SMeshData>&& _MeshData)
+	static void AddLoadedMesh(const std::string& _Name, std::shared_ptr<std::list<SMeshData>>& _MeshData)
 	{
 		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
 
@@ -53,7 +53,7 @@ public:
 			return;
 		}
 
-		LoadedMeshes[UpperName] = std::move(_MeshData);
+		LoadedMeshes[UpperName] = _MeshData;
 	}
 
 	//Shader
@@ -107,7 +107,7 @@ public:
 		return nullptr;
 	}
 
-	static const TextureData FindTexture(std::string_view _Name)
+	static std::shared_ptr<STextureData> FindTexture(std::string_view _Name)
 	{
 		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
 
@@ -116,7 +116,7 @@ public:
 			return LoadedTexture[UpperName];
 		}
 
-		return TextureData{ nullptr, nullptr };
+		return nullptr;
 	}
 
 	static void AddLoadedVertexShader(std::string_view _Name, const std::shared_ptr<class EngineVertexShader> _VertexShader)
@@ -145,7 +145,7 @@ public:
 		LoadedPixelShaders[UpperName] = _PixelShader;
 	}
 
-	static void AddLoadedTexture(std::string_view _Name, const TextureData& _TextureData)
+	static void AddLoadedTexture(std::string_view _Name, std::shared_ptr<STextureData> _TextureData)
 	{
 		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
 
@@ -158,18 +158,17 @@ public:
 		LoadedTexture[UpperName] = _TextureData;
 	}
 
-
 protected:
 	
 private:
 
 
 private:
-	static std::unordered_map<std::string, std::list<SMeshData>> LoadedMeshes;
+	static std::unordered_map<std::string, std::shared_ptr<std::list<SMeshData>>> LoadedMeshes;
 
 	static std::unordered_map<std::string, std::shared_ptr<class EngineVertexShader>> LoadedVertexShaders;
 	static std::unordered_map<std::string, std::shared_ptr<class EnginePixelShader>> LoadedPixelShaders;
 
-	static std::unordered_map<std::string, TextureData> LoadedTexture;
+	static std::unordered_map<std::string, std::shared_ptr<STextureData>> LoadedTexture;
 };
 

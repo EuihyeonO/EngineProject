@@ -51,7 +51,7 @@ private:
 	static void LoadVertexShader(class EngineFile& _ShaderFile);
 	static void LoadPixelShader(class EngineFile& _ShaderFile);
 
-	static void ProcessMeshNode(struct aiNode* _Node, const struct aiScene* _Scene, Float4x4 _Transform, std::list<SMeshData>& _MeshList);
-	static void ProcessMesh(struct aiMesh* _Mesh, const struct aiScene* _Scene, Float4x4 _Transform, std::list<SMeshData>& _MeshList);
+	static void ProcessMeshNode(struct aiNode* _Node, const struct aiScene* _Scene, Float4x4 _Transform, std::shared_ptr<std::list<SMeshData>> _MeshList);
+	static void ProcessMesh(struct aiMesh* _Mesh, const struct aiScene* _Scene, Float4x4 _Transform, std::shared_ptr<std::list<SMeshData>> _MeshList);
 };
 

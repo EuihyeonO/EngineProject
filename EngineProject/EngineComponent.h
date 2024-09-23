@@ -14,6 +14,11 @@ public:
 	EngineComponent& operator=(const EngineComponent& _Other) = delete;
 	EngineComponent& operator=(EngineComponent&& _Other) noexcept = delete;
 
+	void Destroy() override final
+	{
+		OnDestroyed();
+	}
+
 protected:
 
 private:

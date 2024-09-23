@@ -7,10 +7,11 @@ class EngineDebug
 public:
 	static void CheckResult(HRESULT _Result)
 	{
+
 		if (_Result != S_OK)
 		{
 			_com_error Error(_Result);
-			LPCTSTR ErrMsg = Error.ErrorMessage();
+			std::wstring ErrMsg = Error.ErrorMessage();
 
 			std::wcerr << L"Error : " << ErrMsg << std::endl;
 			return;

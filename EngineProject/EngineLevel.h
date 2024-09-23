@@ -1,5 +1,6 @@
 #pragma once
 #include "EngineObjectBase.h"
+#include "EngineActor.h"
 
 #include <memory>
 #include <string>
@@ -52,8 +53,18 @@ public:
 protected:
 
 private:
+	void Destroy() override final
+	{
+		for (const std::pair<std::string, std::shared_ptr<EngineActor>> Actor : Actors)
+		{
+			Actor.second->Destroy();
+		}
+
+		OnDestroyed();
+		Actors.clear();
+	}
 
 	void ActorUpdate();
-	std::unordered_map<std::string, std::shared_ptr<class EngineActor>> Actors;
+	std::unordered_map<std::string, std::shared_ptr<EngineActor>> Actors;
 };
 

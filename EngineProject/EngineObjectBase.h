@@ -19,6 +19,7 @@ public:
 	virtual void Update() = 0;
 	virtual void End() = 0;
 	virtual void OnDestroyed() = 0;
+	virtual void Destroy() = 0;
 
 	void SetActivate(bool _bIsActivate)
 	{

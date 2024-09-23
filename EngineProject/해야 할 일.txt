@@ -8,7 +8,7 @@
 
 4. EngineLevel, EngineActor에 테스트코드 제거
 
-5. EngineResourceManger의 MEsh에서 메모리 누수 발견
+5. EngineResourceManger의 Mesh에서 메모리 누수 발견(skeletalMesh의Renderunit을 weak_ptr로 바꿔서 해결. 근데 순환참조가 왜? 이유를 찾아보자.)
 
 6. ShaderReflection 기능 구현하기 
-EngineDirectX::CreateVSResource
+EngineDirectX::CreateResource
