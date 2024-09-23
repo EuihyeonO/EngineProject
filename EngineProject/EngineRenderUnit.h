@@ -35,40 +35,58 @@ public:
 			return;
 		}
 		
-		Material.VertexShader = _VertexShader;
+		Material.VertexShader = nullptr;
 
-		ConstantBuffers.clear();
+		std::shared_ptr<EngineVertexShader> VertexShader = std::make_shared<EngineVertexShader>();
 
 		const std::unordered_map<std::string, SConstantBuffer>& AllCBuffer = _VertexShader->GetAllConstantBuffer();
-		for (const std::pair<std::string, SConstantBuffer>& _Data : AllCBuffer)
+		for (const std::pair<std::string, SConstantBuffer>& Buffer : AllCBuffer)
 		{
-			ConstantBuffers.insert(_Data);
+			VertexShader->AddConstantBuffer(Buffer.first, Buffer.second);
+		}
+
+		Material.VertexShader = VertexShader;
+	}
+
+	void SetPixelShader(std::shared_ptr<EnginePixelShader> _PixelShader)
+	{
+		if (_PixelShader == nullptr)
+		{
+			return;
+		}
+
+		Material.PixelShader = nullptr;
+
+		std::shared_ptr<EnginePixelShader> PixelShader = std::make_shared<EnginePixelShader>();
+		
+		const std::unordered_map<std::string, STextureData>& AllTexture = _PixelShader->GetAllTexture();
+		for (const std::pair<std::string, STextureData>& Texture : AllTexture)
+		{
+			PixelShader->AddTexture(Texture.first, Texture.second);
+		}
+
+		Material.PixelShader = PixelShader;
+		
+		if (PixelShader->HasTexture("DIFFUSETEX") == true)
+		{
+			Material.PixelShader->SetTexture("DIFFUSETEX", Material.DiffuseTexture);
+		}
+		
+		if (PixelShader->HasTexture("NORMALTEX") == true)
+		{
+			Material.PixelShader->SetTexture("NORMALTEX", Material.NormalTexture);
 		}
 	}
 
 	template<typename DataType>
-	void SetConstantBuffer(std::string_view _Name, DataType* _Data)
+	void SetVSConstantBuffer(std::string_view _Name, DataType* _Data)
 	{
-		if (ConstantBuffers.find(_Name.data()) == ConstantBuffers.end())
-		{
-			std::cerr << "Error : ConstantBuffer that you try to set is invalid." << std::endl;
-			return;
-		}
-
-		if (ConstantBuffers[_Name.data()].Size != sizeof(DataType))
-		{
-			std::cerr << "Error : Size of constantBuffer data that you try to set is not same size of shader constant." << std::endl;
-			return;
-		}
-
-		ConstantBuffers[_Name.data()].Data = reinterpret_cast<void*>(_Data);
+		Material.VertexShader->SetConstantBuffer(_Name, _Data);
 	}
 
 protected:
 
 private:
 	SMaterial Material;
-
-	std::unordered_map<std::string, SConstantBuffer> ConstantBuffers;
 };
 

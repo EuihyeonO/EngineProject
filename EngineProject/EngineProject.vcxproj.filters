@@ -438,9 +438,6 @@
     <ClInclude Include="EngineActor.h">
       <Filter>Source\Object\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="EngineComponent.h">
-      <Filter>Source\Object\Component\Base</Filter>
-    </ClInclude>
     <ClInclude Include="SkeletalMeshComponent.h">
       <Filter>Source\Object\Component\Derived</Filter>
     </ClInclude>
@@ -518,6 +515,9 @@
     </ClInclude>
     <ClInclude Include="EngineDirectX.h">
       <Filter>Source\Base\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineComponent.h">
+      <Filter>Source\Object\Component\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

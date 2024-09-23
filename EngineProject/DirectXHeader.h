@@ -35,3 +35,9 @@ struct SConstantBuffer
 	size_t Size;
 	void* Data;
 };
+
+struct SSamperState
+{
+	MSComPtr<ID3D11SamplerState> SamplerState;
+	size_t BindPoint;
+};

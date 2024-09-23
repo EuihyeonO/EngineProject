@@ -37,12 +37,28 @@ public:
 		}
 	}
 
+	void SetPixelShader(std::string_view _PixelShaderName)
+	{
+		std::shared_ptr<class EnginePixelShader> PixelShader = EngineResourceManager::FindPixelShader(_PixelShaderName);
+
+		if (PixelShader == nullptr)
+		{
+			std::cerr << "PixelShader that you try to set is not loaded. ShaderName : " << _PixelShaderName.data() << std::endl;
+			return;
+		}
+
+		for (std::shared_ptr<EngineRenderUnit> _Unit : RenderUnits)
+		{
+			_Unit->SetPixelShader(PixelShader);
+		}
+	}
+
 	template<typename DataType>
-	void SetConstantBuffer(std::string_view _Name, DataType* _Data)
+	void SetVSConstantBuffer(std::string_view _Name, DataType* _Data)
 	{
 		for (std::shared_ptr<EngineRenderUnit> _Unit : RenderUnits)
 		{
-			_Unit->SetConstantBuffer(_Name, _Data);
+			_Unit->SetVSConstantBuffer(_Name, _Data);
 		}
 	}
 

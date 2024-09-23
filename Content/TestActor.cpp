@@ -21,7 +21,8 @@ void TestActor::Start()
 	
 	SMComp->SetMesh("zeldaPosed001.fbx");
 	SMComp->SetVertexShader("VS_Test.hlsl");
-	SMComp->SetConstantBuffer("DATA", &TestData);
+	SMComp->SetPixelShader("PS_Test.hlsl");
+	SMComp->SetVSConstantBuffer("DATA", &TestData);
 }
 
 void TestActor::Update()

@@ -107,7 +107,7 @@ public:
 		return nullptr;
 	}
 
-	static std::shared_ptr<STextureData> FindTexture(std::string_view _Name)
+	static STextureData FindTexture(std::string_view _Name)
 	{
 		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
 
@@ -116,7 +116,7 @@ public:
 			return LoadedTexture[UpperName];
 		}
 
-		return nullptr;
+		return { 0, nullptr, nullptr };
 	}
 
 	static void AddLoadedVertexShader(std::string_view _Name, const std::shared_ptr<class EngineVertexShader> _VertexShader)
@@ -145,7 +145,7 @@ public:
 		LoadedPixelShaders[UpperName] = _PixelShader;
 	}
 
-	static void AddLoadedTexture(std::string_view _Name, std::shared_ptr<STextureData> _TextureData)
+	static void AddLoadedTexture(std::string_view _Name, STextureData _TextureData)
 	{
 		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
 
@@ -169,6 +169,6 @@ private:
 	static std::unordered_map<std::string, std::shared_ptr<class EngineVertexShader>> LoadedVertexShaders;
 	static std::unordered_map<std::string, std::shared_ptr<class EnginePixelShader>> LoadedPixelShaders;
 
-	static std::unordered_map<std::string, std::shared_ptr<STextureData>> LoadedTexture;
+	static std::unordered_map<std::string, STextureData> LoadedTexture;
 };
 

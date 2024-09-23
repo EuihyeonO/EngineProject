@@ -160,7 +160,7 @@ MSComPtr<ID3D11InputLayout> EngineDirectX::CreateInputLayOut(const EngineFile& _
 	return InputLayOut;
 }
 
-std::shared_ptr<STextureData> EngineDirectX::CreateTexture(unsigned char* _LoadedImage, int _Width, int _Height, int _Channels)
+STextureData EngineDirectX::CreateTexture(unsigned char* _LoadedImage, int _Width, int _Height, int _Channels)
 {
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> Texture;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> SRV;
@@ -184,9 +184,9 @@ std::shared_ptr<STextureData> EngineDirectX::CreateTexture(unsigned char* _Loade
 	Result = GetInstance()->GetDevice()->CreateShaderResourceView(Texture.Get(), nullptr, SRV.GetAddressOf());
 	EngineDebug::CheckResult(Result);
 
-	std::shared_ptr<STextureData> NewTextureData = std::make_shared<STextureData>();
-	NewTextureData->Texture2D = Texture;
-	NewTextureData->SRV = SRV;
+	STextureData NewTextureData;
+	NewTextureData.Texture2D = Texture;
+	NewTextureData.SRV = SRV;
 
 	return NewTextureData;
 }
@@ -233,6 +233,8 @@ std::shared_ptr<EnginePixelShader> EngineDirectX::CreatePixelShader(const Engine
 
 	std::shared_ptr<EnginePixelShader> NewEnginePixelShader = std::make_shared<EnginePixelShader>();
 	NewEnginePixelShader->PixelShader = NewPixelShader;
+
+	CreatePixelShaderResource(NewEnginePixelShader, ShaderBlob);
 
 	return NewEnginePixelShader;
 }
@@ -336,6 +338,55 @@ void EngineDirectX::CreateVertexShaderResource(std::shared_ptr<EngineVertexShade
 			NewBufferData.Size = BufferDesc.Size;
 			
 			_Shader->AddConstantBuffer(UpperName, NewBufferData);
+
+			break;
+		}
+		default:
+			break;
+		}
+	}
+}
+
+void EngineDirectX::CreatePixelShaderResource(std::shared_ptr<EnginePixelShader> _Shader, MSComPtr<ID3DBlob> _ShaderBlob)
+{
+	if (_Shader == nullptr || _ShaderBlob == nullptr)
+	{
+		std::cerr << "Error : PSResource Creation is failed. (Nullptr)" << std::endl;
+		return;
+	}
+
+	ID3D11ShaderReflection* CompileInfo = nullptr;
+
+	HRESULT Result = D3DReflect(_ShaderBlob->GetBufferPointer(), _ShaderBlob->GetBufferSize(), IID_ID3D11ShaderReflection, reinterpret_cast<void**>(&CompileInfo));
+	EngineDebug::CheckResult(Result);
+
+	D3D11_SHADER_DESC Info;
+	CompileInfo->GetDesc(&Info);
+
+	D3D11_SHADER_INPUT_BIND_DESC ResDesc;
+
+	for (UINT i = 0; i < Info.BoundResources; i++)
+	{
+		CompileInfo->GetResourceBindingDesc(i, &ResDesc);
+
+		std::string Name = ResDesc.Name;
+		D3D_SHADER_INPUT_TYPE Type = ResDesc.Type;
+
+		std::string UpperName = EngineString::ToUpperReturn(ResDesc.Name);
+
+		switch (Type)
+		{
+		case D3D_SIT_TEXTURE:
+		{
+			if (_Shader->HasTexture(UpperName) == true)
+			{
+				continue;
+			}
+
+			STextureData TextureData;
+			TextureData.BindPoint = ResDesc.BindPoint;
+
+			_Shader->AddTexture(UpperName, TextureData);
 
 			break;
 		}

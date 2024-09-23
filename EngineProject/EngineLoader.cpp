@@ -219,7 +219,7 @@ void EngineLoader::LoadPNG(EngineFile& _FileData)
 	Image.resize(Width * Height * Channels);
 	memcpy(Image.data(), LoadedImage, Image.size() * sizeof(uint8_t));
 
-	std::shared_ptr<STextureData> NewTexture = EngineDirectX::CreateTexture(LoadedImage, Width, Height, Channels);
+	STextureData NewTexture = EngineDirectX::CreateTexture(LoadedImage, Width, Height, Channels);
 	stbi_image_free(LoadedImage);
 
 	EngineResourceManager::AddLoadedTexture(_FileData.GetFileName(), NewTexture);
@@ -326,8 +326,8 @@ void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, Float4x4 _T
 			EngineString::ToUpper(TextureName);
 			EngineString::ToUpper(Extension);
 
-			std::shared_ptr<STextureData> FindTexture = EngineResourceManager::FindTexture(TextureName);
-			if (FindTexture == nullptr)
+			STextureData FindTexture = EngineResourceManager::FindTexture(TextureName);
+			if (FindTexture.Texture2D == nullptr)
 			{
 				if (Extension == ".PNG")
 				{
@@ -348,8 +348,8 @@ void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, Float4x4 _T
 			EngineString::ToUpper(TextureName);
 			EngineString::ToUpper(Extension);
 
-			std::shared_ptr<STextureData> FindTexture = EngineResourceManager::FindTexture(TextureName);
-			if (FindTexture->Texture2D == nullptr)
+			STextureData FindTexture = EngineResourceManager::FindTexture(TextureName);
+			if (FindTexture.Texture2D == nullptr)
 			{
 				if (Extension == ".PNG")
 				{

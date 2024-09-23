@@ -7,8 +7,6 @@
 #include "EngineVertexShader.h"
 #include "EnginePixelShader.h"
 
-#include "DirectXHeader.h"
-
 struct SVertex
 {
 	Float3 Position;
@@ -31,6 +29,8 @@ struct SMesh
 
 struct STextureData
 {
+	size_t BindPoint;
+
 	MSComPtr<ID3D11Texture2D> Texture2D = nullptr;
 	MSComPtr<ID3D11ShaderResourceView> SRV = nullptr;
 };
@@ -43,8 +43,8 @@ struct SMaterial
 	std::shared_ptr<EngineVertexShader> VertexShader;
 	std::shared_ptr<EnginePixelShader> PixelShader;
 
-	std::shared_ptr<STextureData> DiffuseTexture;
-	std::shared_ptr<STextureData> NormalTexture;
+	STextureData DiffuseTexture;
+	STextureData NormalTexture;
 };
 
 struct SMeshData
@@ -52,8 +52,8 @@ struct SMeshData
 	MSComPtr<ID3D11Buffer> VertexBuffer = nullptr;
 	MSComPtr<ID3D11Buffer> IndexBuffer = nullptr;
 	
-	std::shared_ptr<STextureData> DiffuseTexture;
-	std::shared_ptr<STextureData> NormalTexture;
+	STextureData DiffuseTexture;
+	STextureData NormalTexture;
 };
 
 struct AnimData

@@ -1,6 +1,8 @@
 #pragma once
 #include "DirectXHeader.h"
 
+#include <unordered_map>
+
 class EnginePixelShader
 {
 	friend class EngineDirectX;
@@ -14,9 +16,21 @@ public:
 	EnginePixelShader& operator=(const EnginePixelShader& _Other) = delete;
 	EnginePixelShader& operator=(EnginePixelShader&& _Other) noexcept = delete;
 
+	bool HasTexture(std::string_view _Name);
+	void AddTexture(std::string_view _Name, const struct STextureData& _TextureData);
+	void SetTexture(std::string_view _Name, const struct STextureData& _TextureData);
+
+	const std::unordered_map<std::string, struct STextureData>& GetAllTexture()
+	{
+		return TextureData;
+	}
+
+
 protected:
 
 private:
 	MSComPtr<ID3D11PixelShader> PixelShader;
+	std::unordered_map<std::string, struct STextureData> TextureData;
+	std::unordered_map<std::string, struct STextureData> TextureData;
 };
 
