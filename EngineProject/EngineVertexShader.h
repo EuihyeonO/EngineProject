@@ -50,6 +50,26 @@ public:
 		ConstantBuffers[_Name.data()].Data = reinterpret_cast<void*>(_Data);
 	}
 
+	MSComPtr<ID3D11VertexShader> GetVertexShader()
+	{
+		return VertexShader;
+	}
+
+	MSComPtr<ID3D11InputLayout> GetInputLayOut()
+	{
+		return InputLayOut;
+	}
+
+	void SetVertexShader(MSComPtr<ID3D11VertexShader> _VertexShader)
+	{
+		VertexShader = _VertexShader;
+	}
+
+	void SetInputLayOut(MSComPtr<ID3D11InputLayout> _InputLayOut)
+	{
+		InputLayOut = _InputLayOut;
+	}
+
 protected:
 
 private:

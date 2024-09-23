@@ -45,6 +45,8 @@ public:
 	static void LoadAllPNG();
 	static void LoadPNG(std::string_view _FileName);
 	static void LoadPNG(class EngineFile& __FileData);
+
+	static void LoadAllSampler();
 protected:
 
 private:

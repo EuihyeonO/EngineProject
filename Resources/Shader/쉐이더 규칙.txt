@@ -12,3 +12,6 @@ Ex) VS_SkinningMesh.hlsl
 MainFunc, FuncMain, EntryMain 등등 안되고, main이어야 함.
 
 3. VertexShader의 인풋 레이아웃 구조체는 VS_Input으로 이름을 통일한다.
+
+4. Sampler는 아래 중 택일
+  1) LINEARSAMPLER

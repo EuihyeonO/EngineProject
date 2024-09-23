@@ -1,4 +1,5 @@
 #pragma once
+#include "EngineDirectX.h"
 #include "DirectXHeader.h"
 #include "ResourceHeader.h"
 #include "EngineResourceManager.h"
@@ -26,6 +27,8 @@ public:
 
 		Material.DiffuseTexture = _Mesh.DiffuseTexture;
 		Material.NormalTexture = _Mesh.NormalTexture;
+
+		Material.IndexCount = _Mesh.IndexCount;
 	}
 
 	void SetVertexShader(std::shared_ptr<EngineVertexShader> _VertexShader)
@@ -44,6 +47,9 @@ public:
 		{
 			VertexShader->AddConstantBuffer(Buffer.first, Buffer.second);
 		}
+
+		VertexShader->SetVertexShader(_VertexShader->GetVertexShader());
+		VertexShader->SetInputLayOut(_VertexShader->GetInputLayOut());
 
 		Material.VertexShader = VertexShader;
 	}
@@ -64,8 +70,6 @@ public:
 		{
 			PixelShader->AddTexture(Texture.first, Texture.second);
 		}
-
-		Material.PixelShader = PixelShader;
 		
 		if (PixelShader->HasTexture("DIFFUSETEX") == true)
 		{
@@ -76,12 +80,38 @@ public:
 		{
 			Material.PixelShader->SetTexture("NORMALTEX", Material.NormalTexture);
 		}
+
+		const std::unordered_map<std::string, SSamplerState>& AllSampler = _PixelShader->GetAllSampler();
+		for (const std::pair<std::string, SSamplerState>& Sampler : AllSampler)
+		{
+			PixelShader->AddSampler(Sampler.first, Sampler.second);
+
+			MSComPtr<ID3D11SamplerState> SamplerState = EngineResourceManager::GetSampler(Sampler.first);
+			if (SamplerState != nullptr)
+			{
+				PixelShader->SetSampler(Sampler.first, SamplerState);
+			}
+		}
+
+		PixelShader->SetPixelShader(_PixelShader->GetPixelShader());
+
+		Material.PixelShader = PixelShader;
 	}
 
 	template<typename DataType>
 	void SetVSConstantBuffer(std::string_view _Name, DataType* _Data)
 	{
 		Material.VertexShader->SetConstantBuffer(_Name, _Data);
+	}
+
+	void SetSampler(std::string_view _Name)
+	{
+		MSComPtr<ID3D11SamplerState> Sampler = EngineResourceManager::GetSampler(_Name);
+
+		if (EngineResourceManager::GetSampler(_Name) != nullptr)
+		{
+			Material.PixelShader->SetSampler(_Name, Sampler);
+		}
 	}
 
 protected:

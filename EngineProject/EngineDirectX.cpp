@@ -289,6 +289,35 @@ std::pair<MSComPtr<ID3D11Buffer>, MSComPtr<ID3D11Buffer>> EngineDirectX::CreateV
 	return { VertexBuffer, IndexBuffer };
 }
 
+MSComPtr<ID3D11SamplerState> EngineDirectX::CreateSamplerState(std::string_view _Sampler)
+{
+	std::string UpperName = EngineString::ToUpperReturn(_Sampler.data());
+
+	if (UpperName == "LINEARSAMPLER")
+	{
+		MSComPtr<ID3D11SamplerState> NewSampler;
+
+		D3D11_SAMPLER_DESC SamplerDesc;
+		ZeroMemory(&SamplerDesc, sizeof(SamplerDesc));
+
+		SamplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		SamplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+		SamplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+		SamplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+		SamplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+		SamplerDesc.MinLOD = 0;
+		SamplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+		// Create the Sample State
+		HRESULT Result = GetInstance()->GetDevice()->CreateSamplerState(&SamplerDesc, NewSampler.GetAddressOf());
+		EngineDebug::CheckResult(Result);
+
+		return NewSampler;
+	}
+
+	return MSComPtr<ID3D11SamplerState>();
+}
+
 void EngineDirectX::CreateVertexShaderResource(std::shared_ptr<EngineVertexShader> _Shader, MSComPtr<ID3DBlob> _ShaderBlob)
 {
 	if (_Shader == nullptr || _ShaderBlob == nullptr)
@@ -389,6 +418,18 @@ void EngineDirectX::CreatePixelShaderResource(std::shared_ptr<EnginePixelShader>
 			_Shader->AddTexture(UpperName, TextureData);
 
 			break;
+		}
+		case D3D_SIT_SAMPLER:
+		{
+			if (_Shader->HasSampler(UpperName) == true)
+			{
+				continue;
+			}
+
+			SSamplerState SamplerState;
+			SamplerState.BindPoint = ResDesc.BindPoint;
+
+			_Shader->AddSampler(UpperName, SamplerState);
 		}
 		default:
 			break;

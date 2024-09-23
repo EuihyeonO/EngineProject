@@ -310,6 +310,7 @@ void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, Float4x4 _T
 
 	NewMeshData.VertexBuffer = BufferPair.first;
 	NewMeshData.IndexBuffer = BufferPair.second;
+	NewMeshData.IndexCount = NewMesh.Indices.size();
 
 	if (_Mesh->mMaterialIndex >= 0)
 	{
@@ -362,4 +363,13 @@ void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, Float4x4 _T
 	}
 
 	_MeshList->push_back(NewMeshData);
+}
+
+void EngineLoader::LoadAllSampler()
+{
+	{
+		std::string SamplerName = "LINEARSAMPLER";
+		MSComPtr<ID3D11SamplerState> LinearSampler = EngineDirectX::CreateSamplerState(SamplerName);
+		EngineResourceManager::AddSamplerState(SamplerName, LinearSampler);
+	}
 }

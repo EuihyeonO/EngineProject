@@ -158,17 +158,43 @@ public:
 		LoadedTexture[UpperName] = _TextureData;
 	}
 
+	static MSComPtr<ID3D11SamplerState> GetSampler(std::string_view _Name)
+	{
+		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+		if (SamplerStates.find(UpperName) == SamplerStates.end())
+		{
+			return nullptr;
+		}
+
+		return SamplerStates[_Name.data()];
+	}
+
+	static void AddSamplerState(std::string_view _Name, MSComPtr<ID3D11SamplerState> _SamplerState)
+	{
+		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+		if (SamplerStates.find(UpperName) != SamplerStates.end())
+		{
+			std::cerr << "Error : Sampler(Name : " + UpperName + ") is already created." << std::endl;
+			return;
+		}
+
+		SamplerStates[UpperName] = _SamplerState;
+	}
+
 protected:
 	
 private:
 
 
 private:
+	static std::unordered_map<std::string, STextureData> LoadedTexture;
 	static std::unordered_map<std::string, std::shared_ptr<std::list<SMeshData>>> LoadedMeshes;
 
 	static std::unordered_map<std::string, std::shared_ptr<class EngineVertexShader>> LoadedVertexShaders;
 	static std::unordered_map<std::string, std::shared_ptr<class EnginePixelShader>> LoadedPixelShaders;
 
-	static std::unordered_map<std::string, STextureData> LoadedTexture;
+	static std::unordered_map<std::string, MSComPtr<ID3D11SamplerState>> SamplerStates;
 };
 

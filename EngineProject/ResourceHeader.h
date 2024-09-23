@@ -39,6 +39,7 @@ struct SMaterial
 {
 	MSComPtr<ID3D11Buffer> VertexBuffer;
 	MSComPtr<ID3D11Buffer> IndexBuffer;
+	UINT IndexCount;
 
 	std::shared_ptr<EngineVertexShader> VertexShader;
 	std::shared_ptr<EnginePixelShader> PixelShader;
@@ -54,6 +55,8 @@ struct SMeshData
 	
 	STextureData DiffuseTexture;
 	STextureData NormalTexture;
+
+	UINT IndexCount;
 };
 
 struct AnimData

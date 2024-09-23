@@ -15,14 +15,15 @@ void TestActor::OnCreated()
 {
 }
 
+std::shared_ptr<SkeletalMeshComponent> Comp;
 void TestActor::Start()
 {
-	std::shared_ptr<SkeletalMeshComponent> SMComp = CreateComponent<SkeletalMeshComponent>("Body");
+	Comp = CreateComponent<SkeletalMeshComponent>("Body");
 	
-	SMComp->SetMesh("zeldaPosed001.fbx");
-	SMComp->SetVertexShader("VS_Test.hlsl");
-	SMComp->SetPixelShader("PS_Test.hlsl");
-	SMComp->SetVSConstantBuffer("DATA", &TestData);
+	Comp->SetMesh("zeldaPosed001.fbx");
+	Comp->SetVertexShader("VS_Test.hlsl");
+	Comp->SetPixelShader("PS_Test.hlsl");
+	Comp->SetVSConstantBuffer("DATA", &TestData);
 }
 
 void TestActor::Update()

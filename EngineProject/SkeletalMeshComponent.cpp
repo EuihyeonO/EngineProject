@@ -37,4 +37,3 @@ void SkeletalMeshComponent::SetMesh(std::string_view _Name)
 		RenderUnits.push_back(NewUnit);
 	}
 }
-

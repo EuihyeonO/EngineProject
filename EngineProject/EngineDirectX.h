@@ -57,12 +57,15 @@ public:
 	static MSComPtr<ID3D11InputLayout> CreateInputLayOut(const class EngineFile& _ShaderFile, MSComPtr<ID3DBlob> _ShaderBlob);
 	static STextureData CreateTexture(unsigned char* _LoadedImage, int _Width, int _Height, int _Channels);
 	static std::pair<MSComPtr<ID3D11Buffer>, MSComPtr<ID3D11Buffer>> CreateVertexBufferAndIndexBuffer(const struct SMesh& _Mesh);
+	
+	static MSComPtr<ID3D11SamplerState> CreateSamplerState(std::string_view _Sampler);
 
 protected:
 
 private:
 	static void CreateVertexShaderResource(std::shared_ptr<EngineVertexShader> _Shader, MSComPtr<ID3DBlob> _ShaderBlob);
 	static void CreatePixelShaderResource(std::shared_ptr<EnginePixelShader> _Shader, MSComPtr<ID3DBlob> _ShaderBlob);
+
 	static MSComPtr<ID3D11Buffer> CreateConstantBuffer(D3D11_SHADER_BUFFER_DESC& _Desc);
 
 	void CreateDevice();
