@@ -41,15 +41,6 @@ public:
 		return NewActor;
 	}
 
-	//테스트
-	void AddRenderComps(std::shared_ptr<class SkeletalMeshComponent> _Comp)
-	{
-		RenderComps.push_back(_Comp);
-	}
-
-	//테스트
-	std::vector<std::shared_ptr<class SkeletalMeshComponent>> RenderComps;
-
 protected:
 
 private:
