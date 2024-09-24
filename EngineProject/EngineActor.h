@@ -39,11 +39,12 @@ public:
 		NewComp->OnCreated();
 		NewComp->SetActivate(true);
 
-		////Å×½ºÆ®
-		//std::shared_ptr<EngineLevel> OwnerLevel = std::dynamic_pointer_cast<EngineLevel>(GetOwner());
-		//OwnerLevel->AddRenderComps(NewComp);
-
 		Components[UpperName] = NewComp;
+
+		if (std::is_base_of_v<class EngineRenderBase, CompType> == true)
+		{
+			RenderComponents[UpperName] = NewComp;
+		}
 
 		return NewComp;
 	}
@@ -60,13 +61,21 @@ public:
 		return Components[UpperName];
 	}
 
-	void Destroy() override final;
+	void Render() override final
+	{
+		for (const std::pair<std::string, std::shared_ptr<EngineComponent>>& RenderComp : RenderComponents)
+		{
+			RenderComp.second->Render();
+		}
+	}
 
+	void Destroy() override final;
 protected:
 
 private:
 	void ComponentUpdate();
 
 	std::unordered_map<std::string, std::shared_ptr<EngineComponent>> Components;
+	std::unordered_map<std::string, std::shared_ptr<EngineComponent>> RenderComponents;
 };
 

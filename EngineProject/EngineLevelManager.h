@@ -85,6 +85,14 @@ private:
 		Levels.clear();
 	}
 
+	void Render() override final
+	{
+		if (CurrentLevel != nullptr)
+		{
+			CurrentLevel->Render();
+		}
+	}
+
 	std::shared_ptr<EngineLevel> CurrentLevel = nullptr;
 	std::unordered_map<std::string, std::shared_ptr<EngineLevel>> Levels;
 };

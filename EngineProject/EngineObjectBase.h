@@ -20,6 +20,7 @@ public:
 	virtual void End() = 0;
 	virtual void OnDestroyed() = 0;
 	virtual void Destroy() = 0;
+	virtual void Render() = 0;
 
 	void SetActivate(bool _bIsActivate)
 	{
@@ -46,6 +47,7 @@ public:
 	{
 		return Owner;
 	}
+
 
 protected:
 

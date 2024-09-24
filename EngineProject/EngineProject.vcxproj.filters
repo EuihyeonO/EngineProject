@@ -519,6 +519,9 @@
     <ClInclude Include="EngineComponent.h">
       <Filter>Source\Object\Component\Base</Filter>
     </ClInclude>
+    <ClInclude Include="EngineRenderBase.h">
+      <Filter>Source\Object\Component\Base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineWindow.cpp">
@@ -610,6 +613,9 @@
     </ClCompile>
     <ClCompile Include="EnginePixelShader.cpp">
       <Filter>Source\Base\DirectX\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineRenderBase.cpp">
+      <Filter>Source\Object\Component\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

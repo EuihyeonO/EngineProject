@@ -47,6 +47,8 @@ void Engine::Render()
 	EngineDirectX::GetInstance()->GetDeviceContext()->OMSetRenderTargets(1, EngineDirectX::GetInstance()->GetMainRTV().GetAddressOf(), nullptr);
 	EngineDirectX::GetInstance()->GetDeviceContext()->ClearRenderTargetView(EngineDirectX::GetInstance()->GetMainRTV().Get(), clear_color_with_alpha);
 
+	LevelManager->Render();
+
 	//GUI Renderring	
 	EngineGUIWindow::GUIRender();
 

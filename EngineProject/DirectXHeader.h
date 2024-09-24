@@ -31,13 +31,13 @@ enum class ShaderType
 struct SConstantBuffer
 {
 	MSComPtr<ID3D11Buffer> ConstantBuffer;
-	size_t BindPoint;
-	size_t Size;
+	UINT BindPoint;
+	UINT Size;
 	void* Data;
 };
 
 struct SSamplerState
 {
 	MSComPtr<ID3D11SamplerState> SamplerState;
-	size_t BindPoint;
+	UINT BindPoint;
 };

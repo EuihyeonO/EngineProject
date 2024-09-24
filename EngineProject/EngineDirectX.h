@@ -52,6 +52,8 @@ public:
 		return GetInstance()->SwapChain;
 	}
 
+	static void RenderSetting(class std::shared_ptr<class EngineVertexShader> _VS, class std::shared_ptr<class EnginePixelShader> _PS, MSComPtr<ID3D11Buffer> _VertexBuffer, MSComPtr<ID3D11Buffer> _IndexBuffer);
+
 	static std::shared_ptr<class EngineVertexShader> CreateVertexShader(const class EngineFile& _ShaderFile);
 	static std::shared_ptr<class EnginePixelShader> CreatePixelShader(const class EngineFile& _ShaderFile);
 	static MSComPtr<ID3D11InputLayout> CreateInputLayOut(const class EngineFile& _ShaderFile, MSComPtr<ID3DBlob> _ShaderBlob);

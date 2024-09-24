@@ -29,7 +29,7 @@ struct SMesh
 
 struct STextureData
 {
-	size_t BindPoint;
+	UINT BindPoint;
 
 	MSComPtr<ID3D11Texture2D> Texture2D = nullptr;
 	MSComPtr<ID3D11ShaderResourceView> SRV = nullptr;

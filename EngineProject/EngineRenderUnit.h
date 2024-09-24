@@ -104,6 +104,12 @@ public:
 		Material.VertexShader->SetConstantBuffer(_Name, _Data);
 	}
 
+	template<typename DataType>
+	void SetPSConstantBuffer(std::string_view _Name, DataType* _Data)
+	{
+		Material.PixelShader->SetConstantBuffer(_Name, _Data);
+	}
+
 	void SetSampler(std::string_view _Name)
 	{
 		MSComPtr<ID3D11SamplerState> Sampler = EngineResourceManager::GetSampler(_Name);
@@ -112,6 +118,12 @@ public:
 		{
 			Material.PixelShader->SetSampler(_Name, Sampler);
 		}
+	}
+
+	void Render()
+	{
+		EngineDirectX::RenderSetting(Material.VertexShader, Material.PixelShader, Material.VertexBuffer, Material.IndexBuffer);
+		EngineDirectX::GetDeviceContext()->DrawIndexed(Material.IndexCount, 0, 0);
 	}
 
 protected:

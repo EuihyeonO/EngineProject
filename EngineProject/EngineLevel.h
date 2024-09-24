@@ -64,6 +64,14 @@ private:
 		Actors.clear();
 	}
 
+	void Render() override final
+	{
+		for (const std::pair<std::string, std::shared_ptr<EngineActor>> Actor : Actors)
+		{
+			Actor.second->Render();
+		}
+	}
+
 	void ActorUpdate();
 	std::unordered_map<std::string, std::shared_ptr<EngineActor>> Actors;
 };

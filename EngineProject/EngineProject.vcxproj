@@ -306,6 +306,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="EngineProject.h" />
+    <ClInclude Include="EngineRenderBase.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EngineRenderUnit.h">
       <SubType>
       </SubType>
@@ -405,6 +409,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="EnginePixelShader.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineRenderBase.cpp">
       <SubType>
       </SubType>
     </ClCompile>

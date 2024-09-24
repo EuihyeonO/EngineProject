@@ -85,3 +85,40 @@ void EnginePixelShader::SetSampler(std::string_view _Name, MSComPtr<ID3D11Sample
 
 	SamplerStates[_Name.data()].SamplerState = _SamplerData;
 }
+
+void EnginePixelShader::AddConstantBuffer(std::string _Name, const SConstantBuffer& _Buffer)
+{
+	std::string UpperName = EngineString::ToUpperReturn(_Name);
+
+	if (ConstantBuffers.find(UpperName) != ConstantBuffers.end())
+	{
+		std::cerr << "Error : ConstantBuffer that you try add to VertexShader is already exist. ConstantBufferName : " << _Name << std::endl;
+		return;
+	}
+
+	ConstantBuffers[UpperName] = _Buffer;
+}
+
+bool EnginePixelShader::HasConstantBuffer(std::string_view _Name)
+{
+	std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+	if (ConstantBuffers.find(UpperName) == ConstantBuffers.end())
+	{
+		return false;
+	}
+
+	return true;
+}
+
+const SConstantBuffer& EnginePixelShader::GetConstantBuffer(std::string_view _Name)
+{
+	std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+	if (ConstantBuffers.find(UpperName) == ConstantBuffers.end())
+	{
+		return {};
+	}
+
+	return ConstantBuffers[_Name.data()];
+}

@@ -28,6 +28,55 @@ EngineDirectX::~EngineDirectX()
 {
 }
 
+void EngineDirectX::RenderSetting(std::shared_ptr<class EngineVertexShader> _VS, std::shared_ptr<class EnginePixelShader> _PS, MSComPtr<ID3D11Buffer> _VertexBuffer, MSComPtr<ID3D11Buffer> _IndexBuffer)
+{
+	UINT Stride = sizeof(SVertex);
+	UINT Offset = 0;
+
+	GetInstance()->GetDeviceContext()->IASetVertexBuffers(0, 1, _VertexBuffer.GetAddressOf(), &Stride, &Offset);
+	GetInstance()->GetDeviceContext()->IASetIndexBuffer(_IndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+	GetInstance()->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	GetInstance()->GetDeviceContext()->VSSetShader(_VS->GetVertexShader().Get(), 0, 0);
+	GetInstance()->GetDeviceContext()->IASetInputLayout(_VS->GetInputLayOut().Get());
+	GetInstance()->GetDeviceContext()->PSSetShader(_PS->GetPixelShader().Get(), 0, 0);
+
+	const std::unordered_map<std::string, SConstantBuffer>& VS_CBuffers = _VS->GetAllConstantBuffer();
+	for (const std::pair<std::string, SConstantBuffer>& CBuffer : VS_CBuffers)
+	{
+		GetInstance()->GetDeviceContext()->VSSetConstantBuffers(CBuffer.second.BindPoint, 1, CBuffer.second.ConstantBuffer.GetAddressOf());
+		
+		D3D11_MAPPED_SUBRESOURCE Ms;
+
+		GetInstance()->GetDeviceContext()->Map(CBuffer.second.ConstantBuffer.Get(), NULL, D3D11_MAP_WRITE_DISCARD, NULL, &Ms);
+		memcpy(Ms.pData, CBuffer.second.Data, CBuffer.second.Size);
+		GetInstance()->GetDeviceContext()->Unmap(CBuffer.second.ConstantBuffer.Get(), NULL);
+	}
+
+	const std::unordered_map<std::string, SConstantBuffer>& PS_CBuffers = _PS->GetAllConstantBuffer();
+	for (const std::pair<std::string, SConstantBuffer>& CBuffer : PS_CBuffers)
+	{
+		GetInstance()->GetDeviceContext()->PSSetConstantBuffers(CBuffer.second.BindPoint, 1, CBuffer.second.ConstantBuffer.GetAddressOf());
+	
+		D3D11_MAPPED_SUBRESOURCE Ms;
+	
+		GetInstance()->GetDeviceContext()->Map(CBuffer.second.ConstantBuffer.Get(), NULL, D3D11_MAP_WRITE_DISCARD, NULL, &Ms);
+		memcpy(Ms.pData, CBuffer.second.Data, CBuffer.second.Size);
+		GetInstance()->GetDeviceContext()->Unmap(CBuffer.second.ConstantBuffer.Get(), NULL);
+	}
+
+	const std::unordered_map<std::string,STextureData>& Textures = _PS->GetAllTexture();
+	for (const std::pair<std::string,STextureData>& Texture : Textures)
+	{
+		GetInstance()->GetDeviceContext()->PSSetShaderResources(Texture.second.BindPoint, 1, Texture.second.SRV.GetAddressOf());
+	}
+
+	const std::unordered_map<std::string, SSamplerState>& Samplers = _PS->GetAllSampler();
+	for (const std::pair<std::string, SSamplerState>& Sampler : Samplers)
+	{
+		GetInstance()->GetDeviceContext()->PSSetSamplers(Sampler.second.BindPoint, 1, Sampler.second.SamplerState.GetAddressOf());
+	}
+}
+
 std::shared_ptr<EngineVertexShader> EngineDirectX::CreateVertexShader(const EngineFile& _Shader)
 {
 	MSComPtr<ID3DBlob> ShaderBlob;
@@ -405,6 +454,29 @@ void EngineDirectX::CreatePixelShaderResource(std::shared_ptr<EnginePixelShader>
 
 		switch (Type)
 		{
+		case D3D_SIT_CBUFFER:
+		{
+			ID3D11ShaderReflectionConstantBuffer* CBufferPtr = CompileInfo->GetConstantBufferByName(ResDesc.Name);
+
+			D3D11_SHADER_BUFFER_DESC BufferDesc;
+			CBufferPtr->GetDesc(&BufferDesc);
+
+			if (_Shader->HasConstantBuffer(UpperName) == true)
+			{
+				continue;
+			}
+
+			MSComPtr<ID3D11Buffer> NewCBuffer = CreateConstantBuffer(BufferDesc);
+
+			SConstantBuffer NewBufferData;
+			NewBufferData.ConstantBuffer = NewCBuffer;
+			NewBufferData.BindPoint = ResDesc.BindPoint;
+			NewBufferData.Size = BufferDesc.Size;
+
+			_Shader->AddConstantBuffer(UpperName, NewBufferData);
+
+			break;
+		}
 		case D3D_SIT_TEXTURE:
 		{
 			if (_Shader->HasTexture(UpperName) == true)

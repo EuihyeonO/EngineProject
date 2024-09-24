@@ -310,7 +310,7 @@ void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, Float4x4 _T
 
 	NewMeshData.VertexBuffer = BufferPair.first;
 	NewMeshData.IndexBuffer = BufferPair.second;
-	NewMeshData.IndexCount = NewMesh.Indices.size();
+	NewMeshData.IndexCount = (UINT)NewMesh.Indices.size();
 
 	if (_Mesh->mMaterialIndex >= 0)
 	{

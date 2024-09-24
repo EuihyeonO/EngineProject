@@ -73,8 +73,6 @@ public:
 protected:
 
 private:
-
-
 	MSComPtr<ID3D11VertexShader> VertexShader;
 	MSComPtr<ID3D11InputLayout> InputLayOut;
 
