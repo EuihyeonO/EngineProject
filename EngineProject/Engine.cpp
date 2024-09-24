@@ -15,6 +15,8 @@ Engine::~Engine()
 {
 }
 
+#include "EngineMath.h"
+
 void Engine::EngineStart(HINSTANCE hInstance, int nCmdShow)
 {
 	EngineWindow::Start(hInstance, nCmdShow);

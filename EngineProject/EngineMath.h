@@ -3,7 +3,9 @@
 
 class EngineMath
 {
+	constexpr static float EnginePI = DirectX::XM_PI;
 public:
+
 	static Float4 MulFloat4(const Float4 _Left, const Float4 _Right)
 	{
 		Vector4 LeftVector4 = DirectX::XMLoadFloat4(&_Left);
@@ -152,6 +154,45 @@ public:
 
 		return ReturnValue;
 	}
+
+	static Float4 QuaternionToEuler(Float4 _Quaternion)
+	{
+		float X = _Quaternion.x;
+		float Y = _Quaternion.y;
+		float Z = _Quaternion.z;
+		float W = _Quaternion.w;
+
+		Float4 Euler;
+		
+		Euler.x = atan2f(2.0f * (Y * W + X * Z), 1.0f - 2.0f * (X * X + Y * Y));
+		Euler.y = asinf(2.0f * (Y * Z - W * X)); 
+		Euler.z = atan2f(2.0f * (X * W + Y * Z), 1.0f - 2.0f * (Y * Y + Z * Z));
+
+		return Euler;
+	}
+
+	static Float4 DegreeToRadian(Float4 _Degree)
+	{
+		Float4 Radian;
+		
+		Radian.x = _Degree.x * EnginePI / 180.0f;
+		Radian.y = _Degree.y * EnginePI / 180.0f;
+		Radian.z = _Degree.z * EnginePI / 180.0f;
+
+		return Radian;
+	}
+
+	static Float4 RadianToDegree(Float4 _Radian)
+	{
+		Float4 Degree;
+
+		Degree.x = _Radian.x * 180.0f / EnginePI;
+		Degree.y = _Radian.y * 180.0f / EnginePI;
+		Degree.z = _Radian.z * 180.0f / EnginePI;
+
+		return Degree;
+	}
+
 protected:
 
 private:
