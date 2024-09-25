@@ -1,13 +1,13 @@
 #pragma once
 #include "EngineActor.h"
-#include "DirectXHeader.h"
+#include "EngineMath.h"
 
 struct TestStr
 {
-	Float4 ABCD;
-	Float4 BEFG;
-	Float4 CFDG;
-	Float4 DASD;
+	SFloat4 ABCD;
+	SFloat4 BEFG;
+	SFloat4 CFDG;
+	SFloat4 DASD;
 };
 
 class TestActor : public EngineActor

@@ -5,35 +5,35 @@
 
 struct STransform
 {
-	Float4 LocalScale = { 1.0f, 1.0f, 1.0f, 0.0f };
-	Float4 LocalRotation = { 0.0f, 0.0f, 0.0f, 1.0f };
-	Float4 LocalQuaternion = { 0.0f, 0.0f, 0.0f, 1.0f };
-	Float4 LocalPosition = { 0.0f, 0.0f, 0.0f, 1.0f };
+	SFloat4 LocalScale = { 1.0f, 1.0f, 1.0f, 0.0f };
+	SFloat4 LocalRotation = { 0.0f, 0.0f, 0.0f, 1.0f };
+	SFloat4 LocalQuaternion = { 0.0f, 0.0f, 0.0f, 1.0f };
+	SFloat4 LocalPosition = { 0.0f, 0.0f, 0.0f, 1.0f };
 
-	Float4 WorldScale = { 0.0f, 0.0f, 0.0f, 0.0f };
-	Float4 WorldRotation = { 0.0f, 0.0f, 0.0f, 1.0f };
-	Float4 WorldQuaternion = { 0.0f, 0.0f, 0.0f, 1.0f };
-	Float4 WorldPosition = { 0.0f, 0.0f, 0.0f, 1.0f };
+	SFloat4 WorldScale = { 0.0f, 0.0f, 0.0f, 0.0f };
+	SFloat4 WorldRotation = { 0.0f, 0.0f, 0.0f, 1.0f };
+	SFloat4 WorldQuaternion = { 0.0f, 0.0f, 0.0f, 1.0f };
+	SFloat4 WorldPosition = { 0.0f, 0.0f, 0.0f, 1.0f };
 
 	//SRP 다 곱한 것
-	Float4x4 LocalMatrix;
+	SFloat4x4 LocalMatrix;
 	
-	Float4x4 LocalScaleMatrix;
-	Float4x4 LocalRotationMatrix;
-	Float4x4 LocalPositionMatrix;
+	SFloat4x4 LocalScaleMatrix;
+	SFloat4x4 LocalRotationMatrix;
+	SFloat4x4 LocalPositionMatrix;
 	
 	//SRP 다 곱한 것
-	Float4x4 WorldMatrix;
+	SFloat4x4 WorldMatrix;
 
-	Float4x4 WorldScaleMatrix;
-	Float4x4 WorldRotationMatrix;
-	Float4x4 WorldPositionMatrix;
+	SFloat4x4 WorldScaleMatrix;
+	SFloat4x4 WorldRotationMatrix;
+	SFloat4x4 WorldPositionMatrix;
 
 	//카메라의 뷰행렬
-	Float4x4 ViewMatrix;
+	SFloat4x4 ViewMatrix;
 	
 	//프로젝션 행렬
-	Float4x4 ProjMatrix;
+	SFloat4x4 ProjMatrix;
 };
 
 class TransformComponent : public EngineComponent
@@ -47,55 +47,45 @@ public:
 	TransformComponent& operator=(const TransformComponent& _Other) = delete;
 	TransformComponent& operator=(TransformComponent&& _Other) noexcept = delete;
 
-	void AddLocalScale(const Float3 _AddScale)
+	void AddLocalScale(const SFloat3& _AddScale)
 	{
-		Transform.LocalScale = EngineMath::AddFloat4(Transform.LocalScale, { _AddScale.x, _AddScale.y, _AddScale.z, 0.0f});
-		
-		Matrix4x4 Mat = DirectX::XMMatrixScaling(Transform.LocalScale.x, Transform.LocalScale.y, Transform.LocalScale.z);
-		DirectX::XMStoreFloat4x4(&(Transform.LocalScaleMatrix), Mat);
+		Transform.LocalScale += SFloat4(_AddScale, 0.0f);
 	}
 
-	void AddLocalRotation(const Float3 _AddRot)
+	void AddLocalRotation(const SFloat3& _AddRot)
 	{
-		Float4 Radian = EngineMath::DegreeToRadian({ _AddRot.x, _AddRot.y, _AddRot.z, 1.0f});
+		SFloat4 Radian = SFloat4(_AddRot).DegreeToRadianReturn();
 
-		//회전각 덧셈
-		Vector4 MyQuaternion = DirectX::XMLoadFloat4(&Transform.LocalQuaternion);
-		Vector4 AddQuaternion = DirectX::XMQuaternionRotationRollPitchYaw(Radian.x, Radian.y, Radian.z);
+		SFloat4 AddQuaternion;
+		AddQuaternion.Vector4 = Radian.EulerToQuaternionReturn().Vector4;
 		
-		Vector4 ResultQuaternion = DirectX::XMQuaternionMultiply(MyQuaternion, AddQuaternion);
-		ResultQuaternion = DirectX::XMQuaternionNormalize(ResultQuaternion);
-
-		DirectX::XMStoreFloat4(&Transform.LocalQuaternion, ResultQuaternion);
+		Transform.LocalQuaternion.MulQuaternion(AddQuaternion);
 
 		//행렬에 반영
-		Matrix4x4 Mat = DirectX::XMMatrixRotationQuaternion(ResultQuaternion);
-		DirectX::XMStoreFloat4x4(&Transform.LocalRotationMatrix, Mat);
+		Transform.LocalRotationMatrix.Matrix4x4 = DirectX::XMMatrixRotationQuaternion(Transform.LocalQuaternion.Vector4);
 
 		//LocalRotation에 반영
-		Transform.LocalRotation = EngineMath::QuaternionToEuler(Transform.LocalQuaternion);
-		Transform.LocalRotation.w = 1.0f;
+		Transform.LocalRotation = Transform.LocalQuaternion.QuaternionToEulerReturn();
+		Transform.LocalRotation.W = 1.0f;
 	}
 
-	void AddLocalPosition(const Float3 _AddPos)
+	void AddLocalPosition(const SFloat3 _AddPos)
 	{
-		Transform.LocalPosition = EngineMath::AddFloat4(Transform.LocalPosition, { _AddPos.x, _AddPos.y, _AddPos.z, 0.0f});
-
-		Matrix4x4 Mat = DirectX::XMMatrixTranslation(Transform.LocalPosition.x, Transform.LocalPosition.y, Transform.LocalPosition.z);
-		DirectX::XMStoreFloat4x4(&(Transform.LocalPositionMatrix), Mat);
+		Transform.LocalPosition += SFloat4(_AddPos);
+		Transform.LocalPositionMatrix.Matrix4x4 = DirectX::XMMatrixTranslation(Transform.LocalPosition.X, Transform.LocalPosition.Y, Transform.LocalPosition.Z);
 	}
 
-	const Float4& GetLocalScale() const
+	const SFloat4& GetLocalScale() const
 	{
 		return Transform.LocalScale;
 	}
 
-	const Float4& GetLocalRotation() const
+	const SFloat4& GetLocalRotation() const
 	{
 		return Transform.LocalRotation;
 	}
 
-	const Float4& AddLocalPosition() const
+	const SFloat4& AddLocalPosition() const
 	{
 		return Transform.LocalPosition;
 	}

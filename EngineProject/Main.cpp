@@ -12,5 +12,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 {
     std::locale::global(std::locale("korean"));
     Engine::PlayEngine<ContentLevelManager>(hInstance, nCmdShow);
+    
     return 0;
 }

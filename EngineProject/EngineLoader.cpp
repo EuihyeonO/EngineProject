@@ -161,9 +161,8 @@ void EngineLoader::LoadFBX(EngineFile& _FileData)
 		}
 		else
 		{
-			Float4x4 Transform;
-			Matrix4x4 IdentifyMat = DirectX::XMMatrixIdentity();
-			DirectX::XMStoreFloat4x4(&Transform, IdentifyMat);
+			SFloat4x4 Transform;
+			Transform.Identify();
 
 			ProcessMeshNode(Scene->mRootNode, Scene, Transform, MeshList);
 		}
@@ -228,20 +227,20 @@ void EngineLoader::LoadPNG(EngineFile& _FileData)
 }
 
 
-void EngineLoader::ProcessMeshNode(aiNode* _Node, const aiScene* _Scene, Float4x4 _Transform, std::shared_ptr<std::list<SMeshData>> _MeshList)
+void EngineLoader::ProcessMeshNode(aiNode* _Node, const aiScene* _Scene, const SFloat4x4& _Transform, std::shared_ptr<std::list<SMeshData>> _MeshList)
 {
-	Float4x4 Transform;
+	SFloat4x4 Transform;
 	ai_real* Temp = &_Node->mTransformation.a1;
 	
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			Transform.m[j][i] = Temp[i * 4 + j];
+			Transform.Float4x4.m[j][i] = Temp[i * 4 + j];
 		}
 	}
 
-	Transform = EngineMath::MulFloat4x4(Transform, _Transform);
+	Transform = EngineMath::MulFloat4x4Return(Transform, _Transform);
 
 	for (UINT i = 0; i < _Node->mNumMeshes; i++)
 	{
@@ -256,7 +255,7 @@ void EngineLoader::ProcessMeshNode(aiNode* _Node, const aiScene* _Scene, Float4x
 	}
 }
 
-void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, Float4x4 _Transform, std::shared_ptr<std::list<SMeshData>> _MeshList)
+void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, const SFloat4x4& _Transform, std::shared_ptr<std::list<SMeshData>> _MeshList)
 {
 	SMesh NewMesh;
 	SMeshData NewMeshData;
@@ -274,23 +273,21 @@ void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, Float4x4 _T
 	{
 		SVertex NewVertex;
 
-		NewVertex.Position.x = _Mesh->mVertices[i].x;
-		NewVertex.Position.y = _Mesh->mVertices[i].y;
-		NewVertex.Position.z = _Mesh->mVertices[i].z;
+		NewVertex.Position.X = _Mesh->mVertices[i].x;
+		NewVertex.Position.Y = _Mesh->mVertices[i].y;
+		NewVertex.Position.Z = _Mesh->mVertices[i].z;
 
-		NewVertex.Normal.x = _Mesh->mNormals[i].x;
-		NewVertex.Normal.y = _Mesh->mNormals[i].y;
-		NewVertex.Normal.z = _Mesh->mNormals[i].z;
+		NewVertex.Normal.X = _Mesh->mNormals[i].x;
+		NewVertex.Normal.Y = _Mesh->mNormals[i].y;
+		NewVertex.Normal.Z = _Mesh->mNormals[i].z;
 
 		EngineMath::Normalize(NewVertex.Normal);
 
 		if (_Mesh->mTextureCoords[0] != nullptr)
 		{
-			NewVertex.Texcoord.x = (float)_Mesh->mTextureCoords[0][i].x;
-			NewVertex.Texcoord.y = (float)_Mesh->mTextureCoords[0][i].y;
+			NewVertex.Texcoord.X = (float)_Mesh->mTextureCoords[0][i].x;
+			NewVertex.Texcoord.Y = (float)_Mesh->mTextureCoords[0][i].y;
 		}
-
-		NewVertex.Position = EngineMath::Transform(NewVertex.Position, _Transform);
 		
 		NewMesh.Vertices.push_back(NewVertex);
 	}

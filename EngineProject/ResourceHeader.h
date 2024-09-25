@@ -4,14 +4,15 @@
 #include <string>
 #include <memory>
 
+#include "EngineMath.h"
 #include "EngineVertexShader.h"
 #include "EnginePixelShader.h"
 
 struct SVertex
 {
-	Float3 Position;
-	Float3 Normal;
-	Float2 Texcoord;
+	SFloat3 Position;
+	SFloat3 Normal;
+	SFloat2 Texcoord;
 };
 
 enum VertexOffset
