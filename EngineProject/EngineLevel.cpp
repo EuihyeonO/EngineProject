@@ -34,9 +34,9 @@ void EngineLevel::Update()
 
 void EngineLevel::RenderSetting()
 {
-	//EngineDirectX::GetInstance()->SetMainViewport();
-	//EngineDirectX::GetInstance()->ClearMainRenderTarget();
-	//EngineDirectX::GetInstance()->SetRenderTarget(EngineDirectX::GetMainRTV(), EngineResourceManager::FindDepthStencil("BaseDepthStencil").DSV);
-	//EngineDirectX::GetInstance()->SetDepthStencilState(EngineResourceManager::FindDepthStencil("BaseDepthStencil").DSState);
-	//EngineDirectX::GetInstance()->SetRasterizerState(EngineResourceManager::FindRasterizerState("Solid"));
+	EngineDirectX::GetInstance()->SetMainViewport();
+	EngineDirectX::GetInstance()->ClearMainRenderTarget();
+	EngineDirectX::GetInstance()->SetRenderTarget(EngineDirectX::GetMainRTV(), EngineResourceManager::FindDepthStencil("BaseDepthStencil").DSV);
+	EngineDirectX::GetInstance()->SetDepthStencilState(EngineResourceManager::FindDepthStencil("BaseDepthStencil").DSState);
+	EngineDirectX::GetInstance()->SetRasterizerState(EngineResourceManager::FindRasterizerState("Solid"));
 }
