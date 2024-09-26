@@ -6,6 +6,7 @@
 
 class EngineDirectX
 {
+	friend class Engine;
 public:
 	static EngineDirectX* GetInstance()
 	{
@@ -20,12 +21,6 @@ public:
 	EngineDirectX(EngineDirectX&& _Other) noexcept = delete;
 	EngineDirectX& operator=(const EngineDirectX& _Other) = delete;
 	EngineDirectX& operator=(EngineDirectX&& _Other) noexcept = delete;
-
-	static void Start()
-	{
-		GetInstance()->CreateDevice();
-		GetInstance()->CreateSwapChain();
-	}
 
 	static MSComPtr<ID3D11RenderTargetView> GetMainRTV()
 	{
@@ -212,6 +207,24 @@ public:
 protected:
 
 private:
+	static void Start()
+	{
+		GetInstance()->CreateDevice();
+		GetInstance()->CreateSwapChain();
+	}
+
+	static void End()
+	{
+		GetInstance()->RenderState.DSState = nullptr;
+		GetInstance()->RenderState.DSV = nullptr;
+		GetInstance()->RenderState.IndexBuffer = nullptr;
+		GetInstance()->RenderState.InputLayout = nullptr;
+		GetInstance()->RenderState.PixelShader = nullptr;
+		GetInstance()->RenderState.RSState = nullptr;
+		GetInstance()->RenderState.VertexBuffer = nullptr;
+		GetInstance()->RenderState.VertexShader = nullptr;
+	}
+
 	void CreateDevice();
 	void CreateSwapChain();
 

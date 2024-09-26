@@ -71,11 +71,10 @@ void Engine::CreateEngineGUI()
 	RightGUI->SetWindowSize({ 250, 650 });
 }
 
-#include "EngineResourceManager.h"
-
 void Engine::EngineEnd()
 {
 	EngineGUIWindow::GUIEnd();
 	LevelManager->Destroy();
+	EngineDirectX::End();
 }
 
