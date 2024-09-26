@@ -61,12 +61,15 @@ public:
 
 	//Create
 public:
-	static void CreateRenderTarget();
+	static MSComPtr<ID3D11RenderTargetView> CreateRTV(MSComPtr<ID3D11Texture2D> _Texture2D, const D3D11_RENDER_TARGET_VIEW_DESC& _DESC);
+	static MSComPtr<ID3D11ShaderResourceView> CreateSRV(MSComPtr<ID3D11Texture2D> _Texture2D, const D3D11_SHADER_RESOURCE_VIEW_DESC& _DESC);
 	
 	static std::shared_ptr<class EngineVertexShader> CreateVertexShader(const class EngineFile& _ShaderFile);
 	static std::shared_ptr<class EnginePixelShader> CreatePixelShader(const class EngineFile& _ShaderFile);
 	
 	static STextureData CreateTexture(unsigned char* _LoadedImage, int _Width, int _Height, int _Channels);
+	static MSComPtr<ID3D11Texture2D> CreateTexture2D(const D3D11_TEXTURE2D_DESC& _Desc);
+
 	static SDepthStencil CreateDepthStencil(const D3D11_TEXTURE2D_DESC& _BufferDesc, const D3D11_DEPTH_STENCIL_DESC& _StateDesc);
 	
 	static MSComPtr<ID3D11InputLayout> CreateInputLayOut(const class EngineFile& _ShaderFile, MSComPtr<ID3DBlob> _ShaderBlob);

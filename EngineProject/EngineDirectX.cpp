@@ -242,6 +242,16 @@ STextureData EngineDirectX::CreateTexture(unsigned char* _LoadedImage, int _Widt
 	return NewTextureData;
 }
 
+MSComPtr<ID3D11Texture2D> EngineDirectX::CreateTexture2D(const D3D11_TEXTURE2D_DESC& _Desc)
+{
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> Texture2D;
+
+	HRESULT Result = GetDevice()->CreateTexture2D(&_Desc, NULL, Texture2D.GetAddressOf());
+	EngineDebug::CheckResult(Result);
+
+	return Texture2D;
+}
+
 std::shared_ptr<EnginePixelShader> EngineDirectX::CreatePixelShader(const EngineFile& _Shader)
 {
 	Microsoft::WRL::ComPtr<ID3DBlob> ShaderBlob;
@@ -392,8 +402,28 @@ SDepthStencil EngineDirectX::CreateDepthStencil(const D3D11_TEXTURE2D_DESC& _Buf
 	return Return;
 }
 
-void EngineDirectX::CreateRenderTarget()
+MSComPtr<ID3D11RenderTargetView> EngineDirectX::CreateRTV(MSComPtr<ID3D11Texture2D> _Texture2D, const D3D11_RENDER_TARGET_VIEW_DESC& _DESC)
 {
+	D3D11_TEXTURE2D_DESC TexDesc;
+	_Texture2D->GetDesc(&TexDesc);
+
+	MSComPtr<ID3D11RenderTargetView> RTV;
+	HRESULT Result = GetDevice()->CreateRenderTargetView(_Texture2D.Get(), &_DESC, RTV.GetAddressOf());
+	EngineDebug::CheckResult(Result);
+
+	return RTV;
+}
+
+MSComPtr<ID3D11ShaderResourceView> EngineDirectX::CreateSRV(MSComPtr<ID3D11Texture2D> _Texture2D, const D3D11_SHADER_RESOURCE_VIEW_DESC& _DESC)
+{
+	D3D11_TEXTURE2D_DESC TexDesc;
+	_Texture2D->GetDesc(&TexDesc);
+
+	MSComPtr<ID3D11ShaderResourceView> SRV;
+	HRESULT Result = GetDevice()->CreateShaderResourceView(_Texture2D.Get(), &_DESC, SRV.GetAddressOf());
+	EngineDebug::CheckResult(Result);
+
+	return MSComPtr<ID3D11ShaderResourceView>();
 }
 
 void EngineDirectX::CreateVertexShaderResource(std::shared_ptr<EngineVertexShader> _Shader, MSComPtr<ID3DBlob> _ShaderBlob)

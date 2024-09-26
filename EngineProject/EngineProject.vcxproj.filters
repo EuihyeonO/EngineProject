@@ -97,6 +97,9 @@
     <Filter Include="Source\Base\DirectX\Render">
       <UniqueIdentifier>{841c5487-7799-4a24-ab00-5783fb94290d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Base\DirectX\DirectX">
+      <UniqueIdentifier>{3fc79fb2-f83d-4cc4-9c04-9986d59dd802}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineProject.h">
@@ -423,9 +426,6 @@
     <ClInclude Include="EngineMath.h">
       <Filter>Source\Base\Util</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXHeader.h">
-      <Filter>Source\Base\DirectX</Filter>
-    </ClInclude>
     <ClInclude Include="EngineResourceManager.h">
       <Filter>Source\Resource\Resource</Filter>
     </ClInclude>
@@ -516,9 +516,6 @@
     <ClInclude Include="EnginePixelShader.h">
       <Filter>Source\Base\DirectX\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="EngineDirectX.h">
-      <Filter>Source\Base\DirectX</Filter>
-    </ClInclude>
     <ClInclude Include="EngineComponent.h">
       <Filter>Source\Object\Component\Base</Filter>
     </ClInclude>
@@ -527,6 +524,12 @@
     </ClInclude>
     <ClInclude Include="EngineRenderTarget.h">
       <Filter>Source\Base\DirectX\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXHeader.h">
+      <Filter>Source\Base\DirectX\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineDirectX.h">
+      <Filter>Source\Base\DirectX\DirectX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -556,9 +559,6 @@
     </ClCompile>
     <ClCompile Include="..\Library\IMGUI\imgui_impl_win32.cpp">
       <Filter>Source\Base\Library\IMGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="EngineDirectX.cpp">
-      <Filter>Source\Base\DirectX</Filter>
     </ClCompile>
     <ClCompile Include="EngineGUIWindow.cpp">
       <Filter>Source\Window\GUIWindow\Base</Filter>
@@ -625,6 +625,9 @@
     </ClCompile>
     <ClCompile Include="EngineRenderTarget.cpp">
       <Filter>Source\Base\DirectX\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineDirectX.cpp">
+      <Filter>Source\Base\DirectX\DirectX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
