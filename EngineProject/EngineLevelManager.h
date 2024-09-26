@@ -18,7 +18,7 @@ public:
 	EngineLevelManager(EngineLevelManager&& _Other) noexcept = delete;
 	EngineLevelManager& operator=(const EngineLevelManager& _Other) = delete;
 	EngineLevelManager& operator=(EngineLevelManager&& _Other) noexcept = delete;
-	
+
 	template<typename LevelType, typename = std::enable_if_t<std::is_base_of_v<EngineLevel, LevelType>>>
 	std::shared_ptr<LevelType> CreateLevel(std::string_view _LevelName)
 	{
@@ -66,12 +66,16 @@ public:
 		CurrentLevel->SetActivate(true);
 	}
 
+	virtual void Start() override final;
+	virtual void Update() override final;
+
 protected:
 
 private:
-	void LevelUpdate();
-	void OnCreated() override final {}
 
+	virtual void End() override final {}
+
+	void OnCreated() override final {}
 	void OnDestroyed() override final{}
 	
 	void Destroy() override final

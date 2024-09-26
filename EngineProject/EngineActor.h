@@ -12,6 +12,9 @@ class EngineActor : public EngineObjectBase
 {
 	friend class EngineLevel;
 public:
+	virtual void Start() override final;
+	virtual void Update() override final;
+	virtual void End() override final;
 
 	EngineActor();
 	~EngineActor();
@@ -73,8 +76,6 @@ public:
 protected:
 
 private:
-	void ComponentUpdate();
-
 	std::unordered_map<std::string, std::shared_ptr<EngineComponent>> Components;
 	std::unordered_map<std::string, std::shared_ptr<EngineComponent>> RenderComponents;
 };

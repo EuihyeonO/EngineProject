@@ -23,9 +23,9 @@ public:
 	TestActor& operator=(TestActor&& _Other) noexcept = delete;
 
 	void OnCreated() override;
-	void Start() override;
-	void Update() override;
-	void End() override;
+	void OnStart() override;
+	void OnUpdate() override;
+	void OnEnd() override;
 	void OnDestroyed() override;
 
 protected:

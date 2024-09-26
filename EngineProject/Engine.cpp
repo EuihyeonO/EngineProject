@@ -36,20 +36,12 @@ void Engine::EngineLoop()
 void Engine::Update()
 {
 	LevelManager->Update();
-	LevelManager->LevelUpdate();
-
-	EngineGUIWindow::GUIUpdate();
 }
 
 void Engine::Render()
 {
-	//const float clear_color_with_alpha[4] = { 0.0, 1.0, 1.0, 1.0 };
-	//
-	////·»´õÅ¸°Ù ¼¼ÆÃ
-	//EngineDirectX::GetInstance()->GetDeviceContext()->OMSetRenderTargets(1, EngineDirectX::GetInstance()->GetMainRTV().GetAddressOf(), nullptr);
-	//EngineDirectX::GetInstance()->GetDeviceContext()->ClearRenderTargetView(EngineDirectX::GetInstance()->GetMainRTV().Get(), clear_color_with_alpha);
-
 	LevelManager->Render();
+	EngineGUIWindow::GUIUpdate();
 
 	//GUI Renderring	
 	EngineGUIWindow::GUIRender();

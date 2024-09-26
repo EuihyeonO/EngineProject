@@ -37,6 +37,11 @@ public:
 		return GetInstance()->MainSRV;
 	}
 
+	static MSComPtr<ID3D11DepthStencilView> GetMainDSV()
+	{
+		return GetInstance()->MainDSV;
+	}
+
 	static MSComPtr<IDXGISwapChain> GetSwapChain()
 	{
 		return GetInstance()->SwapChain;
@@ -188,6 +193,7 @@ public:
 
 	void SetRenderTarget(MSComPtr<ID3D11RenderTargetView> _RTV, MSComPtr<ID3D11DepthStencilView> _DSV)
 	{
+		RenderState.DSV = _DSV;
 		DeviceContext->OMSetRenderTargets(1, _RTV.GetAddressOf(), _DSV.Get());
 	}
 
@@ -223,5 +229,6 @@ private:
 
 	MSComPtr<ID3D11RenderTargetView> MainRTV = nullptr;
 	MSComPtr<ID3D11ShaderResourceView> MainSRV = nullptr;
+	MSComPtr<ID3D11DepthStencilView> MainDSV = nullptr;
 };
 

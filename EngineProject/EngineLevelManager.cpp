@@ -8,8 +8,17 @@ EngineLevelManager::~EngineLevelManager()
 {
 }
 
-void EngineLevelManager::LevelUpdate()
+void EngineLevelManager::Start()
 {
-	CurrentLevel->Update();
-	CurrentLevel->ActorUpdate();
+	OnStart();
+}
+
+void EngineLevelManager::Update()
+{
+	OnUpdate();
+	
+	if (CurrentLevel != nullptr)
+	{
+		CurrentLevel->Update();
+	}
 }

@@ -369,10 +369,11 @@ MSComPtr<ID3D11SamplerState> EngineDirectX::CreateSamplerState(std::string_view 
 	return MSComPtr<ID3D11SamplerState>();
 }
 
+
 SDepthStencil EngineDirectX::CreateDepthStencil(const D3D11_TEXTURE2D_DESC& _BufferDesc, const D3D11_DEPTH_STENCIL_DESC& _StateDesc)
 {
 	MSComPtr<ID3D11Texture2D> DSBuffer;
-	
+
 	HRESULT Result = GetDevice()->CreateTexture2D(&_BufferDesc, 0, DSBuffer.GetAddressOf());
 	EngineDebug::CheckResult(Result);
 

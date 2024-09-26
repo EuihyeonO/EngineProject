@@ -11,7 +11,7 @@ ContentLevelManager::~ContentLevelManager()
 {
 }
 
-void ContentLevelManager::Start()
+void ContentLevelManager::OnStart()
 {
 	EngineLoader::LoadAllShader();
 	EngineLoader::LoadAllSampler();
@@ -26,10 +26,10 @@ void ContentLevelManager::Start()
 	LevelChange("TestLevel");
 }
 
-void ContentLevelManager::Update()
+void ContentLevelManager::OnUpdate()
 {
 }
 
-void ContentLevelManager::End()
+void ContentLevelManager::OnEnd()
 {
 }

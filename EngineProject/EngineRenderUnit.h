@@ -73,12 +73,12 @@ public:
 		
 		if (PixelShader->HasTexture("DIFFUSETEX") == true)
 		{
-			Material.PixelShader->SetTexture("DIFFUSETEX", Material.DiffuseTexture);
+			PixelShader->SetTexture("DIFFUSETEX", Material.DiffuseTexture);
 		}
 		
 		if (PixelShader->HasTexture("NORMALTEX") == true)
 		{
-			Material.PixelShader->SetTexture("NORMALTEX", Material.NormalTexture);
+			PixelShader->SetTexture("NORMALTEX", Material.NormalTexture);
 		}
 
 		const std::unordered_map<std::string, SSamplerState>& AllSampler = _PixelShader->GetAllSampler();

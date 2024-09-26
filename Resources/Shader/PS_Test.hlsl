@@ -1,5 +1,15 @@
-
-float4 main() : SV_TARGET
+struct PS_Input
 {
-    return float4(1.0f, 0.0f, 0.0f, 1.0f);
+    float4 Pos : SV_POSITION;
+    float4 NORMAL : NORMAL;
+    float2 UV : TEXCOORD;
+};
+
+Texture2D DiffuseTex : register(t0);
+SamplerState LinearSampler : register(s0);
+
+float4 main(PS_Input _Input) : SV_TARGET
+{
+    float4 Color = DiffuseTex.Sample(LinearSampler, _Input.UV);
+    return Color;
 }

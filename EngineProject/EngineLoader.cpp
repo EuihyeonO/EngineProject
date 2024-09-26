@@ -95,10 +95,13 @@ void EngineLoader::LoadAllDepthStencil()
 {
 	{
 		//
-		D3D11_TEXTURE2D_DESC DepthStencilBufferDesc;
+		D3D11_TEXTURE2D_DESC DepthStencilBufferDesc = { 0, };
 
-		DepthStencilBufferDesc.Width = (UINT)EngineDirectX::GetMainViewPortSize().first;
-		DepthStencilBufferDesc.Height = (UINT)EngineDirectX::GetMainViewPortSize().second;
+		DXGI_SWAP_CHAIN_DESC desc;
+		EngineDirectX::GetSwapChain()->GetDesc(&desc);
+
+		DepthStencilBufferDesc.Width = desc.BufferDesc.Width;
+		DepthStencilBufferDesc.Height = desc.BufferDesc.Height;
 
 		DepthStencilBufferDesc.MipLevels = 1;
 		DepthStencilBufferDesc.ArraySize = 1;
@@ -119,6 +122,7 @@ void EngineLoader::LoadAllDepthStencil()
 		DepthStencilDesc.DepthEnable = true;
 		DepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		DepthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL;
+		DepthStencilDesc.StencilEnable = false;
 
 		SDepthStencil DSData = EngineDirectX::CreateDepthStencil(DepthStencilBufferDesc, DepthStencilDesc);
 
@@ -313,6 +317,7 @@ void EngineLoader::ProcessMeshNode(aiNode* _Node, const aiScene* _Scene, const S
 		}
 	}
 
+	Transform.Matrix4x4 = DirectX::XMMatrixTranspose(Transform.Matrix4x4);
 	Transform = EngineMath::MulFloat4x4Return(Transform, _Transform);
 
 	for (UINT i = 0; i < _Node->mNumMeshes; i++)
@@ -363,6 +368,13 @@ void EngineLoader::ProcessMesh(aiMesh* _Mesh, const aiScene* _Scene, const SFloa
 		}
 		
 		NewMesh.Vertices.push_back(NewVertex);
+	}
+
+	for (SVertex& Vertex : NewMesh.Vertices)
+	{
+		DirectX::XMVECTOR Vector = DirectX::XMLoadFloat3(&Vertex.Position.Float3);
+		Vector = DirectX::XMVector3Transform(Vector, _Transform.Matrix4x4);
+		DirectX::XMStoreFloat3(&Vertex.Position.Float3, Vector);
 	}
 
 	for (UINT i = 0; i < _Mesh->mNumFaces; i++)

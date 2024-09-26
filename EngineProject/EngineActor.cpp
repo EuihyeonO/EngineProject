@@ -1,6 +1,16 @@
 #include "EngineActor.h"
 #include "EngineComponent.h"
 
+void EngineActor::Start()
+{
+	OnStart();
+}
+
+void EngineActor::End()
+{
+	OnEnd();
+}
+
 EngineActor::EngineActor()
 {
 }
@@ -20,8 +30,10 @@ void EngineActor::Destroy()
 	Components.clear();
 }
 
-void EngineActor::ComponentUpdate()
+void EngineActor::Update()
 {
+	OnUpdate();
+
 	for (const std::pair<std::string, std::shared_ptr<EngineComponent>> Component : Components)
 	{
 		Component.second->Update();

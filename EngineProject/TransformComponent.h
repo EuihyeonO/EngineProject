@@ -90,6 +90,19 @@ public:
 		return Transform.LocalPosition;
 	}
 
+	STransform& GetTransform()
+	{
+		return Transform;
+	}
+
+	virtual void OnCreated(){}
+	virtual void OnStart(){}
+	virtual void OnUpdate(){} 
+	virtual void OnEnd(){} 
+	virtual void OnDestroyed(){} 
+	virtual void OnRender(){}
+
+
 protected:
 
 private:

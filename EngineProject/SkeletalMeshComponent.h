@@ -22,12 +22,11 @@ public:
 
 	void SetMesh(std::string_view _Name);
 	void OnCreated() override {}
-	void Start() override {}
-	void Update() override {}
-	
-	void End() override {}
-	
-	void Render() override
+	void OnStart() override {}
+	void OnUpdate() override {}
+	void OnEnd() override {}
+
+	void OnRender() override
 	{
 		EngineRenderBase::Render();
 	}

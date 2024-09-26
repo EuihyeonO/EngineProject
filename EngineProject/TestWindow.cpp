@@ -1,4 +1,5 @@
 #include "TestWindow.h"
+#include "EngineDirectX.h"
 
 TestWindow::TestWindow()
 {
@@ -23,6 +24,8 @@ void TestWindow::Update()
 
     ImGui::SetWindowPos(WindowPos);
     ImGui::SetWindowSize(WindowSize);
-   
+
+    ImGui::Image((ImTextureID)EngineDirectX::GetMainSRV().Get(), ImVec2(1600, 900));
+
     ImGui::End();
 }

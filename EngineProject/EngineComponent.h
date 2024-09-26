@@ -19,6 +19,26 @@ public:
 		OnDestroyed();
 	}
 
+	void Render() override final 
+	{
+		OnRender();
+	}
+
+	void Start() override final
+	{
+		OnStart();
+	}
+
+	void Update() override final
+	{
+		OnUpdate();
+	}
+
+	void End() override final
+	{
+		OnEnd();
+	}
+
 protected:
 
 private:

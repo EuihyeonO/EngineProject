@@ -15,16 +15,16 @@ void TestLevel::OnCreated()
 {
 }
 
-void TestLevel::Start()
+void TestLevel::OnStart()
 {
 	CreateActor<TestActor>("TestActor");
 }
 
-void TestLevel::Update()
+void TestLevel::OnUpdate()
 {
 }
 
-void TestLevel::End()
+void TestLevel::OnEnd()
 {
 }
 

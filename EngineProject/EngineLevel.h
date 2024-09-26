@@ -20,6 +20,10 @@ public:
 	EngineLevel& operator=(const EngineLevel& _Other) = delete;
 	EngineLevel& operator=(EngineLevel&& _Other) noexcept = delete;
 	
+	void Start() override final;
+	virtual void Update() override final;
+	void End() override final;
+
 	template<typename ActorType, typename = std::enable_if_t<std::is_base_of_v<EngineActor, ActorType>>>
 	std::shared_ptr<ActorType> CreateActor(std::string_view _ActorName)
 	{
@@ -65,9 +69,10 @@ private:
 		}
 	}
 
-	void ActorUpdate();
 	void RenderSetting();
 
 	std::unordered_map<std::string, std::shared_ptr<EngineActor>> Actors;
+
+	std::shared_ptr<class EngineRenderTarget> MainRenderTarget;
 };
 
