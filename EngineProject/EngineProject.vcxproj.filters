@@ -94,6 +94,9 @@
     <Filter Include="Source\Base\DirectX\Shader">
       <UniqueIdentifier>{d7a89508-52aa-45ab-84ce-ed11903d4dd0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Base\DirectX\Render">
+      <UniqueIdentifier>{841c5487-7799-4a24-ab00-5783fb94290d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineProject.h">
@@ -522,6 +525,9 @@
     <ClInclude Include="EngineRenderBase.h">
       <Filter>Source\Object\Component\Base</Filter>
     </ClInclude>
+    <ClInclude Include="EngineRenderTarget.h">
+      <Filter>Source\Base\DirectX\Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineWindow.cpp">
@@ -616,6 +622,9 @@
     </ClCompile>
     <ClCompile Include="EngineRenderBase.cpp">
       <Filter>Source\Object\Component\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineRenderTarget.cpp">
+      <Filter>Source\Base\DirectX\Render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

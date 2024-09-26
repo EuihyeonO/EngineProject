@@ -16,6 +16,10 @@ void ContentLevelManager::Start()
 	EngineLoader::LoadAllShader();
 	EngineLoader::LoadAllSampler();
 
+	EngineLoader::LoadAllBlendState();
+	EngineLoader::LoadAllRasterizer();
+	EngineLoader::LoadAllDepthStencil();
+
 	EngineLoader::LoadAllFile(ExtensionType::FBX);
 	
 	CreateLevel<TestLevel>("TestLevel");

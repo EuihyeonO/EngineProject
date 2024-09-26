@@ -158,7 +158,7 @@ public:
 		LoadedTexture[UpperName] = _TextureData;
 	}
 
-	static MSComPtr<ID3D11SamplerState> GetSampler(std::string_view _Name)
+	static MSComPtr<ID3D11SamplerState> FindSampler(std::string_view _Name)
 	{
 		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
 
@@ -183,11 +183,83 @@ public:
 		SamplerStates[UpperName] = _SamplerState;
 	}
 
+	static const SDepthStencil& FindDepthStencil(std::string_view _Name)
+	{
+		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+		
+		if (DepthStencils.find(UpperName) != DepthStencils.end())
+		{
+			return DepthStencils[UpperName];
+		}
+
+		return { nullptr, nullptr };
+	}
+
+	static const void AddDepthStencil(std::string_view _Name, const SDepthStencil& _DepthStencil)
+	{
+		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+		if (DepthStencils.find(UpperName) != DepthStencils.end())
+		{
+			std::cerr << "Error : DepthStencils(Name : " + UpperName + ") is already created." << std::endl;
+			return;
+		}
+
+		DepthStencils[UpperName] = _DepthStencil;
+	}
+
+	static const MSComPtr<ID3D11RasterizerState> FindRasterizerState(std::string_view _Name)
+	{
+		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+		if (RasterizerStates.find(UpperName) != RasterizerStates.end())
+		{
+			return RasterizerStates[UpperName];
+		}
+
+		return nullptr;
+	}
+
+	static const void AddRasterizerState(std::string_view _Name, const MSComPtr<ID3D11RasterizerState> _RasterizerState)
+	{
+		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+		if (RasterizerStates.find(UpperName) != RasterizerStates.end())
+		{
+			std::cerr << "Error : RasterizerState(Name : " + UpperName + ") is already created." << std::endl;
+			return;
+		}
+
+		RasterizerStates[UpperName] = _RasterizerState;
+	}
+
+	static const MSComPtr<ID3D11BlendState> FindBlendState(std::string_view _Name)
+	{
+		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+		if (BlendStates.find(UpperName) != BlendStates.end())
+		{
+			return BlendStates[UpperName];
+		}
+
+		return nullptr;
+	}
+
+	static const void AddBlendState(std::string_view _Name, const MSComPtr<ID3D11BlendState> _BlendState)
+	{
+		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+		if (BlendStates.find(UpperName) != BlendStates.end())
+		{
+			std::cerr << "Error : BlendStates(Name : " + UpperName + ") is already created." << std::endl;
+			return;
+		}
+
+		BlendStates[UpperName] = _BlendState;
+	}
+
 protected:
 	
-private:
-
-
 private:
 	static std::unordered_map<std::string, STextureData> LoadedTexture;
 	static std::unordered_map<std::string, std::shared_ptr<std::list<SMeshData>>> LoadedMeshes;
@@ -196,5 +268,9 @@ private:
 	static std::unordered_map<std::string, std::shared_ptr<class EnginePixelShader>> LoadedPixelShaders;
 
 	static std::unordered_map<std::string, MSComPtr<ID3D11SamplerState>> SamplerStates;
+	static std::unordered_map<std::string, SDepthStencil> DepthStencils;
+
+	static std::unordered_map<std::string, MSComPtr<ID3D11RasterizerState>> RasterizerStates;
+	static std::unordered_map<std::string, MSComPtr<ID3D11BlendState>> BlendStates;
 };
 

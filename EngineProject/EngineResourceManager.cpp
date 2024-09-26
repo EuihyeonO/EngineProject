@@ -5,6 +5,9 @@ std::unordered_map<std::string, std::shared_ptr<EnginePixelShader>> EngineResour
 std::unordered_map<std::string, std::shared_ptr<EngineVertexShader>> EngineResourceManager::LoadedVertexShaders;
 std::unordered_map<std::string, STextureData> EngineResourceManager::LoadedTexture;
 std::unordered_map<std::string, MSComPtr<ID3D11SamplerState>> EngineResourceManager::SamplerStates;
+std::unordered_map<std::string, SDepthStencil> EngineResourceManager::DepthStencils;
+std::unordered_map<std::string, MSComPtr<ID3D11RasterizerState>> EngineResourceManager::RasterizerStates;
+std::unordered_map<std::string, MSComPtr<ID3D11BlendState>> EngineResourceManager::BlendStates;
 
 EngineResourceManager::EngineResourceManager()
 {

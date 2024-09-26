@@ -16,6 +16,8 @@ void TestActor::OnCreated()
 }
 
 std::shared_ptr<SkeletalMeshComponent> Comp;
+std::shared_ptr<SkeletalMeshComponent> Trans;
+
 void TestActor::Start()
 {
 	Comp = CreateComponent<SkeletalMeshComponent>("Body");

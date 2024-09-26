@@ -91,6 +91,79 @@ void EngineLoader::LoadVertexShader(EngineFile& _ShaderFile)
 	EngineResourceManager::AddLoadedVertexShader(_ShaderFile.GetFileName(), LoadedVertexShader);
 }
 
+void EngineLoader::LoadAllDepthStencil()
+{
+	{
+		//
+		D3D11_TEXTURE2D_DESC DepthStencilBufferDesc;
+
+		DepthStencilBufferDesc.Width = (UINT)EngineDirectX::GetMainViewPortSize().first;
+		DepthStencilBufferDesc.Height = (UINT)EngineDirectX::GetMainViewPortSize().second;
+
+		DepthStencilBufferDesc.MipLevels = 1;
+		DepthStencilBufferDesc.ArraySize = 1;
+
+		DepthStencilBufferDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+
+		DepthStencilBufferDesc.SampleDesc.Count = 1;
+		DepthStencilBufferDesc.SampleDesc.Quality = 0;
+
+		DepthStencilBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+		DepthStencilBufferDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+		DepthStencilBufferDesc.CPUAccessFlags = 0;
+		DepthStencilBufferDesc.MiscFlags = 0;
+
+		//
+		D3D11_DEPTH_STENCIL_DESC DepthStencilDesc;
+		ZeroMemory(&DepthStencilDesc, sizeof(D3D11_DEPTH_STENCIL_DESC));
+		DepthStencilDesc.DepthEnable = true;
+		DepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
+		DepthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL;
+
+		SDepthStencil DSData = EngineDirectX::CreateDepthStencil(DepthStencilBufferDesc, DepthStencilDesc);
+
+		EngineResourceManager::AddDepthStencil("BaseDepthStencil", DSData);
+	}
+}
+
+void EngineLoader::LoadAllRasterizer()
+{
+	{
+		MSComPtr<ID3D11RasterizerState> RSState;
+
+		D3D11_RASTERIZER_DESC RD;
+		ZeroMemory(&RD, sizeof(D3D11_RASTERIZER_DESC));
+		RD.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
+		RD.CullMode = D3D11_CULL_MODE::D3D11_CULL_BACK;
+		RD.FrontCounterClockwise = false;
+
+		HRESULT Result = EngineDirectX::GetDevice()->CreateRasterizerState(&RD, &RSState);
+		EngineResourceManager::AddRasterizerState("Solid", RSState);
+	}
+}
+
+void EngineLoader::LoadAllBlendState()
+{
+	MSComPtr<ID3D11BlendState> BlendState;
+
+	D3D11_BLEND_DESC Desc = { 0, };
+
+	Desc.AlphaToCoverageEnable = false;
+	Desc.IndependentBlendEnable = false;
+	Desc.RenderTarget[0].BlendEnable = true;
+	Desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	Desc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	Desc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
+	Desc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+
+	Desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_MAX;
+	Desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	Desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
+
+	EngineDirectX::GetDevice()->CreateBlendState(&Desc, BlendState.GetAddressOf());
+	EngineResourceManager::AddBlendState("BaseBlendState", BlendState);
+}
+
 void EngineLoader::LoadPixelShader(class EngineFile& _ShaderFile)
 {
 	const std::string& ShaderName = _ShaderFile.GetFileName();

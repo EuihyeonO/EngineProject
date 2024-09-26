@@ -20,6 +20,8 @@
 #pragma comment(lib, "dxguid")
 #pragma comment(lib, "DXGI")
 
+std::pair<float, float> EngineDirectX::MainViewPortSize = { 1600.0f, 900.0f };
+
 EngineDirectX::EngineDirectX()
 {
 }
@@ -33,12 +35,12 @@ void EngineDirectX::RenderSetting(std::shared_ptr<class EngineVertexShader> _VS,
 	UINT Stride = sizeof(SVertex);
 	UINT Offset = 0;
 
-	GetInstance()->GetDeviceContext()->IASetVertexBuffers(0, 1, _VertexBuffer.GetAddressOf(), &Stride, &Offset);
-	GetInstance()->GetDeviceContext()->IASetIndexBuffer(_IndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-	GetInstance()->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	GetInstance()->GetDeviceContext()->VSSetShader(_VS->GetVertexShader().Get(), 0, 0);
-	GetInstance()->GetDeviceContext()->IASetInputLayout(_VS->GetInputLayOut().Get());
-	GetInstance()->GetDeviceContext()->PSSetShader(_PS->GetPixelShader().Get(), 0, 0);
+	GetInstance()->SetVertexBuffer(0, _VertexBuffer);
+	GetInstance()->SetIndexBuffer(_IndexBuffer);
+	GetInstance()->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	GetInstance()->SetVertexShader(_VS->GetVertexShader());
+	GetInstance()->SetInputLayout(_VS->GetInputLayOut());
+	GetInstance()->SetPixelShader(_PS->GetPixelShader());
 
 	const std::unordered_map<std::string, SConstantBuffer>& VS_CBuffers = _VS->GetAllConstantBuffer();
 	for (const std::pair<std::string, SConstantBuffer>& CBuffer : VS_CBuffers)
@@ -365,6 +367,32 @@ MSComPtr<ID3D11SamplerState> EngineDirectX::CreateSamplerState(std::string_view 
 	}
 
 	return MSComPtr<ID3D11SamplerState>();
+}
+
+SDepthStencil EngineDirectX::CreateDepthStencil(const D3D11_TEXTURE2D_DESC& _BufferDesc, const D3D11_DEPTH_STENCIL_DESC& _StateDesc)
+{
+	MSComPtr<ID3D11Texture2D> DSBuffer;
+	
+	HRESULT Result = GetDevice()->CreateTexture2D(&_BufferDesc, 0, DSBuffer.GetAddressOf());
+	EngineDebug::CheckResult(Result);
+
+	MSComPtr<ID3D11DepthStencilView> DSV;
+	Result = GetDevice()->CreateDepthStencilView(DSBuffer.Get(), 0, &DSV);
+	EngineDebug::CheckResult(Result);
+
+	MSComPtr<ID3D11DepthStencilState> DSState;
+	Result = GetDevice()->CreateDepthStencilState(&_StateDesc, DSState.GetAddressOf());
+	EngineDebug::CheckResult(Result);
+
+	SDepthStencil Return;
+	Return.DSV = DSV;
+	Return.DSState = DSState;
+	
+	return Return;
+}
+
+void EngineDirectX::CreateRenderTarget()
+{
 }
 
 void EngineDirectX::CreateVertexShaderResource(std::shared_ptr<EngineVertexShader> _Shader, MSComPtr<ID3DBlob> _ShaderBlob)

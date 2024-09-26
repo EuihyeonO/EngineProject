@@ -89,6 +89,7 @@ private:
 	{
 		if (CurrentLevel != nullptr)
 		{
+			CurrentLevel->RenderSetting();
 			CurrentLevel->Render();
 		}
 	}

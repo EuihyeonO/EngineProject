@@ -86,7 +86,7 @@ public:
 		{
 			PixelShader->AddSampler(Sampler.first, Sampler.second);
 
-			MSComPtr<ID3D11SamplerState> SamplerState = EngineResourceManager::GetSampler(Sampler.first);
+			MSComPtr<ID3D11SamplerState> SamplerState = EngineResourceManager::FindSampler(Sampler.first);
 			if (SamplerState != nullptr)
 			{
 				PixelShader->SetSampler(Sampler.first, SamplerState);
@@ -112,9 +112,9 @@ public:
 
 	void SetSampler(std::string_view _Name)
 	{
-		MSComPtr<ID3D11SamplerState> Sampler = EngineResourceManager::GetSampler(_Name);
+		MSComPtr<ID3D11SamplerState> Sampler = EngineResourceManager::FindSampler(_Name);
 
-		if (EngineResourceManager::GetSampler(_Name) != nullptr)
+		if (EngineResourceManager::FindSampler(_Name) != nullptr)
 		{
 			Material.PixelShader->SetSampler(_Name, Sampler);
 		}
@@ -123,7 +123,7 @@ public:
 	void Render()
 	{
 		EngineDirectX::RenderSetting(Material.VertexShader, Material.PixelShader, Material.VertexBuffer, Material.IndexBuffer);
-		EngineDirectX::GetDeviceContext()->DrawIndexed(Material.IndexCount, 0, 0);
+		EngineDirectX::DrawIndexed(Material.IndexCount, 0, 0);
 	}
 
 protected:

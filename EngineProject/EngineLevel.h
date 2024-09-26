@@ -57,6 +57,8 @@ private:
 
 	void Render() override final
 	{
+		RenderSetting();
+
 		for (const std::pair<std::string, std::shared_ptr<EngineActor>> Actor : Actors)
 		{
 			Actor.second->Render();
@@ -64,6 +66,8 @@ private:
 	}
 
 	void ActorUpdate();
+	void RenderSetting();
+
 	std::unordered_map<std::string, std::shared_ptr<EngineActor>> Actors;
 };
 

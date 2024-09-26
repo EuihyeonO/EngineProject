@@ -47,6 +47,11 @@ public:
 	static void LoadPNG(class EngineFile& __FileData);
 
 	static void LoadAllSampler();
+
+	static void LoadAllDepthStencil();
+	static void LoadAllRasterizer();
+	static void LoadAllBlendState();
+
 protected:
 
 private:

@@ -31,3 +31,28 @@ struct SSamplerState
 	MSComPtr<ID3D11SamplerState> SamplerState;
 	UINT BindPoint;
 };
+
+struct SDepthStencil
+{
+	MSComPtr<ID3D11DepthStencilView> DSV;
+	MSComPtr<ID3D11DepthStencilState> DSState;
+};
+
+struct SRenderState
+{
+	MSComPtr<ID3D11Buffer> VertexBuffer = nullptr;
+	MSComPtr<ID3D11Buffer> IndexBuffer = nullptr;
+	
+	MSComPtr<ID3D11VertexShader> VertexShader = nullptr;
+	MSComPtr<ID3D11PixelShader> PixelShader = nullptr;
+
+	MSComPtr<ID3D11InputLayout> InputLayout = nullptr;
+
+	D3D11_PRIMITIVE_TOPOLOGY Topology = D3D11_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_UNDEFINED;
+	D3D11_VIEWPORT ViewPort;
+
+	MSComPtr<ID3D11DepthStencilView> DSV = nullptr;
+	MSComPtr<ID3D11DepthStencilState> DSState = nullptr;
+
+	MSComPtr<ID3D11RasterizerState> RSState = nullptr;
+};
