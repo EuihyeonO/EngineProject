@@ -3,9 +3,11 @@
 #include "EngineGUIWindow.h"
 #include "EngineDirectX.h"
 #include "TestWindow.h"
+#include "EngineMath.h"
 
 bool Engine::isEngineOn = false;
 std::shared_ptr<EngineLevelManager> Engine::LevelManager = nullptr;
+std::pair<float, float> Engine::ViewPortSize = { 1100.0f, 650.0f };
 
 Engine::Engine()
 {
@@ -15,7 +17,6 @@ Engine::~Engine()
 {
 }
 
-#include "EngineMath.h"
 
 void Engine::EngineStart(HINSTANCE hInstance, int nCmdShow)
 {
@@ -37,13 +38,17 @@ void Engine::Update()
 {
 	LevelManager->Update();
 }
+#include "EngineRenderTarget.h"
 
 void Engine::Render()
 {
 	LevelManager->Render();
-	EngineGUIWindow::GUIUpdate();
+
+	EngineDirectX::GetInstance()->ClearMainRenderTarget();
+	EngineDirectX::SetRenderTarget(EngineDirectX::GetMainRTV(), nullptr);
 
 	//GUI Renderring	
+	EngineGUIWindow::GUIUpdate(LevelManager->CurrentLevel->GetRenderTarget()->GetSRV());
 	EngineGUIWindow::GUIRender();
 
 	//Present
@@ -58,17 +63,21 @@ void Engine::Loop()
 
 void Engine::CreateEngineGUI()
 {
-	std::shared_ptr<EngineGUIWindow> LeftGUI = TestWindow::CreateGUIWindow<TestWindow>("LeftGUI");
+	std::shared_ptr<EngineGUIWindow> LeftGUI = TestWindow::CreateGUIWindow<TestWindow>("Hierachy");
 	LeftGUI->SetWindowPos({ 0, 0 });
 	LeftGUI->SetWindowSize({ 250, 900 });
 	
-	std::shared_ptr<EngineGUIWindow> DownGUI = TestWindow::CreateGUIWindow<TestWindow>("DownGUI");
+	std::shared_ptr<EngineGUIWindow> DownGUI = TestWindow::CreateGUIWindow<TestWindow>("Files");
 	DownGUI->SetWindowPos({ 250, 650 });
 	DownGUI->SetWindowSize({ 1350, 250 });
 	
-	std::shared_ptr<EngineGUIWindow> RightGUI = TestWindow::CreateGUIWindow<TestWindow>("RightGUI");
+	std::shared_ptr<EngineGUIWindow> RightGUI = TestWindow::CreateGUIWindow<TestWindow>("Details");
 	RightGUI->SetWindowPos({ 1350, 0 });
 	RightGUI->SetWindowSize({ 250, 650 });
+
+	std::shared_ptr<EngineGUIWindow> ViewPortGUI = TestWindow::CreateGUIWindow<TestWindow>("ViewPort");
+	ViewPortGUI->SetWindowPos({ 250, 0 });
+	ViewPortGUI->SetWindowSize({1100, 650});
 }
 
 void Engine::EngineEnd()

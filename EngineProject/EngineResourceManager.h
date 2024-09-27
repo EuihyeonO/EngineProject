@@ -183,29 +183,29 @@ public:
 		SamplerStates[UpperName] = _SamplerState;
 	}
 
-	static const SDepthStencil& FindDepthStencil(std::string_view _Name)
+	static const MSComPtr<ID3D11DepthStencilState> FindDSState(std::string_view _Name)
 	{
 		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
 		
-		if (DepthStencils.find(UpperName) != DepthStencils.end())
+		if (DSStates.find(UpperName) != DSStates.end())
 		{
-			return DepthStencils[UpperName];
+			return DSStates[UpperName];
 		}
 
-		return { nullptr, nullptr };
+		return nullptr;
 	}
 
-	static const void AddDepthStencil(std::string_view _Name, const SDepthStencil& _DepthStencil)
+	static const void AddDSState(std::string_view _Name, const MSComPtr<ID3D11DepthStencilState> _DSState)
 	{
 		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
 
-		if (DepthStencils.find(UpperName) != DepthStencils.end())
+		if (DSStates.find(UpperName) != DSStates.end())
 		{
 			std::cerr << "Error : DepthStencils(Name : " + UpperName + ") is already created." << std::endl;
 			return;
 		}
 
-		DepthStencils[UpperName] = _DepthStencil;
+		DSStates[UpperName] = _DSState;
 	}
 
 	static const MSComPtr<ID3D11RasterizerState> FindRasterizerState(std::string_view _Name)
@@ -268,7 +268,7 @@ private:
 	static std::unordered_map<std::string, std::shared_ptr<class EnginePixelShader>> LoadedPixelShaders;
 
 	static std::unordered_map<std::string, MSComPtr<ID3D11SamplerState>> SamplerStates;
-	static std::unordered_map<std::string, SDepthStencil> DepthStencils;
+	static std::unordered_map<std::string, MSComPtr<ID3D11DepthStencilState>> DSStates;
 
 	static std::unordered_map<std::string, MSComPtr<ID3D11RasterizerState>> RasterizerStates;
 	static std::unordered_map<std::string, MSComPtr<ID3D11BlendState>> BlendStates;

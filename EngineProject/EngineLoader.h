@@ -48,7 +48,7 @@ public:
 
 	static void LoadAllSampler();
 
-	static void LoadAllDepthStencil();
+	static void LoadAllDSState();
 	static void LoadAllRasterizer();
 	static void LoadAllBlendState();
 

@@ -1,5 +1,6 @@
 #include "TestWindow.h"
 #include "EngineDirectX.h"
+#include "DirectXHeader.h"
 
 TestWindow::TestWindow()
 {
@@ -18,14 +19,17 @@ void TestWindow::Start()
     Style.Colors[ImGuiCol_Border] = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-void TestWindow::Update()
+void TestWindow::Update(MSComPtr<ID3D11ShaderResourceView> _SRV)
 {
     ImGui::Begin(GetName().c_str());
 
     ImGui::SetWindowPos(WindowPos);
     ImGui::SetWindowSize(WindowSize);
 
-    ImGui::Image((ImTextureID)EngineDirectX::GetMainSRV().Get(), ImVec2(1600, 900));
+    if (_SRV != nullptr && GetName() == "ViewPort")
+    {
+        ImGui::Image((ImTextureID)_SRV.Get(), ImGui::GetContentRegionAvail());
+    }
 
     ImGui::End();
 }

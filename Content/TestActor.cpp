@@ -25,7 +25,7 @@ void TestActor::OnStart()
 	Trans = CreateComponent<TransformComponent>("Transform");
 	STransform& Transform = Trans->GetTransform();
 
-	SFloat4 EyePos = { 0.0f, 5.0f, -25.0f };
+	SFloat4 EyePos = { 0.0f, 7.5f, -25.0f };
 	SFloat4 EyeDir = { 0.0f, 0.0f, 1.0f };
 	SFloat4 UpDir = { 0.0f, 1.0f, 0.0f };
 

@@ -45,6 +45,11 @@ public:
 		return NewActor;
 	}
 
+	std::shared_ptr<class EngineRenderTarget> GetRenderTarget()
+	{
+		return LevelRenderTarget;
+	}
+
 protected:
 
 private:
@@ -73,6 +78,6 @@ private:
 
 	std::unordered_map<std::string, std::shared_ptr<EngineActor>> Actors;
 
-	std::shared_ptr<class EngineRenderTarget> MainRenderTarget;
+	std::shared_ptr<class EngineRenderTarget> LevelRenderTarget;
 };
 

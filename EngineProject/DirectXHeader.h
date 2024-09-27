@@ -32,12 +32,6 @@ struct SSamplerState
 	UINT BindPoint;
 };
 
-struct SDepthStencil
-{
-	MSComPtr<ID3D11DepthStencilView> DSV;
-	MSComPtr<ID3D11DepthStencilState> DSState;
-};
-
 struct SRenderState
 {
 	MSComPtr<ID3D11Buffer> VertexBuffer = nullptr;

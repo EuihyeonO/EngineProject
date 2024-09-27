@@ -9,6 +9,7 @@
 #include "EngineVertexShader.h"
 #include "EngineString.h"
 #include "EnginePixelShader.h"
+#include "EnginePixelShader.h"
 
 #include <vector>
 #include <string>
@@ -20,7 +21,7 @@
 #pragma comment(lib, "dxguid")
 #pragma comment(lib, "DXGI")
 
-std::pair<float, float> EngineDirectX::MainViewPortSize = { 1600.0f, 900.0f };
+std::pair<float, float> EngineDirectX::MainViewPortSize = { 1084, 615 };
 
 EngineDirectX::EngineDirectX()
 {
@@ -379,34 +380,8 @@ MSComPtr<ID3D11SamplerState> EngineDirectX::CreateSamplerState(std::string_view 
 	return MSComPtr<ID3D11SamplerState>();
 }
 
-
-SDepthStencil EngineDirectX::CreateDepthStencil(const D3D11_TEXTURE2D_DESC& _BufferDesc, const D3D11_DEPTH_STENCIL_DESC& _StateDesc)
-{
-	MSComPtr<ID3D11Texture2D> DSBuffer;
-
-	HRESULT Result = GetDevice()->CreateTexture2D(&_BufferDesc, 0, DSBuffer.GetAddressOf());
-	EngineDebug::CheckResult(Result);
-
-	MSComPtr<ID3D11DepthStencilView> DSV;
-	Result = GetDevice()->CreateDepthStencilView(DSBuffer.Get(), 0, &DSV);
-	EngineDebug::CheckResult(Result);
-
-	MSComPtr<ID3D11DepthStencilState> DSState;
-	Result = GetDevice()->CreateDepthStencilState(&_StateDesc, DSState.GetAddressOf());
-	EngineDebug::CheckResult(Result);
-
-	SDepthStencil Return;
-	Return.DSV = DSV;
-	Return.DSState = DSState;
-	
-	return Return;
-}
-
 MSComPtr<ID3D11RenderTargetView> EngineDirectX::CreateRTV(MSComPtr<ID3D11Texture2D> _Texture2D, const D3D11_RENDER_TARGET_VIEW_DESC& _DESC)
 {
-	D3D11_TEXTURE2D_DESC TexDesc;
-	_Texture2D->GetDesc(&TexDesc);
-
 	MSComPtr<ID3D11RenderTargetView> RTV;
 	HRESULT Result = GetDevice()->CreateRenderTargetView(_Texture2D.Get(), &_DESC, RTV.GetAddressOf());
 	EngineDebug::CheckResult(Result);
@@ -416,14 +391,29 @@ MSComPtr<ID3D11RenderTargetView> EngineDirectX::CreateRTV(MSComPtr<ID3D11Texture
 
 MSComPtr<ID3D11ShaderResourceView> EngineDirectX::CreateSRV(MSComPtr<ID3D11Texture2D> _Texture2D, const D3D11_SHADER_RESOURCE_VIEW_DESC& _DESC)
 {
-	D3D11_TEXTURE2D_DESC TexDesc;
-	_Texture2D->GetDesc(&TexDesc);
-
 	MSComPtr<ID3D11ShaderResourceView> SRV;
-	HRESULT Result = GetDevice()->CreateShaderResourceView(_Texture2D.Get(), &_DESC, SRV.GetAddressOf());
+	HRESULT Result = GetDevice()->CreateShaderResourceView(_Texture2D.Get(), &_DESC , SRV.GetAddressOf());
 	EngineDebug::CheckResult(Result);
 
-	return MSComPtr<ID3D11ShaderResourceView>();
+	return SRV;
+}
+
+MSComPtr<ID3D11DepthStencilView> EngineDirectX::CreateDSV(MSComPtr<ID3D11Texture2D> _Texture2D, const D3D11_DEPTH_STENCIL_VIEW_DESC& _DESC)
+{
+	MSComPtr<ID3D11DepthStencilView> DSV;
+	HRESULT Result = GetDevice()->CreateDepthStencilView(_Texture2D.Get(), &_DESC, DSV.GetAddressOf());
+	EngineDebug::CheckResult(Result);
+
+	return DSV;
+}
+
+MSComPtr<ID3D11DepthStencilState> EngineDirectX::CreateDSState(const D3D11_DEPTH_STENCIL_DESC& _DESC)
+{
+	MSComPtr<ID3D11DepthStencilState> DSState;
+	HRESULT Result = GetDevice()->CreateDepthStencilState(&_DESC, DSState.GetAddressOf());
+	EngineDebug::CheckResult(Result);
+
+	return DSState;
 }
 
 void EngineDirectX::CreateVertexShaderResource(std::shared_ptr<EngineVertexShader> _Shader, MSComPtr<ID3DBlob> _ShaderBlob)

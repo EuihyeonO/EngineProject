@@ -18,7 +18,7 @@ void ContentLevelManager::OnStart()
 
 	EngineLoader::LoadAllBlendState();
 	EngineLoader::LoadAllRasterizer();
-	EngineLoader::LoadAllDepthStencil();
+	EngineLoader::LoadAllDSState();
 
 	EngineLoader::LoadAllFile(ExtensionType::FBX);
 	

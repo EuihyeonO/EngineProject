@@ -14,7 +14,7 @@ public:
 	TestWindow& operator=(TestWindow&& _Other) noexcept = delete;
 
 	void Start() override;
-	void Update() override;
+	void Update(MSComPtr<ID3D11ShaderResourceView> _SRV) override;
 
 protected:
 };

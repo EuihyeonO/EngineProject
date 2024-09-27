@@ -38,6 +38,11 @@ public:
 	Engine& operator=(const Engine& _Other) = delete;
 	Engine& operator=(Engine&& _Other) noexcept = delete;
 
+	static std::pair<float, float> GetViewPortSize()
+	{
+		return ViewPortSize;
+	}
+
 protected:
 
 private:
@@ -57,6 +62,7 @@ private:
 	~Engine();
 
 	static bool isEngineOn;
+	static std::pair<float, float> ViewPortSize;
 	static std::shared_ptr<EngineLevelManager> LevelManager;
 };
 

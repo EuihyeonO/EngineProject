@@ -91,42 +91,23 @@ void EngineLoader::LoadVertexShader(EngineFile& _ShaderFile)
 	EngineResourceManager::AddLoadedVertexShader(_ShaderFile.GetFileName(), LoadedVertexShader);
 }
 
-void EngineLoader::LoadAllDepthStencil()
+void EngineLoader::LoadAllDSState()
 {
+	DXGI_SWAP_CHAIN_DESC SwapChainDesc;
+	EngineDirectX::GetSwapChain()->GetDesc(&SwapChainDesc);
+
 	{
-		//
-		D3D11_TEXTURE2D_DESC DepthStencilBufferDesc = { 0, };
-
-		DXGI_SWAP_CHAIN_DESC desc;
-		EngineDirectX::GetSwapChain()->GetDesc(&desc);
-
-		DepthStencilBufferDesc.Width = desc.BufferDesc.Width;
-		DepthStencilBufferDesc.Height = desc.BufferDesc.Height;
-
-		DepthStencilBufferDesc.MipLevels = 1;
-		DepthStencilBufferDesc.ArraySize = 1;
-
-		DepthStencilBufferDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-
-		DepthStencilBufferDesc.SampleDesc.Count = 1;
-		DepthStencilBufferDesc.SampleDesc.Quality = 0;
-
-		DepthStencilBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-		DepthStencilBufferDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-		DepthStencilBufferDesc.CPUAccessFlags = 0;
-		DepthStencilBufferDesc.MiscFlags = 0;
-
-		//
+		//DepthStencil-State
 		D3D11_DEPTH_STENCIL_DESC DepthStencilDesc;
 		ZeroMemory(&DepthStencilDesc, sizeof(D3D11_DEPTH_STENCIL_DESC));
+
 		DepthStencilDesc.DepthEnable = true;
 		DepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		DepthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL;
 		DepthStencilDesc.StencilEnable = false;
 
-		SDepthStencil DSData = EngineDirectX::CreateDepthStencil(DepthStencilBufferDesc, DepthStencilDesc);
-
-		EngineResourceManager::AddDepthStencil("BaseDepthStencil", DSData);
+		MSComPtr<ID3D11DepthStencilState> DSState = EngineDirectX::CreateDSState(DepthStencilDesc);
+		EngineResourceManager::AddDSState("BaseDSState", DSState);
 	}
 }
 

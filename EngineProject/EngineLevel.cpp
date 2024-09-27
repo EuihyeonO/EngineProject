@@ -1,6 +1,8 @@
 #include "EngineLevel.h"
 #include "EngineActor.h"
 #include "EngineDirectX.h"
+#include "EngineRenderTarget.h"
+#include "EngineResourceManager.h"
 
 EngineLevel::EngineLevel()
 {
@@ -12,6 +14,11 @@ EngineLevel::~EngineLevel()
 
 void EngineLevel::Start()
 {
+	LevelRenderTarget = EngineRenderTarget::CreateRenderTarget("LevelRenderTarget", EngineDirectX::GetMainViewPortSize().first, EngineDirectX::GetMainViewPortSize().second);
+	LevelRenderTarget->CreateRTV();
+	LevelRenderTarget->CreateSRV();
+	LevelRenderTarget->CreateDepthStencil();
+
 	OnStart();
 }
 
@@ -30,13 +37,12 @@ void EngineLevel::Update()
 	}
 }
 
-#include "EngineResourceManager.h"
-
 void EngineLevel::RenderSetting()
 {
+	LevelRenderTarget->Clear();
+	EngineDirectX::SetRenderTarget(LevelRenderTarget->GetRTV(), LevelRenderTarget->GetDSV());
+
 	EngineDirectX::GetInstance()->SetMainViewport();
-	EngineDirectX::GetInstance()->ClearMainRenderTarget();
-	EngineDirectX::GetInstance()->SetRenderTarget(EngineDirectX::GetMainRTV(), EngineResourceManager::FindDepthStencil("BaseDepthStencil").DSV);
-	EngineDirectX::GetInstance()->SetDepthStencilState(EngineResourceManager::FindDepthStencil("BaseDepthStencil").DSState);
+	EngineDirectX::GetInstance()->SetDepthStencilState(EngineResourceManager::FindDSState("basedsstate"));
 	EngineDirectX::GetInstance()->SetRasterizerState(EngineResourceManager::FindRasterizerState("Solid"));
 }

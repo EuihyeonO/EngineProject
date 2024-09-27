@@ -3,6 +3,7 @@
 #include "imgui.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
+#include "DirectXHeader.h"
 
 #include <memory>
 #include <vector>
@@ -29,7 +30,7 @@ public:
 	EngineGUIWindow& operator=(EngineGUIWindow&& _Other) noexcept = delete;
 
 	virtual void Start();
-	virtual void Update();
+	virtual void Update(MSComPtr<ID3D11ShaderResourceView> _SRV);
 
 
 	template<typename Window> requires GUIWindow<Window>
@@ -68,7 +69,7 @@ private:
 	static void GUIStart();
 	static void GUIEnd();
 
-	static void GUIUpdate()
+	static void GUIUpdate(MSComPtr<ID3D11ShaderResourceView> _SRV)
 	{
 		ImGui_ImplDX11_NewFrame();
 		ImGui_ImplWin32_NewFrame();
@@ -76,7 +77,7 @@ private:
 
 		for (std::pair<std::string, std::shared_ptr<EngineGUIWindow>> GUIData : GUIWindows)
 		{
-			GUIData.second->Update();
+			GUIData.second->Update(_SRV);
 		}
 	}
 

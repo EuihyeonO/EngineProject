@@ -20,7 +20,7 @@ void EngineGUIWindow::Start()
 {
 }
 
-void EngineGUIWindow::Update()
+void EngineGUIWindow::Update(MSComPtr<ID3D11ShaderResourceView> _SRV)
 {
 }
 
