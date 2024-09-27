@@ -14,7 +14,7 @@ EngineLevel::~EngineLevel()
 
 void EngineLevel::Start()
 {
-	LevelRenderTarget = EngineRenderTarget::CreateRenderTarget("LevelRenderTarget", EngineDirectX::GetMainViewPortSize().first, EngineDirectX::GetMainViewPortSize().second);
+	LevelRenderTarget = EngineRenderTarget::CreateRenderTarget("LevelRenderTarget", (UINT)EngineDirectX::GetMainViewPortSize().first, (UINT)EngineDirectX::GetMainViewPortSize().second);
 	LevelRenderTarget->CreateRTV();
 	LevelRenderTarget->CreateSRV();
 	LevelRenderTarget->CreateDepthStencil();
@@ -44,5 +44,5 @@ void EngineLevel::RenderSetting()
 
 	EngineDirectX::GetInstance()->SetMainViewport();
 	EngineDirectX::GetInstance()->SetDepthStencilState(EngineResourceManager::FindDSState("basedsstate"));
-	EngineDirectX::GetInstance()->SetRasterizerState(EngineResourceManager::FindRasterizerState("Solid"));
+	//EngineDirectX::GetInstance()->SetRasterizerState(EngineResourceManager::FindRasterizerState("Solid"));
 }

@@ -4,6 +4,7 @@
 #include "EngineDirectX.h"
 #include "TestWindow.h"
 #include "EngineMath.h"
+#include "EngineRenderTarget.h"
 
 bool Engine::isEngineOn = false;
 std::shared_ptr<EngineLevelManager> Engine::LevelManager = nullptr;
@@ -16,7 +17,6 @@ Engine::Engine()
 Engine::~Engine()
 {
 }
-
 
 void Engine::EngineStart(HINSTANCE hInstance, int nCmdShow)
 {
@@ -36,9 +36,7 @@ void Engine::EngineLoop()
 
 void Engine::Update()
 {
-	LevelManager->Update();
 }
-#include "EngineRenderTarget.h"
 
 void Engine::Render()
 {
@@ -48,8 +46,12 @@ void Engine::Render()
 	EngineDirectX::SetRenderTarget(EngineDirectX::GetMainRTV(), nullptr);
 
 	//GUI Renderring	
-	EngineGUIWindow::GUIUpdate(LevelManager->CurrentLevel->GetRenderTarget()->GetSRV());
-	EngineGUIWindow::GUIRender();
+	if (LevelManager->CurrentLevel != nullptr)
+	{
+		EngineGUIWindow::GUIUpdate(LevelManager->CurrentLevel->GetRenderTarget()->GetSRV());
+		EngineGUIWindow::GUIRender();
+	}
+
 
 	//Present
 	EngineDirectX::GetInstance()->GetSwapChain()->Present(1, 0);

@@ -21,7 +21,7 @@
 #pragma comment(lib, "dxguid")
 #pragma comment(lib, "DXGI")
 
-std::pair<float, float> EngineDirectX::MainViewPortSize = { 1084, 615 };
+std::pair<float, float> EngineDirectX::MainViewPortSize = { 1084.0f, 615.0f };
 
 EngineDirectX::EngineDirectX()
 {

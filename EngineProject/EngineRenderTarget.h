@@ -163,6 +163,16 @@ public:
 		EngineDirectX::GetDeviceContext()->ClearDepthStencilView(DSV.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	}
 
+	void Destroy()
+	{
+		Texture2D = nullptr;
+		DepthTexture2D = nullptr;
+		RTV = nullptr;
+		SRV = nullptr;
+		DSV = nullptr;
+		DSState = nullptr;
+	}
+
 protected:
 
 private:

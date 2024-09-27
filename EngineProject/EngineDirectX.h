@@ -204,7 +204,8 @@ public:
 	{
 		if (RenderState.DSState != _DSState)
 		{
-			GetDeviceContext()->OMGetDepthStencilState(_DSState.GetAddressOf(), 0);
+			GetDeviceContext()->OMSetDepthStencilState(_DSState.Get(), 0);
+			RenderState.DSState = _DSState;
 		}
 	}
 

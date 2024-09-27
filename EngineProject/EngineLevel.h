@@ -1,6 +1,7 @@
 #pragma once
 #include "EngineObjectBase.h"
 #include "EngineActor.h"
+#include "EngineRenderTarget.h"
 
 #include <memory>
 #include <string>
@@ -60,8 +61,12 @@ private:
 			Actor.second->Destroy();
 		}
 
-		OnDestroyed();
 		Actors.clear();
+
+		LevelRenderTarget->Destroy();
+		LevelRenderTarget = nullptr;
+
+		OnDestroyed();
 	}
 
 	void Render() override final

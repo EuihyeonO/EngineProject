@@ -73,10 +73,13 @@ protected:
 
 private:
 
-	virtual void End() override final {}
-
+	virtual void End() override final{}
 	void OnCreated() override final {}
-	void OnDestroyed() override final{}
+
+	void OnDestroyed() override final
+	{
+		CurrentLevel = nullptr;
+	}
 	
 	void Destroy() override final
 	{
@@ -85,8 +88,8 @@ private:
 			Level.second->Destroy();
 		}
 
-		OnDestroyed();
 		Levels.clear();
+		OnDestroyed();
 	}
 
 	void Render() override final
