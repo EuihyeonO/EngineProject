@@ -19,6 +19,8 @@ public:
 
 		isEngineOn = true;
 
+		std::locale::global(std::locale("korean"));
+
 		std::shared_ptr<LevelManagerType> NewLevelManager = std::make_shared<LevelManagerType>();
 		LevelManager = NewLevelManager;
 
