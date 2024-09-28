@@ -6,6 +6,7 @@
 #include "EngineDirectX.h"
 #include "EngineString.h"
 #include "EngineVertexShader.h"
+#include "EngineDebug.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -82,7 +83,7 @@ void EngineLoader::LoadVertexShader(EngineFile& _ShaderFile)
 {
 	if (EngineResourceManager::FindShader<EngineVertexShader>(_ShaderFile.GetFileName()) != nullptr)
 	{
-		std::cerr << "Error : Shader that try to compile is already compiled." << std::endl;
+		EngineDebug::LogErrorMsg(L"로드하고자 하는 쉐이더가 이미 로드되어 있습니다.");
 		return;
 	}
 
@@ -154,7 +155,7 @@ void EngineLoader::LoadPixelShader(class EngineFile& _ShaderFile)
 	const std::string& ShaderName = _ShaderFile.GetFileName();
 	if (EngineResourceManager::FindShader<EnginePixelShader>(ShaderName) != nullptr)
 	{
-		std::cerr << "Error : Shader that try to compile is already compiled." << std::endl;
+		EngineDebug::LogErrorMsg(L"로드하고자 하는 쉐이더가 이미 로드되어 있습니다.");
 		return;
 	}
 
@@ -204,7 +205,9 @@ void EngineLoader::LoadFBX(EngineFile& _FileData)
 	
 	if (Scene == nullptr)
 	{
-		std::cerr << "Error : FileLoad is failed. " << "FileName : " << _FileData.GetFileName() << std::endl;
+		std::wstring Msg = L"로드하고자 하는 FBX파일을 로드할 수 없습니다. 이름을 확인해주세요. FileName : ";
+		Msg += EngineString::StringToWString(_FileData.GetFileName());
+		EngineDebug::LogErrorMsg(Msg);
 		return;
 	}
 
@@ -215,7 +218,10 @@ void EngineLoader::LoadFBX(EngineFile& _FileData)
 
 		if (EngineResourceManager::FindMesh(_FileData.GetFileName()) != nullptr)
 		{
-			std::cerr << "Error : Mesh(Name : " + _FileData.GetFileName() + ") is already loaded." << std::endl;
+			std::wstring Msg = L"로드하고자 하는 FBX파일이 이미 로드되어 있습니다. FileName : ";
+			Msg += EngineString::StringToWString(_FileData.GetFileName());
+			EngineDebug::LogErrorMsg(Msg);
+			return;
 		}
 		else
 		{

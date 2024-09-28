@@ -52,7 +52,6 @@ void Engine::Render()
 		EngineGUIWindow::GUIRender();
 	}
 
-
 	//Present
 	EngineDirectX::GetInstance()->GetSwapChain()->Present(1, 0);
 }

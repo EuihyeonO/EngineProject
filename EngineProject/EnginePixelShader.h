@@ -1,5 +1,6 @@
 #pragma once
 #include "DirectXHeader.h"
+#include "EngineDebug.h"
 
 #include <unordered_map>
 
@@ -58,13 +59,13 @@ public:
 	{
 		if (ConstantBuffers.find(_Name.data()) == ConstantBuffers.end())
 		{
-			std::cerr << "Error : ConstantBuffer that you try to set is invalid." << std::endl;
+			EngineDebug::LogErrorMsg(L"세팅하고자 하는 상수버퍼 이름이 쉐이더 내에 존재하지 않습니다.");
 			return;
 		}
 
 		if (ConstantBuffers[_Name.data()].Size != sizeof(DataType))
 		{
-			std::cerr << "Error : Size of constantBuffer data that you try to set is not same size of shader constant." << std::endl;
+			EngineDebug::LogErrorMsg(L"세팅하고자 하는 상수버퍼 크기가 쉐이더 내에서 사용된 크기와 일치하지 않습니다.");
 			return;
 		}
 

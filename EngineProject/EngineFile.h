@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <filesystem>
+#include "EngineDebug.h"
 
 class EngineFile
 {
@@ -35,7 +36,7 @@ public:
 
 		if (nullptr == FilePtr)
 		{
-			std::cerr << "File Opening is failed. FilePath : " + PathString << std::endl;
+			EngineDebug::LogErrorMsg(L"문자열로 읽고자 하는 파일이 nullptr 입니다.");
 			return "";
 		}
 

@@ -1,4 +1,5 @@
 #include "EngineVertexShader.h"
+#include "EngineDebug.h"
 
 EngineVertexShader::EngineVertexShader()
 {
@@ -38,7 +39,7 @@ void EngineVertexShader::AddConstantBuffer(std::string _Name, const SConstantBuf
 
 	if (ConstantBuffers.find(UpperName) != ConstantBuffers.end())
 	{
-		std::cerr << "Error : ConstantBuffer that you try add to VertexShader is already exist. ConstantBufferName : " << _Name << std::endl;
+		EngineDebug::LogErrorMsg(L"버텍스 쉐이더에 생성하고자 하는 상수버퍼가 이미 존재합니다. 동일한 이름을 두 번 사용하지 않도록 해주세요");
 		return;
 	}
 

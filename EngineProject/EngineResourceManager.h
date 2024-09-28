@@ -49,7 +49,7 @@ public:
 
 		if (FindMesh(UpperName) != nullptr)
 		{
-			std::cerr << "Error : Mesh(Name : " + UpperName + ") is already loaded." << std::endl;
+			EngineDebug::LogErrorMsg(L"같은 이름의 메쉬가 이미 존재합니다.");
 			return;
 		}
 
@@ -78,7 +78,7 @@ public:
 		}
 		else
 		{
-			std::cerr << "Error : Shader that Try to find is Invalid ShaderType." << std::endl;
+			EngineDebug::LogErrorMsg("지원하지 않는 쉐이더 타입닙니다.");
 			return nullptr;
 		}
 	}
@@ -125,7 +125,7 @@ public:
 
 		if (FindShader<class EngineVertexShader>(UpperName) != nullptr)
 		{
-			std::cerr << "Error : Shader(Name : " + UpperName + ") is already loaded." << std::endl;
+			EngineDebug::LogErrorMsg(L"같은 이름의 버텍스 쉐이더가 이미 존재합니다.");
 			return;
 		}
 
@@ -138,7 +138,7 @@ public:
 
 		if (FindShader<EnginePixelShader>(UpperName) != nullptr)
 		{
-			std::cerr << "Error : Shader(Name : " + UpperName + ") is already loaded." << std::endl;
+			EngineDebug::LogErrorMsg(L"같은 이름의 픽셀 쉐이더가 이미 존재합니다.");
 			return;
 		}
 
@@ -151,7 +151,7 @@ public:
 
 		if (LoadedTexture.find(UpperName) != LoadedTexture.end())
 		{
-			std::cerr << "Error : Texture(Name : " + UpperName + ") is already loaded." << std::endl;
+			EngineDebug::LogErrorMsg(L"같은 이름의 텍스쳐가 이미 존재합니다.");
 			return;
 		}
 
@@ -176,7 +176,7 @@ public:
 
 		if (SamplerStates.find(UpperName) != SamplerStates.end())
 		{
-			std::cerr << "Error : Sampler(Name : " + UpperName + ") is already created." << std::endl;
+			EngineDebug::LogErrorMsg(L"같은 이름의 샘플러가 이미 존재합니다.");
 			return;
 		}
 
@@ -201,7 +201,7 @@ public:
 
 		if (DSStates.find(UpperName) != DSStates.end())
 		{
-			std::cerr << "Error : DepthStencils(Name : " + UpperName + ") is already created." << std::endl;
+			EngineDebug::LogErrorMsg(L"같은 이름의 DSState가 이미 존재합니다.");
 			return;
 		}
 
@@ -226,7 +226,7 @@ public:
 
 		if (RasterizerStates.find(UpperName) != RasterizerStates.end())
 		{
-			std::cerr << "Error : RasterizerState(Name : " + UpperName + ") is already created." << std::endl;
+			EngineDebug::LogErrorMsg(L"같은 이름의 RSState가 이미 존재합니다.");
 			return;
 		}
 
@@ -251,7 +251,7 @@ public:
 
 		if (BlendStates.find(UpperName) != BlendStates.end())
 		{
-			std::cerr << "Error : BlendStates(Name : " + UpperName + ") is already created." << std::endl;
+			EngineDebug::LogErrorMsg(L"같은 이름의 BlendState가 이미 존재합니다.");
 			return;
 		}
 

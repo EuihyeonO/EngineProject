@@ -13,7 +13,7 @@ public:
 		//혹시나 main함수 말고 다른데서 호출하면 안된다
 		if (isEngineOn == true)
 		{
-			std::cerr << "Why do you call \"PlayEngine\"?" << std::endl;
+			EngineDebug::LogErrorMsg(L"PlayEngine을 임의로 호출하지 마세요.");
 			return;
 		}
 

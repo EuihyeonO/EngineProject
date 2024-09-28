@@ -22,7 +22,7 @@ public:
 	EngineLevel& operator=(EngineLevel&& _Other) noexcept = delete;
 	
 	void Start() override final;
-	virtual void Update() override final;
+	void Update() override final;
 	void End() override final;
 
 	template<typename ActorType, typename = std::enable_if_t<std::is_base_of_v<EngineActor, ActorType>>>
@@ -31,7 +31,7 @@ public:
 		if (Actors.find(_ActorName.data()) != Actors.end())
 		{
 			std::string ActorName = _ActorName.data();
-			std::cerr << "Error : Actor(ActorName : " + ActorName + ") is already created." << std::endl;
+			EngineDebug::LogErrorMsg(L"생성하고자 하는 Actor의 이름이 이미 존재합니다.");
 			return nullptr;
 		}
 

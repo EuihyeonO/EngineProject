@@ -1,5 +1,6 @@
 #pragma once
 #include "EngineDirectX.h"
+#include "EngineDebug.h"
 
 class EngineRenderTarget
 {
@@ -41,7 +42,7 @@ public:
 	{
 		if (Texture2D == nullptr)
 		{
-			std::cerr << "Texture2D is nullptr." << std::endl;
+			EngineDebug::LogErrorMsg(L"렌더타겟에 Texture2D가 생성되지 않았습니다.");
 			return;
 		}
 
@@ -68,7 +69,7 @@ public:
 	{
 		if (Texture2D == nullptr)
 		{
-			std::cerr << "Texture2D is nullptr." << std::endl;
+			EngineDebug::LogErrorMsg(L"렌더타겟에 Texture2D가 생성되지 않았습니다.");
 			return;
 		}
 

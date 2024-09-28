@@ -420,7 +420,7 @@ void EngineDirectX::CreateVertexShaderResource(std::shared_ptr<EngineVertexShade
 {
 	if (_Shader == nullptr || _ShaderBlob == nullptr)
 	{
-		std::cerr << "Error : VSResource Creation is failed. (Nullptr)" << std::endl;
+		EngineDebug::LogErrorMsg(L"버텍스 쉐이더 혹은 쉐이더Blob이 nullptr입니다.");
 		return;
 	}
 
@@ -478,7 +478,7 @@ void EngineDirectX::CreatePixelShaderResource(std::shared_ptr<EnginePixelShader>
 {
 	if (_Shader == nullptr || _ShaderBlob == nullptr)
 	{
-		std::cerr << "Error : PSResource Creation is failed. (Nullptr)" << std::endl;
+		EngineDebug::LogErrorMsg(L"픽셀 쉐이더 혹은 쉐이더Blob이 nullptr입니다.");
 		return;
 	}
 
@@ -609,16 +609,13 @@ void EngineDirectX::CreateDevice()
 
 	if (featureLevel != D3D_FEATURE_LEVEL_11_0)
 	{
-		std::cerr << "Created Device Version is not D3D11" << std::endl;
+		EngineDebug::LogErrorMsg(L"생성된 디바이스 버전이 DirectX 11이 아닙니다.");
 		return;
 	}
 
 	if (Result != S_OK)
 	{
-		_com_error Error(Result);
-		LPCTSTR ErrMsg = Error.ErrorMessage();
-
-		std::wcerr << L"Error : " << ErrMsg << std::endl;
+		EngineDebug::CheckResult(Result);
 		return;
 	}
 }

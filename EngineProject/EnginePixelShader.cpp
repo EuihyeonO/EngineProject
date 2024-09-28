@@ -1,5 +1,6 @@
 #include "EnginePixelShader.h"
 #include "ResourceHeader.h"
+#include "EngineDebug.h"
 
 EnginePixelShader::EnginePixelShader()
 {
@@ -27,7 +28,7 @@ void EnginePixelShader::AddTexture(std::string_view _Name, const STextureData& _
 
 	if (TextureData.find(UpperName) != TextureData.end())
 	{
-		std::cerr << "Error : TextureData that you try add to PixelShader is already exist. TextureDataName : " << _Name << std::endl;
+		EngineDebug::LogErrorMsg(L"픽셀 쉐이더에 추가하고자 하는 텍스쳐가 이미 존재합니다. 동일한 이름을 두 번 사용하지 않도록 해주세요.");
 		return;
 	}
 
@@ -40,7 +41,7 @@ void EnginePixelShader::SetTexture(std::string_view _Name, const STextureData& _
 
 	if (TextureData.find(UpperName) == TextureData.end())
 	{
-		std::cerr << "Error : TextureData that you try set to PixelShader is not exist. TextureDataName : " << _Name << std::endl;
+		EngineDebug::LogErrorMsg(L"픽셀 쉐이더에 세팅하고자 하는 텍스쳐가 로드되지 않았습니다.");
 		return;
 	}
 
@@ -66,7 +67,7 @@ void EnginePixelShader::AddSampler(std::string_view _Name, const SSamplerState& 
 
 	if (SamplerStates.find(UpperName) != SamplerStates.end())
 	{
-		std::cerr << "Error : SamplerStates that you try add to PixelShader is already exist. SamplerStates : " << _Name << std::endl;
+		EngineDebug::LogErrorMsg(L"픽셀 쉐이더에 추가하고자 하는 샘플러가 이미 존재합니다. 동일한 이름을 두 번 사용하지 않도록 해주세요");
 		return;
 	}
 
@@ -79,7 +80,7 @@ void EnginePixelShader::SetSampler(std::string_view _Name, MSComPtr<ID3D11Sample
 
 	if (SamplerStates.find(UpperName) == SamplerStates.end())
 	{
-		std::cerr << "Error : SamplerStates that you try set to PixelShader is not exist. SamplerStates : " << _Name << std::endl;
+		EngineDebug::LogErrorMsg(L"픽셀 쉐이더에 세팅하고자 하는 샘플러가 존재하지 않습니다.");
 		return;
 	}
 
@@ -92,7 +93,7 @@ void EnginePixelShader::AddConstantBuffer(std::string _Name, const SConstantBuff
 
 	if (ConstantBuffers.find(UpperName) != ConstantBuffers.end())
 	{
-		std::cerr << "Error : ConstantBuffer that you try add to VertexShader is already exist. ConstantBufferName : " << _Name << std::endl;
+		EngineDebug::LogErrorMsg(L"픽셀 쉐이더에 생성하고자 하는 상수버퍼가 이미 존재합니다. 동일한 이름을 두 번 사용하지 않도록 해주세요");
 		return;
 	}
 

@@ -25,7 +25,7 @@ public:
 		if (Levels.find(_LevelName.data()) != Levels.end())
 		{
 			std::string LevelMame = _LevelName.data();
-			std::cerr << "Error : Level(LevelName : " + LevelMame + ") is already created." << std::endl;
+			EngineDebug::LogErrorMsg(L"생성하고자 하는 레벨이 이미 존재합니다.");
 			return nullptr;
 		}
 
@@ -44,7 +44,7 @@ public:
 		if (FindIter == Levels.end())
 		{
 			std::string NextLevelName = _NextLevelName.data();
-			std::cerr << "Level that you try to change is not been created. tried LevelName is " + NextLevelName << std::endl;
+			EngineDebug::LogErrorMsg(L"변경하고자 하는 레벨이 생성되지 않은 레벨입니다. NextLevel : " + EngineString::StringToWString(NextLevelName));
 
 			return;
 		}
@@ -52,8 +52,7 @@ public:
 		if (FindIter->second == CurrentLevel)
 		{
 			std::string NextLevelName = _NextLevelName.data();
-			std::cerr << "Level that you try to change is same currentlevel. tried LevelName is " + NextLevelName << std::endl;
-
+			EngineDebug::LogErrorMsg(L"변경하고자 하는 레벨이 현재 레벨과 동일합니다. Level : " + EngineString::StringToWString(NextLevelName));
 			return;
 		}
 

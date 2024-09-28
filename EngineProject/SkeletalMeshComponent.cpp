@@ -1,6 +1,8 @@
 #include "SkeletalMeshComponent.h"
 #include "EngineResourceManager.h"
 #include "EngineRenderUnit.h"
+#include "EngineDebug.h"
+#include "EngineString.h"
 
 SkeletalMeshComponent::SkeletalMeshComponent()
 {
@@ -16,9 +18,9 @@ void SkeletalMeshComponent::SetMesh(std::string_view _Name)
 
 	if (FindedMesh == nullptr)
 	{
-		std::string MeshName = _Name.data();
-		std::cerr << "Mesh that you try set is not loaded. MeshName : " + MeshName << std::endl;
-	
+		std::wstring Msg = L"세팅하고자 하는 메쉬가 로드되지 않았습니다. MeshName : ";
+		Msg += EngineString::StringToWString(_Name.data());
+		EngineDebug::LogErrorMsg(Msg);
 		return;
 	}
 

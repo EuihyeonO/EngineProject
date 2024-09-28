@@ -26,7 +26,7 @@ public:
 
 		if (VertexShader == nullptr)
 		{
-			std::cerr << "VertexShader that you try to set is not loaded. ShaderName : " << _VertexShaderName.data() << std::endl;
+			EngineDebug::LogErrorMsg(L"세팅하고자 하는 버텍스 쉐이더가 존재하지 않습니다.");
 			return;
 		}
 
@@ -42,7 +42,7 @@ public:
 
 		if (PixelShader == nullptr)
 		{
-			std::cerr << "PixelShader that you try to set is not loaded. ShaderName : " << _PixelShaderName.data() << std::endl;
+			EngineDebug::LogErrorMsg(L"세팅하고자 하는 픽셀 쉐이더가 존재하지 않습니다.");
 			return;
 		}
 

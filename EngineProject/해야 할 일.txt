@@ -9,3 +9,4 @@
 5.스왑체인 관련 코드 정리좀 하자
 6. 트랜스폼 및 GUI 테스트 코드 제거하고 구조 수정 필요
 7. 리소스 로드 과정도 수정해야함 (ContentLevelManager의 OnStart 참고)
+8. 오류 메세지 모두 EngineDebug::LogErrorMsg로 대체할 것

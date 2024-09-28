@@ -4,6 +4,7 @@
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
 #include "DirectXHeader.h"
+#include "EngineDebug.h"
 
 #include <memory>
 #include <vector>
@@ -38,7 +39,7 @@ public:
 	{
 		if (GUIWindows.find(_GUIName) != GUIWindows.end())
 		{
-			std::cerr << _GUIName << " is already created" << std::endl;
+			EngineDebug::LogErrorMsg(L"같은 이름의 GUI가 이미 존재합니다.");
 			return nullptr;
 		}
 

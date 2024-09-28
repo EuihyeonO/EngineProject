@@ -2,6 +2,7 @@
 #include "EngineObjectBase.h"
 #include "EngineString.h"
 #include "EngineComponent.h"
+#include "EngineDebug.h"
 
 #include <iostream>
 #include <memory>
@@ -31,8 +32,7 @@ public:
 
 		if (Components.find(UpperName) != Components.end())
 		{
-			std::string CompName = CompName.data();
-			std::cerr << "Error : Component(ComponentName : " + CompName + ") is already created." << std::endl;
+			EngineDebug::LogErrorMsg(L"생성하고자 하는 Component의 이름이 이미 존재합니다.");
 			return nullptr;
 		}
 
