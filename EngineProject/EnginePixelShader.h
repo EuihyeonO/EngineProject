@@ -8,7 +8,6 @@ class EnginePixelShader
 {
 	friend class EngineDirectX;
 public:
-
 	EnginePixelShader();
 	~EnginePixelShader();
 
@@ -17,9 +16,15 @@ public:
 	EnginePixelShader& operator=(const EnginePixelShader& _Other) = delete;
 	EnginePixelShader& operator=(EnginePixelShader&& _Other) noexcept = delete;
 
+	//Has
+public:
 	bool HasTexture(std::string_view _Name);
-	void AddTexture(std::string_view _Name, const struct STextureData& _TextureData);
-	void SetTexture(std::string_view _Name, const struct STextureData& _TextureData);
+	bool HasSampler(std::string_view _Name);
+	bool HasConstantBuffer(std::string_view _Name);
+
+	//Get
+public:
+	const SConstantBuffer& GetConstantBuffer(std::string_view _Name);
 
 	const std::unordered_map<std::string, struct STextureData>& GetAllTexture()
 	{
@@ -31,18 +36,10 @@ public:
 		return SamplerStates;
 	}
 
-	bool HasSampler(std::string_view _Name);
-	void AddSampler(std::string_view _Name, const struct SSamplerState& _SamplerData);
-	void SetSampler(std::string_view _Name, MSComPtr<ID3D11SamplerState> _SamplerData);
-
 	MSComPtr<ID3D11PixelShader> GetPixelShader()
 	{
 		return PixelShader;
 	}
-
-	void AddConstantBuffer(std::string _Name, const SConstantBuffer& _Buffer);
-	bool HasConstantBuffer(std::string_view _Name);
-	const SConstantBuffer& GetConstantBuffer(std::string_view _Name);
 
 	void SetPixelShader(MSComPtr<ID3D11PixelShader> _PixelShader)
 	{
@@ -54,6 +51,11 @@ public:
 		return ConstantBuffers;
 	}
 
+	//Set
+public:
+	void SetTexture(std::string_view _Name, const struct STextureData& _TextureData);
+	void SetSampler(std::string_view _Name, MSComPtr<ID3D11SamplerState> _SamplerData);
+	
 	template<typename DataType>
 	void SetConstantBuffer(std::string_view _Name, DataType* _Data)
 	{
@@ -72,13 +74,19 @@ public:
 		ConstantBuffers[_Name.data()].Data = reinterpret_cast<void*>(_Data);
 	}
 
+	//Add
+public:
+	void AddTexture(std::string_view _Name, const struct STextureData& _TextureData);
+	void AddSampler(std::string_view _Name, const struct SSamplerState& _SamplerData);
+	void AddConstantBuffer(std::string _Name, const SConstantBuffer& _Buffer);
+
 protected:
 
 private:
 	MSComPtr<ID3D11PixelShader> PixelShader;
+
 	std::unordered_map<std::string, struct STextureData> TextureData;
 	std::unordered_map<std::string, struct SSamplerState> SamplerStates;
-
 	std::unordered_map<std::string, SConstantBuffer> ConstantBuffers;
 };
 

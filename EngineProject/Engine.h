@@ -29,31 +29,16 @@ public:
 		GetInstance()->EngineEnd();
 	}
 
-	static void PlayEngine(HINSTANCE hInstance, int nCmdShow);
-
 	void EngineStart(HINSTANCE hInstance, int nCmdShow);
 	void EngineLoop();
 	void EngineEnd();
 
-	Engine(const Engine& _Other) = delete;
-	Engine(Engine&& _Other) noexcept = delete;
 	Engine& operator=(const Engine& _Other) = delete;
 	Engine& operator=(Engine&& _Other) noexcept = delete;
-
-	static std::pair<float, float> GetViewPortSize()
-	{
-		return ViewPortSize;
-	}
 
 protected:
 
 private:
-	void Update();
-	void Render();
-	void Loop();
-
-	void CreateEngineGUI();
-
 	static Engine* GetInstance()
 	{
 		static Engine Instance;
@@ -63,8 +48,17 @@ private:
 	Engine();
 	~Engine();
 
+	Engine(const Engine& _Other) = delete;
+	Engine(Engine&& _Other) noexcept = delete;
+
+private:
+	void Update();
+	void Render();
+	void Loop();
+
+	void CreateEngineGUI();
+
 	static bool isEngineOn;
-	static std::pair<float, float> ViewPortSize;
 	static std::shared_ptr<EngineLevelManager> LevelManager;
 };
 

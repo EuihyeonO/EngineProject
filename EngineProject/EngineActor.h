@@ -13,10 +13,6 @@ class EngineActor : public EngineObjectBase
 {
 	friend class EngineLevel;
 public:
-	virtual void Start() override final;
-	virtual void Update() override final;
-	virtual void End() override final;
-
 	EngineActor();
 	~EngineActor();
 
@@ -25,6 +21,7 @@ public:
 	EngineActor& operator=(const EngineActor& _Other) = delete;
 	EngineActor& operator=(EngineActor&& _Other) noexcept = delete;
 
+public:
 	template<typename CompType, typename = std::enable_if_t<std::is_base_of_v<class EngineComponent, CompType>>>
 	std::shared_ptr<CompType> CreateComponent(std::string_view _CompName)
 	{
@@ -52,27 +49,14 @@ public:
 		return NewComp;
 	}
 
-	std::shared_ptr<EngineComponent> GetComponent(std::string_view _Name)
-	{
-		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+	std::shared_ptr<EngineComponent> GetComponent(std::string_view _Name);
 
-		if (Components.find(UpperName) == Components.end())
-		{
-			return nullptr;
-		}
-
-		return Components[UpperName];
-	}
-
-	void Render() override final
-	{
-		for (const std::pair<std::string, std::shared_ptr<EngineComponent>>& RenderComp : RenderComponents)
-		{
-			RenderComp.second->Render();
-		}
-	}
-
+	void Start() override final;
+	void Update() override final;
+	void Render() override final;
+	void End() override final;
 	void Destroy() override final;
+
 protected:
 
 private:

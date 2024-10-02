@@ -102,7 +102,6 @@ public:
 	virtual void OnDestroyed(){} 
 	virtual void OnRender(){}
 
-
 protected:
 
 private:

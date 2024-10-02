@@ -14,51 +14,6 @@ public:
 		return &Instance;
 	}
 
-	EngineDirectX();
-	~EngineDirectX();
-
-	EngineDirectX(const EngineDirectX& _Other) = delete;
-	EngineDirectX(EngineDirectX&& _Other) noexcept = delete;
-	EngineDirectX& operator=(const EngineDirectX& _Other) = delete;
-	EngineDirectX& operator=(EngineDirectX&& _Other) noexcept = delete;
-
-	static MSComPtr<ID3D11RenderTargetView> GetMainRTV()
-	{
-		return GetInstance()->MainRTV;
-	}
-
-	static MSComPtr<ID3D11ShaderResourceView> GetMainSRV()
-	{
-		return GetInstance()->MainSRV;
-	}
-
-	static MSComPtr<ID3D11DepthStencilView> GetMainDSV()
-	{
-		return GetInstance()->MainDSV;
-	}
-
-	static MSComPtr<IDXGISwapChain> GetSwapChain()
-	{
-		return GetInstance()->SwapChain;
-	}
-
-	static void DrawIndexed(UINT _IndexCount, UINT _StartIndex = 0, INT _BaseVertexLocation = 0)
-	{
-		GetInstance()->GetDeviceContext()->DrawIndexed(_IndexCount, _StartIndex, _BaseVertexLocation);
-	}
-
-	static MSComPtr<ID3D11Device> GetDevice()
-	{
-		return GetInstance()->Device;
-	}
-
-	static MSComPtr<ID3D11DeviceContext> GetDeviceContext()
-	{
-		return GetInstance()->DeviceContext;
-	}
-
-	static void RenderSetting(class std::shared_ptr<class EngineVertexShader> _VS, class std::shared_ptr<class EnginePixelShader> _PS, MSComPtr<ID3D11Buffer> _VertexBuffer, MSComPtr<ID3D11Buffer> _IndexBuffer);
-
 	//Create
 public:
 	static MSComPtr<ID3D11RenderTargetView> CreateRTV(MSComPtr<ID3D11Texture2D> _Texture2D, const D3D11_RENDER_TARGET_VIEW_DESC& _DESC);
@@ -68,18 +23,61 @@ public:
 
 	static std::shared_ptr<class EngineVertexShader> CreateVertexShader(const class EngineFile& _ShaderFile);
 	static std::shared_ptr<class EnginePixelShader> CreatePixelShader(const class EngineFile& _ShaderFile);
-	
+
 	static STextureData CreateTexture(unsigned char* _LoadedImage, int _Width, int _Height, int _Channels);
 	static MSComPtr<ID3D11Texture2D> CreateTexture2D(const D3D11_TEXTURE2D_DESC& _Desc);
 
-	//static SDepthStencil CreateDepthStencil(const D3D11_TEXTURE2D_DESC& _BufferDesc, const D3D11_DEPTH_STENCIL_DESC& _StateDesc);
-	
 	static MSComPtr<ID3D11InputLayout> CreateInputLayOut(const class EngineFile& _ShaderFile, MSComPtr<ID3DBlob> _ShaderBlob);
 	static MSComPtr<ID3D11SamplerState> CreateSamplerState(std::string_view _Sampler);
 
 	static std::pair<MSComPtr<ID3D11Buffer>, MSComPtr<ID3D11Buffer>> CreateVertexBufferAndIndexBuffer(const struct SMesh& _Mesh);
 
+	//Getter
 public:
+	static inline MSComPtr<ID3D11RenderTargetView> GetMainRTV()
+	{
+		return GetInstance()->MainRTV;
+	}
+
+	static inline MSComPtr<ID3D11ShaderResourceView> GetMainSRV()
+	{
+		return GetInstance()->MainSRV;
+	}
+
+	static inline MSComPtr<ID3D11DepthStencilView> GetMainDSV()
+	{
+		return GetInstance()->MainDSV;
+	}
+
+	static inline MSComPtr<IDXGISwapChain> GetSwapChain()
+	{
+		return GetInstance()->SwapChain;
+	}
+
+	static inline void DrawIndexed(UINT _IndexCount, UINT _StartIndex = 0, INT _BaseVertexLocation = 0)
+	{
+		GetInstance()->GetDeviceContext()->DrawIndexed(_IndexCount, _StartIndex, _BaseVertexLocation);
+	}
+
+	static inline MSComPtr<ID3D11Device> GetDevice()
+	{
+		return GetInstance()->Device;
+	}
+
+	static inline MSComPtr<ID3D11DeviceContext> GetDeviceContext()
+	{
+		return GetInstance()->DeviceContext;
+	}
+
+	static inline std::pair<float, float> GetMainViewPortSize()
+	{
+		return MainViewPortSize;
+	}
+
+	//Setting
+public:
+	static void RenderSetting(class std::shared_ptr<class EngineVertexShader> _VS, class std::shared_ptr<class EnginePixelShader> _PS, MSComPtr<ID3D11Buffer> _VertexBuffer, MSComPtr<ID3D11Buffer> _IndexBuffer);
+
 	void SetVertexBuffer(UINT _BindPoint, MSComPtr<ID3D11Buffer> _VertexBuffer)
 	{
 		UINT Stride = sizeof(SVertex);
@@ -146,15 +144,24 @@ public:
 		}
 	}
 
-	static std::pair<float ,float> GetMainViewPortSize()
-	{
-		return MainViewPortSize;
-	}
-
 	static void SetMainViewPortSize(float _Width, float _Height)
 	{
 		MainViewPortSize.first = _Width;
 		MainViewPortSize.second = _Height;
+	}
+
+	static void SetRenderTarget(MSComPtr<ID3D11RenderTargetView> _RTV, MSComPtr<ID3D11DepthStencilView> _DSV)
+	{
+		GetDeviceContext()->OMSetRenderTargets(1, _RTV.GetAddressOf(), _DSV.Get());
+	}
+
+	void SetDepthStencilState(MSComPtr<ID3D11DepthStencilState> _DSState)
+	{
+		if (RenderState.DSState != _DSState)
+		{
+			GetDeviceContext()->OMSetDepthStencilState(_DSState.Get(), 0);
+			RenderState.DSState = _DSState;
+		}
 	}
 
 	void SetMainViewport()
@@ -191,27 +198,20 @@ public:
 		}
 	}
 
-	static void SetRenderTarget(MSComPtr<ID3D11RenderTargetView> _RTV, MSComPtr<ID3D11DepthStencilView> _DSV)
-	{
-		GetDeviceContext()->OMSetRenderTargets(1, _RTV.GetAddressOf(), _DSV.Get());
-	}
-
-	void MainRenderSetting()
-	{
-	}
-
-	void SetDepthStencilState(MSComPtr<ID3D11DepthStencilState> _DSState)
-	{
-		if (RenderState.DSState != _DSState)
-		{
-			GetDeviceContext()->OMSetDepthStencilState(_DSState.Get(), 0);
-			RenderState.DSState = _DSState;
-		}
-	}
+	//operator
+public:
+	EngineDirectX& operator=(const EngineDirectX& _Other) = delete;
+	EngineDirectX& operator=(EngineDirectX&& _Other) noexcept = delete;
 
 protected:
 
 private:
+	EngineDirectX();
+	~EngineDirectX();
+
+	EngineDirectX(const EngineDirectX& _Other) = delete;
+	EngineDirectX(EngineDirectX&& _Other) noexcept = delete;
+
 	static void Start()
 	{
 		GetInstance()->CreateDevice();

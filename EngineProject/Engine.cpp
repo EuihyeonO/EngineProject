@@ -8,7 +8,6 @@
 
 bool Engine::isEngineOn = false;
 std::shared_ptr<EngineLevelManager> Engine::LevelManager = nullptr;
-std::pair<float, float> Engine::ViewPortSize = { 1100.0f, 650.0f };
 
 Engine::Engine()
 {

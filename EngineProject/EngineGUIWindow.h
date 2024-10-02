@@ -51,17 +51,17 @@ public:
 		return NewWindow;
 	}
 
-	const std::string& GetName()
+	inline const std::string& GetName()
 	{
 		return Name;
 	}
 
-	void SetWindowSize(ImVec2 _Size)
+	inline void SetWindowSize(ImVec2 _Size)
 	{
 		WindowSize = _Size;
 	}
 
-	void SetWindowPos(ImVec2 _Pos)
+	inline void SetWindowPos(ImVec2 _Pos)
 	{
 		WindowPos = _Pos;
 	}

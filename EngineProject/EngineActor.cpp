@@ -40,3 +40,23 @@ void EngineActor::Update()
 	}
 }
 
+void EngineActor::Render()
+{
+	for (const std::pair<std::string, std::shared_ptr<EngineComponent>>& RenderComp : RenderComponents)
+	{
+		RenderComp.second->Render();
+	}
+}
+
+std::shared_ptr<EngineComponent> EngineActor::GetComponent(std::string_view _Name)
+{
+	std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+	if (Components.find(UpperName) == Components.end())
+	{
+		return nullptr;
+	}
+
+	return Components[UpperName];
+}
+

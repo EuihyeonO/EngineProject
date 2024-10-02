@@ -5,7 +5,6 @@
 
 class EngineString
 {
-
 public:
 	static void ToUpper(std::string& _String)
 	{
@@ -39,11 +38,5 @@ public:
 
 		return Wstr;
 	}
-
-
-protected:
-
-private:
-
 };
 
