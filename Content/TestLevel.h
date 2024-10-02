@@ -15,7 +15,7 @@ public:
 
 	void OnCreated() override;
 	void OnStart() override;
-	void OnUpdate() override;
+	void OnUpdate(float _DeltaTime) override;
 	void OnEnd() override;
 	void OnDestroyed() override;
 protected:

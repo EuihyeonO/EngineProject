@@ -1,4 +1,4 @@
-1. 코드 정리, 구조 정리
+1. 헤더파일 정리(프리컴파일 헤더 추가), 구조 정리
 2. 델타타임 추가
 3. 렌더링 관련 컴포넌트->렌더링 구조 개선
 4. SkeletalMeshComponent::SetMesh(std::string_view _Name)

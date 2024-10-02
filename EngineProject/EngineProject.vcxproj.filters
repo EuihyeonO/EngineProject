@@ -531,6 +531,9 @@
     <ClInclude Include="EngineDirectX.h">
       <Filter>Source\Base\DirectX\DirectX</Filter>
     </ClInclude>
+    <ClInclude Include="EngineTimer.h">
+      <Filter>Source\Base\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineWindow.cpp">
@@ -628,6 +631,9 @@
     </ClCompile>
     <ClCompile Include="EngineDirectX.cpp">
       <Filter>Source\Base\DirectX\DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineTimer.cpp">
+      <Filter>Source\Base\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

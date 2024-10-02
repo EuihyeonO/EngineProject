@@ -26,7 +26,7 @@ void ContentLevelManager::OnStart()
 	LevelChange("TestLevel");
 }
 
-void ContentLevelManager::OnUpdate()
+void ContentLevelManager::OnUpdate(float _DeltaTime)
 {
 }
 

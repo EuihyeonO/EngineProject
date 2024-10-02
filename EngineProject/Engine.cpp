@@ -5,6 +5,7 @@
 #include "TestWindow.h"
 #include "EngineMath.h"
 #include "EngineRenderTarget.h"
+#include "EngineTimer.h"
 
 bool Engine::isEngineOn = false;
 std::shared_ptr<EngineLevelManager> Engine::LevelManager = nullptr;
@@ -19,7 +20,7 @@ Engine::~Engine()
 
 void Engine::EngineStart(HINSTANCE hInstance, int nCmdShow)
 {
-	EngineWindow::Start(hInstance, nCmdShow);
+	EngineWindow::Start(hInstance, nCmdShow, std::bind(&Engine::Loop, GetInstance(), std::placeholders::_1));
 	EngineDirectX::Start();
 	EngineGUIWindow::GUIStart();
 
@@ -29,12 +30,13 @@ void Engine::EngineStart(HINSTANCE hInstance, int nCmdShow)
 
 void Engine::EngineLoop()
 {
-	std::function<void()> Func = std::bind(&Engine::Loop, GetInstance());
-	EngineWindow::Loop(Func);
+	EngineTimer::DeltaTimeUpdate();
+	EngineWindow::Loop(EngineTimer::GetDeltaTime());
 }
 
-void Engine::Update()
+void Engine::Update(float _DeltaTime)
 {
+	LevelManager->Update(_DeltaTime);
 }
 
 void Engine::Render()
@@ -55,9 +57,9 @@ void Engine::Render()
 	EngineDirectX::GetInstance()->GetSwapChain()->Present(1, 0);
 }
 
-void Engine::Loop()
+void Engine::Loop(float _DeltaTime)
 {
-	Update();
+	Update(_DeltaTime);
 	Render();
 }
 

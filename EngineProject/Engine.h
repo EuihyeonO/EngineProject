@@ -52,9 +52,10 @@ private:
 	Engine(Engine&& _Other) noexcept = delete;
 
 private:
-	void Update();
+	void Loop(float _DeltaTime);
+
+	void Update(float _DeltaTime);
 	void Render();
-	void Loop();
 
 	void CreateEngineGUI();
 

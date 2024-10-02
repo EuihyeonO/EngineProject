@@ -20,7 +20,7 @@ void TestLevel::OnStart()
 	CreateActor<TestActor>("TestActor");
 }
 
-void TestLevel::OnUpdate()
+void TestLevel::OnUpdate(float _DeltaTime)
 {
 }
 

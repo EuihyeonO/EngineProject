@@ -23,7 +23,7 @@ public:
 	void SetMesh(std::string_view _Name);
 	void OnCreated() override {}
 	void OnStart() override {}
-	void OnUpdate() override {}
+	void OnUpdate(float _DeltaTime) override {}
 	void OnEnd() override {}
 
 	void OnRender() override

@@ -40,7 +40,7 @@ public:
 	void LevelChange(std::string_view _NextLevelName);
 
 	virtual void Start() override final;
-	virtual void Update() override final;
+	virtual void Update(float _DeltaTime) override final;
 
 protected:
 

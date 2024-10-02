@@ -154,7 +154,7 @@ const MSComPtr<ID3D11DepthStencilState> EngineResourceManager::FindDSState(std::
 	return nullptr;
 }
 
-const void EngineResourceManager::AddDSState(std::string_view _Name, const MSComPtr<ID3D11DepthStencilState> _DSState)
+void EngineResourceManager::AddDSState(std::string_view _Name, const MSComPtr<ID3D11DepthStencilState> _DSState)
 {
 	std::string UpperName = EngineString::ToUpperReturn(_Name.data());
 
@@ -179,7 +179,7 @@ const MSComPtr<ID3D11RasterizerState> EngineResourceManager::FindRasterizerState
 	return nullptr;
 }
 
-const void EngineResourceManager::AddRasterizerState(std::string_view _Name, const MSComPtr<ID3D11RasterizerState> _RasterizerState)
+void EngineResourceManager::AddRasterizerState(std::string_view _Name, const MSComPtr<ID3D11RasterizerState> _RasterizerState)
 {
 	std::string UpperName = EngineString::ToUpperReturn(_Name.data());
 
@@ -204,7 +204,7 @@ const MSComPtr<ID3D11BlendState> EngineResourceManager::FindBlendState(std::stri
 	return nullptr;
 }
 
-const void EngineResourceManager::AddBlendState(std::string_view _Name, const MSComPtr<ID3D11BlendState> _BlendState)
+void EngineResourceManager::AddBlendState(std::string_view _Name, const MSComPtr<ID3D11BlendState> _BlendState)
 {
 	std::string UpperName = EngineString::ToUpperReturn(_Name.data());
 

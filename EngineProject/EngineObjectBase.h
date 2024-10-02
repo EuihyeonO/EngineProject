@@ -15,7 +15,7 @@ public:
 
 	//엔진에서 호출되는 함수
 	virtual void Start() = 0;
-	virtual void Update() = 0;
+	virtual void Update(float _DeltaTime) = 0;
 	virtual void Render() = 0;
 	virtual void Destroy() = 0;
 	virtual void End() = 0;
@@ -23,7 +23,7 @@ public:
 	//추가적인 작업을 실행하고 싶다면 오버로딩해서 정의하면 된다.
 	virtual void OnCreated(){}
 	virtual void OnStart(){}
-	virtual void OnUpdate(){}
+	virtual void OnUpdate(float _DeltaTime){}
 	virtual void OnRender(){}
 	virtual void OnEnd(){}
 	virtual void OnDestroyed(){}

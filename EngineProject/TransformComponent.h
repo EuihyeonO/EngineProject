@@ -97,7 +97,7 @@ public:
 
 	virtual void OnCreated(){}
 	virtual void OnStart(){}
-	virtual void OnUpdate(){} 
+	virtual void OnUpdate(float _DeltaTime){}
 	virtual void OnEnd(){} 
 	virtual void OnDestroyed(){} 
 	virtual void OnRender(){}

@@ -50,7 +50,7 @@ public:
 	}
 
 	void Start() override final;
-	void Update() override final;
+	void Update(float _DeltaTime) override final;
 	void End() override final;
 
 protected:

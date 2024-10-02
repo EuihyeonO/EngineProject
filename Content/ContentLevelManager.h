@@ -13,7 +13,7 @@ public:
 	ContentLevelManager& operator=(const ContentLevelManager& _Other) = delete;
 	ContentLevelManager& operator=(ContentLevelManager&& _Other) noexcept = delete;
 
-	void OnUpdate() override;
+	void OnUpdate(float _DeltaTime) override;
 	void OnStart() override;
 	void OnEnd() override;
 

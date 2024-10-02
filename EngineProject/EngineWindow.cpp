@@ -15,24 +15,25 @@ EngineWindow::~EngineWindow()
 {
 }
 
-void EngineWindow::Start(HINSTANCE hInstance, int nCmdShow)
+void EngineWindow::Start(HINSTANCE hInstance, int nCmdShow, std::function<void(float)> _LoopFunc)
 {
 	GetInstance()->RegisterWindow();
     GetInstance()->InitInstance(hInstance, nCmdShow); 
+    GetInstance()->LoopFunc = _LoopFunc;
 }
 
-void EngineWindow::Loop(std::function<void()> _LoopFunc)
+void EngineWindow::Loop(float _DeltaTime)
 {
-    HACCEL hAccelTable = LoadAccelerators(GetInstance()->HInst, MAKEINTRESOURCE(IDC_ENGINEPROJECT));
-    MSG msg;
-
     EngineWindow* Window = GetInstance();
+
+    HACCEL hAccelTable = LoadAccelerators(Window->HInst, MAKEINTRESOURCE(IDC_ENGINEPROJECT));
+    MSG msg;
 
     while (isWindowUpdate)
     {
-        if (_LoopFunc != nullptr)
+        if (Window->LoopFunc != nullptr)
         {
-            _LoopFunc();
+            Window->LoopFunc(_DeltaTime);
         }
 
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))

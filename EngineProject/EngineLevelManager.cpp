@@ -13,13 +13,13 @@ void EngineLevelManager::Start()
 	OnStart();
 }
 
-void EngineLevelManager::Update()
+void EngineLevelManager::Update(float _DeltaTime)
 {
-	OnUpdate();
+	OnUpdate(_DeltaTime);
 	
 	if (CurrentLevel != nullptr)
 	{
-		CurrentLevel->Update();
+		CurrentLevel->Update(_DeltaTime);
 	}
 }
 

@@ -29,9 +29,9 @@ public:
 		OnStart();
 	}
 
-	void Update() override final
+	void Update(float _DeltaTime) override final
 	{
-		OnUpdate();
+		OnUpdate(_DeltaTime);
 	}
 
 	void End() override final

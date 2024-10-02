@@ -30,13 +30,13 @@ void EngineActor::Destroy()
 	Components.clear();
 }
 
-void EngineActor::Update()
+void EngineActor::Update(float _DeltaTime)
 {
-	OnUpdate();
+	OnUpdate(_DeltaTime);
 
 	for (const std::pair<std::string, std::shared_ptr<EngineComponent>> Component : Components)
 	{
-		Component.second->Update();
+		Component.second->Update(_DeltaTime);
 	}
 }
 

@@ -52,7 +52,7 @@ public:
 	std::shared_ptr<EngineComponent> GetComponent(std::string_view _Name);
 
 	void Start() override final;
-	void Update() override final;
+	void Update(float _DeltaTime) override final;
 	void Render() override final;
 	void End() override final;
 	void Destroy() override final;

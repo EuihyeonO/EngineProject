@@ -27,13 +27,13 @@ void EngineLevel::End()
 	OnEnd();
 }
 
-void EngineLevel::Update()
+void EngineLevel::Update(float _DeltaTime)
 {
-	OnUpdate();
+	OnUpdate(_DeltaTime);
 
 	for (const std::pair<std::string, std::shared_ptr<EngineActor>> Actor : Actors)
 	{
-		Actor.second->Update();
+		Actor.second->Update(_DeltaTime);
 	}
 }
 

@@ -42,15 +42,16 @@ private:
 	~EngineWindow();
 
 private:
-	static void Start(HINSTANCE hInstance, int nCmdShow);
-	static void Loop(std::function<void()> _LoopFunc);
+	static void Start(HINSTANCE hInstance, int nCmdShow, std::function<void(float)> _LoopFunc);
+	static void Loop(float _DeltaTime);
 	static void End();
 
 	ATOM RegisterWindow();
 	BOOL InitInstance(HINSTANCE hInstance, int nCmdShow);
 
-
 private:
+	std::function<void(float)> LoopFunc = nullptr;
+
 	static bool isWindowUpdate;
 
 	HWND hWnd;

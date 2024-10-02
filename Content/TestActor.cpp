@@ -52,7 +52,7 @@ void TestActor::OnStart()
 	Comp->SetVSConstantBuffer("DATA", &(Transform->GetTransform()));
 }
 
-void TestActor::OnUpdate()
+void TestActor::OnUpdate(float _DeltaTime)
 {
 }
 
