@@ -1,5 +1,5 @@
 #pragma once
-#include "EngineActor.h"
+#include "DynamicActor.h"
 #include "EngineMath.h"
 
 struct TestStr
@@ -10,7 +10,7 @@ struct TestStr
 	SFloat4 DASD;
 };
 
-class TestActor : public EngineActor
+class TestActor : public DynamicActor
 {
 
 public:

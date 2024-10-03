@@ -243,8 +243,8 @@ private:
 
  	MSComPtr<ID3D11Device> Device = nullptr;
 	MSComPtr<ID3D11DeviceContext> DeviceContext = nullptr;
-	MSComPtr<IDXGISwapChain> SwapChain = nullptr;
 
+	MSComPtr<IDXGISwapChain> SwapChain = nullptr;
 	MSComPtr<ID3D11RenderTargetView> MainRTV = nullptr;
 	MSComPtr<ID3D11ShaderResourceView> MainSRV = nullptr;
 	MSComPtr<ID3D11DepthStencilView> MainDSV = nullptr;

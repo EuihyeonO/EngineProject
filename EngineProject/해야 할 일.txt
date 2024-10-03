@@ -1,11 +1,30 @@
-1. 헤더파일 정리(프리컴파일 헤더 추가), 구조 정리
+현재 작업중인 해야 할 일
+
+- 카메라 기반의 렌더링 -
+
+1. StaticActor - DynamicActor 
+2. StaticComponent - DynamicComponent
+3. Component에서 자식 Component를 만드는 것
+4. CameraActor에서 View, Proj 업데이트
+5. 쉐이더에 연결될 트랜스폼 상수버퍼(STranformConstantBuffer) 쉐이더에 연결
+
+--------------------------------------------
+추후 해야 할 일
+
+1. 헤더파일 정리, 구조 정리
 
 3. 렌더링 관련 컴포넌트->렌더링 구조 개선
+
 4. SkeletalMeshComponent::SetMesh(std::string_view _Name)
 메쉬를 세팅할 때, 기존에 세팅되어 있던 것이 있다면? 무엇을 해야하는지 처리 코드 추가
 (RenderUnit 구체화 이후에)
+
 5. 카메라 구조 설정
+
 6. 스왑체인 관련 코드 정리좀 하자
+
 7. 트랜스폼 및 GUI 테스트 코드 제거하고 구조 수정 필요
+
 8. 리소스 로드 과정도 수정해야함 (ContentLevelManager의 OnStart 참고)
+
 9. 뷰포트 사이즈

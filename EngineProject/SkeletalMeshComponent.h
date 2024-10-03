@@ -8,7 +8,7 @@
 #include <string_view>
 #include <vector>
 
-class SkeletalMeshComponent : public EngineComponent, public EngineRenderBase
+class SkeletalMeshComponent final : public EngineComponent, public EngineRenderBase
 {
 
 public:

@@ -100,6 +100,24 @@
     <Filter Include="Source\Base\DirectX\DirectX">
       <UniqueIdentifier>{3fc79fb2-f83d-4cc4-9c04-9986d59dd802}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Object\Actor\Base">
+      <UniqueIdentifier>{203fb980-9cfd-4559-bc1c-49080ef02d57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Object\Actor\Derived">
+      <UniqueIdentifier>{81abcc2a-b44c-4211-b9c1-5a3b0a45b5b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Object\Actor\Derived\Base">
+      <UniqueIdentifier>{72873687-011e-43c6-bbb7-55e023807403}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Object\Actor\Derived\Derived">
+      <UniqueIdentifier>{f58219d1-0c9a-4269-8bd9-c7322ec855be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Object\Component\Derived\Base">
+      <UniqueIdentifier>{ba146641-1772-4ed8-b9b9-fdf19c025298}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Object\Component\Derived\Derived">
+      <UniqueIdentifier>{6daf851c-c884-4a93-a6a6-466244113348}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineProject.h">
@@ -438,9 +456,6 @@
     <ClInclude Include="EngineObjectBase.h">
       <Filter>Source\Object\Base</Filter>
     </ClInclude>
-    <ClInclude Include="EngineActor.h">
-      <Filter>Source\Object\Actor</Filter>
-    </ClInclude>
     <ClInclude Include="SkeletalMeshComponent.h">
       <Filter>Source\Object\Component\Derived</Filter>
     </ClInclude>
@@ -519,9 +534,6 @@
     <ClInclude Include="EngineComponent.h">
       <Filter>Source\Object\Component\Base</Filter>
     </ClInclude>
-    <ClInclude Include="EngineRenderBase.h">
-      <Filter>Source\Object\Component\Base</Filter>
-    </ClInclude>
     <ClInclude Include="EngineRenderTarget.h">
       <Filter>Source\Base\DirectX\Render</Filter>
     </ClInclude>
@@ -533,6 +545,21 @@
     </ClInclude>
     <ClInclude Include="EngineTimer.h">
       <Filter>Source\Base\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineActor.h">
+      <Filter>Source\Object\Actor\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticActor.h">
+      <Filter>Source\Object\Actor\Derived\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraActor.h">
+      <Filter>Source\Object\Actor\Derived\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicActor.h">
+      <Filter>Source\Object\Actor\Derived\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineRenderBase.h">
+      <Filter>Source\Object\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -599,9 +626,6 @@
     <ClCompile Include="EngineObjectBase.cpp">
       <Filter>Source\Object\Base</Filter>
     </ClCompile>
-    <ClCompile Include="EngineActor.cpp">
-      <Filter>Source\Object\Actor</Filter>
-    </ClCompile>
     <ClCompile Include="EngineComponent.cpp">
       <Filter>Source\Object\Component\Base</Filter>
     </ClCompile>
@@ -623,9 +647,6 @@
     <ClCompile Include="EnginePixelShader.cpp">
       <Filter>Source\Base\DirectX\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="EngineRenderBase.cpp">
-      <Filter>Source\Object\Component\Base</Filter>
-    </ClCompile>
     <ClCompile Include="EngineRenderTarget.cpp">
       <Filter>Source\Base\DirectX\Render</Filter>
     </ClCompile>
@@ -634,6 +655,21 @@
     </ClCompile>
     <ClCompile Include="EngineTimer.cpp">
       <Filter>Source\Base\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineActor.cpp">
+      <Filter>Source\Object\Actor\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticActor.cpp">
+      <Filter>Source\Object\Actor\Derived\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraActor.cpp">
+      <Filter>Source\Object\Actor\Derived\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicActor.cpp">
+      <Filter>Source\Object\Actor\Derived\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineRenderBase.cpp">
+      <Filter>Source\Object\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

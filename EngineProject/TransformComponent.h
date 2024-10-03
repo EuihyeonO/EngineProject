@@ -6,37 +6,29 @@
 struct STransform
 {
 	SFloat4 LocalScale = { 1.0f, 1.0f, 1.0f, 0.0f };
-	SFloat4 LocalRotation = { 0.0f, 0.0f, 0.0f, 1.0f };
+	SFloat4 LocalRotation = { 0.0f, 0.0f, 0.0f, 0.0f };
 	SFloat4 LocalQuaternion = { 0.0f, 0.0f, 0.0f, 1.0f };
 	SFloat4 LocalPosition = { 0.0f, 0.0f, 0.0f, 1.0f };
 
-	SFloat4 WorldScale = { 0.0f, 0.0f, 0.0f, 0.0f };
-	SFloat4 WorldRotation = { 0.0f, 0.0f, 0.0f, 1.0f };
+	SFloat4 WorldScale = { 1.0f, 1.0f, 1.0f, 0.0f };
+	SFloat4 WorldRotation = { 0.0f, 0.0f, 0.0f, 0.0f };
 	SFloat4 WorldQuaternion = { 0.0f, 0.0f, 0.0f, 1.0f };
 	SFloat4 WorldPosition = { 0.0f, 0.0f, 0.0f, 1.0f };
 
-	//SRP 다 곱한 것
+	SFloat4 UpVector = { 0.0f, 0.0f, 0.0f, 0.0f };
+	SFloat4 LeftVector = { 0.0f, 0.0f, 0.0f, 0.0f };
+	SFloat4 ForwardVector = { 0.0f, 0.0f, 0.0f, 0.0f };
+};
+
+struct STranformConstantBuffer
+{
 	SFloat4x4 LocalMatrix;
-	
-	SFloat4x4 LocalScaleMatrix;
-	SFloat4x4 LocalRotationMatrix;
-	SFloat4x4 LocalPositionMatrix;
-	
-	//SRP 다 곱한 것
 	SFloat4x4 WorldMatrix;
-
-	SFloat4x4 WorldScaleMatrix;
-	SFloat4x4 WorldRotationMatrix;
-	SFloat4x4 WorldPositionMatrix;
-
-	//카메라의 뷰행렬
 	SFloat4x4 ViewMatrix;
-	
-	//프로젝션 행렬
 	SFloat4x4 ProjMatrix;
 };
 
-class TransformComponent : public EngineComponent
+class TransformComponent final : public EngineComponent
 {
 public:
 	TransformComponent();
@@ -61,9 +53,6 @@ public:
 		
 		Transform.LocalQuaternion.MulQuaternion(AddQuaternion);
 
-		//행렬에 반영
-		Transform.LocalRotationMatrix.Matrix4x4 = DirectX::XMMatrixRotationQuaternion(Transform.LocalQuaternion.Vector4);
-
 		//LocalRotation에 반영
 		Transform.LocalRotation = Transform.LocalQuaternion.QuaternionToEulerReturn();
 		Transform.LocalRotation.W = 1.0f;
@@ -72,7 +61,6 @@ public:
 	void AddLocalPosition(const SFloat3 _AddPos)
 	{
 		Transform.LocalPosition += SFloat4(_AddPos);
-		Transform.LocalPositionMatrix.Matrix4x4 = DirectX::XMMatrixTranslation(Transform.LocalPosition.X, Transform.LocalPosition.Y, Transform.LocalPosition.Z);
 	}
 
 	const SFloat4& GetLocalScale() const
@@ -90,14 +78,22 @@ public:
 		return Transform.LocalPosition;
 	}
 
+	//Private로 옮겨야함.
 	STransform& GetTransform()
 	{
 		return Transform;
 	}
 
+	void MatrixUpdate();
+
 	virtual void OnCreated(){}
 	virtual void OnStart(){}
-	virtual void OnUpdate(float _DeltaTime){}
+	
+	virtual void OnUpdate(float _DeltaTime)
+	{
+		MatrixUpdate();
+	}
+
 	virtual void OnEnd(){} 
 	virtual void OnDestroyed(){} 
 	virtual void OnRender(){}
