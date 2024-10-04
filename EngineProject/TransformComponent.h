@@ -84,16 +84,20 @@ public:
 		return Transform;
 	}
 
-	void MatrixUpdate();
+	void SetParent(STransform* _Parent)
+	{
+		Parent = _Parent;
+	}
 
-	virtual void OnCreated(){}
-	virtual void OnStart(){}
+	void MatrixUpdate();
 	
 	virtual void OnUpdate(float _DeltaTime)
 	{
 		MatrixUpdate();
 	}
 
+	virtual void OnCreated() {}
+	virtual void OnStart() {}
 	virtual void OnEnd(){} 
 	virtual void OnDestroyed(){} 
 	virtual void OnRender(){}
@@ -101,6 +105,7 @@ public:
 protected:
 
 private:
+	STransform* Parent = nullptr;
 	STransform Transform;
 };
 

@@ -456,9 +456,6 @@
     <ClInclude Include="EngineObjectBase.h">
       <Filter>Source\Object\Base</Filter>
     </ClInclude>
-    <ClInclude Include="SkeletalMeshComponent.h">
-      <Filter>Source\Object\Component\Derived</Filter>
-    </ClInclude>
     <ClInclude Include="EngineRenderUnit.h">
       <Filter>Source\Render</Filter>
     </ClInclude>
@@ -522,9 +519,6 @@
     <ClInclude Include="..\Library\STB\stb_divide.h">
       <Filter>Source\Base\Library\STB</Filter>
     </ClInclude>
-    <ClInclude Include="TransformComponent.h">
-      <Filter>Source\Object\Component\Derived</Filter>
-    </ClInclude>
     <ClInclude Include="EngineVertexShader.h">
       <Filter>Source\Base\DirectX\Shader</Filter>
     </ClInclude>
@@ -560,6 +554,21 @@
     </ClInclude>
     <ClInclude Include="EngineRenderBase.h">
       <Filter>Source\Object\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicComponent.h">
+      <Filter>Source\Object\Component\Derived\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticComponent.h">
+      <Filter>Source\Object\Component\Derived\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="SkeletalMeshComponent.h">
+      <Filter>Source\Object\Component\Derived\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectHeader.h">
+      <Filter>Source\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Source\Object\Component\Derived\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -629,17 +638,11 @@
     <ClCompile Include="EngineComponent.cpp">
       <Filter>Source\Object\Component\Base</Filter>
     </ClCompile>
-    <ClCompile Include="SkeletalMeshComponent.cpp">
-      <Filter>Source\Object\Component\Derived</Filter>
-    </ClCompile>
     <ClCompile Include="EngineRenderUnit.cpp">
       <Filter>Source\Render</Filter>
     </ClCompile>
     <ClCompile Include="..\Library\STB\stb_vorbis.c">
       <Filter>Source\Base\Library\STB</Filter>
-    </ClCompile>
-    <ClCompile Include="TransformComponent.cpp">
-      <Filter>Source\Object\Component\Derived</Filter>
     </ClCompile>
     <ClCompile Include="EngineVertexShader.cpp">
       <Filter>Source\Base\DirectX\Shader</Filter>
@@ -670,6 +673,18 @@
     </ClCompile>
     <ClCompile Include="EngineRenderBase.cpp">
       <Filter>Source\Object\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicComponent.cpp">
+      <Filter>Source\Object\Component\Derived\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticComponent.cpp">
+      <Filter>Source\Object\Component\Derived\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="SkeletalMeshComponent.cpp">
+      <Filter>Source\Object\Component\Derived\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformComponent.cpp">
+      <Filter>Source\Object\Component\Derived\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,10 @@
 #pragma once
+
 #include "EngineObjectBase.h"
+#include "EngineRenderBase.h"
+
+#include <unordered_map>
+#include <string>
 
 class EngineComponent : public EngineObjectBase
 {
@@ -14,34 +19,19 @@ public:
 	EngineComponent& operator=(const EngineComponent& _Other) = delete;
 	EngineComponent& operator=(EngineComponent&& _Other) noexcept = delete;
 
-	void Destroy() override final
-	{
-		OnDestroyed();
-	}
-
-	void Render() override final 
-	{
-		OnRender();
-	}
-
-	void Start() override final
-	{
-		OnStart();
-	}
-
-	void Update(float _DeltaTime) override final
-	{
-		OnUpdate(_DeltaTime);
-	}
-
-	void End() override final
-	{
-		OnEnd();
-	}
+	void Destroy() override;
 
 protected:
+	void Render() override;
+	void Start() override;
+	void Update(float _DeltaTime) override;
+	void End() override;
+	
+	virtual void ComponentUpdate(float _DeltaTime);
+	virtual void ComponentRender();
+	virtual void ComponentDestroy();
 
+	std::unordered_map<std::string, std::shared_ptr<EngineComponent>> Components;
 private:
-
 };
 
