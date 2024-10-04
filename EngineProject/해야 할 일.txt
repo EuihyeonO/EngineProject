@@ -2,11 +2,7 @@
 
 - 카메라 기반의 렌더링 -
 
-1. StaticActor - DynamicActor 
-2. StaticComponent - DynamicComponent
-3. Component에서 자식 Component를 만드는 것
-4. CameraActor에서 View, Proj 업데이트
-5. 쉐이더에 연결될 트랜스폼 상수버퍼(STranformConstantBuffer) 쉐이더에 연결
+4. Camera가 View, Proj 를 보유하고 업데이트 하도록 (CameraActor와 CameraComponent를 어떻게 관리할지 구조 고민해야 됨)
 
 --------------------------------------------
 추후 해야 할 일
