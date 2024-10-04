@@ -24,7 +24,17 @@ public:
 	void SetSampler(std::string_view _Name);
 	void SetVertexShader(std::shared_ptr<EngineVertexShader> _VertexShader);
 	void SetPixelShader(std::shared_ptr<EnginePixelShader> _PixelShader);
+	
+	std::shared_ptr<EngineVertexShader> GetVertexShader()
+	{
+		return Material.VertexShader;
+	}
 
+	std::shared_ptr<EnginePixelShader> GetPixelShader()
+	{
+		return Material.PixelShader;
+	}
+	
 	template<typename DataType>
 	void SetVSConstantBuffer(std::string_view _Name, DataType* _Data)
 	{

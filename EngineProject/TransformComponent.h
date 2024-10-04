@@ -20,7 +20,7 @@ struct STransform
 	SFloat4 ForwardVector = { 0.0f, 0.0f, 0.0f, 0.0f };
 };
 
-struct STranformConstantBuffer
+struct STransformConstantBuffer
 {
 	SFloat4x4 LocalMatrix;
 	SFloat4x4 WorldMatrix;
@@ -84,6 +84,11 @@ public:
 		return Transform;
 	}
 
+	STransformConstantBuffer& GetTransformBuffer()
+	{
+		return TransformBuffer;
+	}
+
 	void SetParent(STransform* _Parent)
 	{
 		Parent = _Parent;
@@ -107,5 +112,7 @@ protected:
 private:
 	STransform* Parent = nullptr;
 	STransform Transform;
+	
+	STransformConstantBuffer TransformBuffer;
 };
 

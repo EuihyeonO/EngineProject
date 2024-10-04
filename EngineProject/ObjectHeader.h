@@ -1,5 +1,8 @@
 #pragma once
 
+#include "TransformComponent.h"
+#include "EngineRenderBase.h"
+
 template<typename T>
 concept Not_Trans_Component = std::is_base_of_v<EngineComponent, T> && !std::derived_from<T, TransformComponent>;
 

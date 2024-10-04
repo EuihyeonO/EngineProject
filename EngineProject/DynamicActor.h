@@ -42,7 +42,7 @@ public:
 
 		Components[UpperName] = NewComp;
 
-		if (std::is_base_of_v<class EngineRenderBase, CompType> == true)
+		if constexpr (std::is_base_of_v<class EngineRenderBase, CompType> == true)
 		{
 			RenderComponents[UpperName] = NewComp;
 		}

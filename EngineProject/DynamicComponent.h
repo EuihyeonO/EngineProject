@@ -14,7 +14,9 @@ public:
 	DynamicComponent& operator=(const DynamicComponent& _Other) = delete;
 	DynamicComponent& operator=(DynamicComponent&& _Other) noexcept = delete;
 
-	//트랜스폼 컴포넌트는 만들 수 없습니다. 다이나믹 컴포넌트는 기본적으로 트랜스폼을 소유하고 있습니다.
+public:
+	//트랜스폼 컴포넌트와 렌더링 컴포넌트는 생성할 수 없습니다.
+	//트랜스폼 컴포넌트는 DynamicComponent에 기본으로 포함되어 있으며, 렌더링 컴포넌트는 DynamicActor에만 생성 가능합니다.
 	template<Not_Trans_Render_Component CompType>
 	std::shared_ptr<CompType> CreateComponent(std::string_view _CompName)
 	{

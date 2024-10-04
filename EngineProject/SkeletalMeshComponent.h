@@ -1,5 +1,5 @@
 #pragma once
-#include "EngineComponent.h"
+#include "StaticComponent.h"
 #include "EngineRenderUnit.h"
 #include "EngineResourceManager.h"
 #include "EngineRenderBase.h"
@@ -8,7 +8,7 @@
 #include <string_view>
 #include <vector>
 
-class SkeletalMeshComponent final : public EngineComponent, public EngineRenderBase
+class SkeletalMeshComponent final : public StaticComponent, public EngineRenderBase
 {
 
 public:

@@ -21,16 +21,16 @@ bool EngineVertexShader::HasConstantBuffer(std::string_view _Name)
 	return true;
 }
 
-const SConstantBuffer& EngineVertexShader::GetConstantBuffer(std::string_view _Name)
+const SConstantBuffer* EngineVertexShader::GetConstantBuffer(std::string_view _Name)
 {
 	std::string UpperName = EngineString::ToUpperReturn(_Name.data());
 
 	if (ConstantBuffers.find(UpperName) == ConstantBuffers.end())
 	{
-		return {};
+		return nullptr;
 	}
 
-	return ConstantBuffers[_Name.data()];
+	return &ConstantBuffers[_Name.data()];
 }
 
 void EngineVertexShader::AddConstantBuffer(std::string _Name, const SConstantBuffer& _Buffer)

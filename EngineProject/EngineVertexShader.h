@@ -21,7 +21,7 @@ public:
 
 	void AddConstantBuffer(std::string _Name, const SConstantBuffer& _Buffer);
 	bool HasConstantBuffer(std::string_view _Name);
-	const SConstantBuffer& GetConstantBuffer(std::string_view _Name);
+	const SConstantBuffer* GetConstantBuffer(std::string_view _Name);
 
 	const std::unordered_map<std::string, SConstantBuffer>& GetAllConstantBuffer() const
 	{
@@ -36,19 +36,21 @@ public:
 	template<typename DataType>
 	void SetConstantBuffer(std::string_view _Name, DataType* _Data)
 	{
-		if (ConstantBuffers.find(_Name.data()) == ConstantBuffers.end())
+		std::string UpperName = EngineString::ToUpperReturn(_Name.data());
+
+		if (ConstantBuffers.find(UpperName) == ConstantBuffers.end())
 		{
 			EngineDebug::LogErrorMsg(L"세팅하고자 하는 상수버퍼 이름이 쉐이더 내에 존재하지 않습니다.");
 			return;
 		}
 
-		if (ConstantBuffers[_Name.data()].Size != sizeof(DataType))
+		if (ConstantBuffers[UpperName].Size != sizeof(DataType))
 		{
 			EngineDebug::LogErrorMsg(L"세팅하고자 하는 상수버퍼 크기가 쉐이더 내에서 사용된 크기와 일치하지 않습니다.");
 			return;
 		}
 
-		ConstantBuffers[_Name.data()].Data = reinterpret_cast<void*>(_Data);
+		ConstantBuffers[UpperName].Data = reinterpret_cast<void*>(_Data);
 	}
 
 	MSComPtr<ID3D11VertexShader> GetVertexShader()

@@ -12,31 +12,11 @@ struct VS_OutPut
     float2 UV : TEXCOORD;
 };
 
-cbuffer Data : register (b0)
-{
-    float4 LocalScale;
-    float4 LocalRotation;
-    float4 LocalQuaternion;
-    float4 LocalPosition;
-
-    float4 WorldScale;
-    float4 WorldRotation;
-    float4 WorldQuaternion;
-    float4 WorldPosition;
-
+cbuffer Transform : register (b0)
+{	
 	//SRP 다 곱한 것
     matrix LocalMatrix;
-	
-    matrix LocalScaleMatrix;
-    matrix LocalRotationMatrix;
-    matrix LocalPositionMatrix;
-	
-	//SRP 다 곱한 것
     matrix WorldMatrix;
-
-    matrix WorldScaleMatrix;
-    matrix WorldRotationMatrix;
-    matrix WorldPositionMatrix;
 
 	//카메라의 뷰행렬
     matrix ViewMatrix;

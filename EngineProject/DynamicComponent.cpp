@@ -19,7 +19,7 @@ void DynamicComponent::Destroy()
 void DynamicComponent::Start()
 {
 	EngineComponent::Start();
-	//
+	CreateTransformComponent();
 	OnStart();
 }
 
@@ -39,9 +39,9 @@ void DynamicComponent::Render()
 
 void DynamicComponent::End()
 {
-	EngineComponent::End();
-	//
 	OnEnd();
+	//
+	EngineComponent::End();
 }
 
 void DynamicComponent::ComponentUpdate(float _DeltaTime)
