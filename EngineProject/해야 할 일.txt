@@ -8,6 +8,7 @@
 추후 해야 할 일
 
 1. 헤더파일 정리, 구조 정리
+2. Init함수 추가했는데, 코드 정리 추가로 할 거 있나 살펴보기
 
 4. SkeletalMeshComponent::SetMesh(std::string_view _Name)
 메쉬를 세팅할 때, 기존에 세팅되어 있던 것이 있다면? 무엇을 해야하는지 처리 코드 추가
