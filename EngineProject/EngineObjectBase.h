@@ -14,6 +14,7 @@ public:
 	EngineObjectBase& operator=(EngineObjectBase&& _Other) noexcept = delete;
 
 	//엔진에서 호출되는 함수
+	virtual void Init() = 0;
 	virtual void Start() = 0;
 	virtual void Update(float _DeltaTime) = 0;
 	virtual void Render() = 0;

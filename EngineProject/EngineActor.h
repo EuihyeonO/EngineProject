@@ -28,6 +28,7 @@ public:
 	void Destroy() override;
 
 protected:
+	void Init() override;
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void Render() override;

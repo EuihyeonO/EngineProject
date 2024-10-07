@@ -32,7 +32,7 @@ public:
 		std::shared_ptr<CompType> NewComp = std::make_shared<CompType>();
 		NewComp->SetOwner(shared_from_this());
 
-		NewComp->OnCreated();
+		NewComp->Init();
 		NewComp->SetActivate(true);
 
 		Components[UpperName] = NewComp;

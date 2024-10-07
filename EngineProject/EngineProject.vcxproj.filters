@@ -546,9 +546,6 @@
     <ClInclude Include="StaticActor.h">
       <Filter>Source\Object\Actor\Derived\Base</Filter>
     </ClInclude>
-    <ClInclude Include="CameraActor.h">
-      <Filter>Source\Object\Actor\Derived\Derived</Filter>
-    </ClInclude>
     <ClInclude Include="DynamicActor.h">
       <Filter>Source\Object\Actor\Derived\Base</Filter>
     </ClInclude>
@@ -664,9 +661,6 @@
     </ClCompile>
     <ClCompile Include="StaticActor.cpp">
       <Filter>Source\Object\Actor\Derived\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraActor.cpp">
-      <Filter>Source\Object\Actor\Derived\Derived</Filter>
     </ClCompile>
     <ClCompile Include="DynamicActor.cpp">
       <Filter>Source\Object\Actor\Derived\Base</Filter>

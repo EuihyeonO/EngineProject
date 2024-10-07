@@ -30,7 +30,7 @@ public:
 		}
 
 		std::shared_ptr<LevelType> NewLevel = std::make_shared<LevelType>();
-		NewLevel->OnCreated();
+		NewLevel->Init();
 
 		Levels[_LevelName.data()] = NewLevel;
 
@@ -45,9 +45,9 @@ public:
 protected:
 
 private:
-	virtual void End() override final{}
+	void Init() override final{}
+	void End() override final { OnEnd(); }
 	void OnCreated() override final {}
-
 	void OnDestroyed() override final
 	{
 		CurrentLevel = nullptr;

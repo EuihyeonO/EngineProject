@@ -8,6 +8,8 @@
 
 class EngineComponent : public EngineObjectBase
 {
+	friend class DynamicActor;
+	friend class StaticActor;
 	friend class EngineActor;
 public:
 
@@ -22,6 +24,7 @@ public:
 	void Destroy() override;
 
 protected:
+	void Init() override;
 	void Render() override;
 	void Start() override;
 	void Update(float _DeltaTime) override;

@@ -9,6 +9,13 @@ DynamicComponent::~DynamicComponent()
 {
 }
 
+void DynamicComponent::Init()
+{
+	EngineComponent::Init();
+	CreateTransformComponent();
+	OnCreated();
+}
+
 void DynamicComponent::Destroy()
 {
 	OnDestroyed();
@@ -19,7 +26,7 @@ void DynamicComponent::Destroy()
 void DynamicComponent::Start()
 {
 	EngineComponent::Start();
-	CreateTransformComponent();
+	//
 	OnStart();
 }
 

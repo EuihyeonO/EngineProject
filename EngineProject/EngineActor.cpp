@@ -9,6 +9,10 @@ EngineActor::~EngineActor()
 {
 }
 
+void EngineActor::Init()
+{
+}
+
 void EngineActor::Start()
 {
 }

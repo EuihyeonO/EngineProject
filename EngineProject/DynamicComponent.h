@@ -36,7 +36,7 @@ public:
 			NewComp->SetParent(&(Transform->GetTransform()));
 		}
 
-		NewComp->OnCreated();
+		NewComp->Init();
 		NewComp->SetActivate(true);
 
 		Components[UpperName] = NewComp;
@@ -53,6 +53,7 @@ public:
 protected:
 
 private:
+	void Init() override final;
 	void Start() override final;
 	void Update(float _DeltaTime) override final;
 	void Render() override final;

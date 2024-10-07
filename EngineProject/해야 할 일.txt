@@ -9,8 +9,6 @@
 
 1. 헤더파일 정리, 구조 정리
 
-3. 렌더링 관련 컴포넌트->렌더링 구조 개선
-
 4. SkeletalMeshComponent::SetMesh(std::string_view _Name)
 메쉬를 세팅할 때, 기존에 세팅되어 있던 것이 있다면? 무엇을 해야하는지 처리 코드 추가
 (RenderUnit 구체화 이후에)

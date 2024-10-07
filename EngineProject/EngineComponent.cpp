@@ -12,6 +12,10 @@ void EngineComponent::Destroy()
 {
 }
 
+void EngineComponent::Init()
+{
+}
+
 void EngineComponent::Render()
 {
 }

@@ -12,6 +12,11 @@ EngineLevel::~EngineLevel()
 {
 }
 
+void EngineLevel::Init()
+{
+	OnCreated();
+}
+
 void EngineLevel::Start()
 {
 	LevelRenderTarget = EngineRenderTarget::CreateRenderTarget("LevelRenderTarget", (UINT)EngineDirectX::GetMainViewPortSize().first, (UINT)EngineDirectX::GetMainViewPortSize().second);

@@ -8,10 +8,16 @@ DynamicActor::~DynamicActor()
 {
 }
 
+void DynamicActor::Init()
+{
+	EngineActor::Init();
+	CreateTransformComponent();
+	OnCreated();
+}
+
 void DynamicActor::Start()
 {
 	EngineActor::Start();
-	CreateTransformComponent();
 	OnStart();
 }
 
