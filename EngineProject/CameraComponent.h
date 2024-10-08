@@ -23,6 +23,7 @@ public:
 protected:
 
 private:
-
+	SFloat4x4 ViewMat;
+	SFloat4x4 ProjMat;
 };
 

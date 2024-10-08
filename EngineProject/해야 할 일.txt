@@ -2,7 +2,9 @@
 
 - 카메라 기반의 렌더링 -
 
-4. Camera가 View, Proj 를 보유하고 업데이트 하도록 (CameraActor와 CameraComponent를 어떻게 관리할지 구조 고민해야 됨)
+4. Camera가 View, Proj 를 보유하고 업데이트 하도록
+5. Level에 모든 CameraComponent를 관리하는 객체 추가하고, 메인 카메라는 1개만 설정되도록.
+6. 렌더링컴포넌트는 촬영될 카메라를 설정하도록 하고, EngineRenderBase에 해당 카메라의 정보를 저장하도록.
 
 --------------------------------------------
 추후 해야 할 일
