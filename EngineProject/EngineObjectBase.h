@@ -1,5 +1,15 @@
 #pragma once
 #include <memory>
+#include "EngineDebug.h"
+
+enum EObjectType
+{
+	LevelManager,
+	Level,
+	Actor,
+	Component,
+	Null,
+};
 
 class EngineObjectBase : public std::enable_shared_from_this<EngineObjectBase>
 {
@@ -13,6 +23,12 @@ public:
 	EngineObjectBase& operator=(const EngineObjectBase& _Other) = delete;
 	EngineObjectBase& operator=(EngineObjectBase&& _Other) noexcept = delete;
 
+	//편의를 위한 함수
+	bool hasTransform()
+	{
+		return bHasTransform;
+	}
+ 
 	//엔진에서 호출되는 함수
 	virtual void Init() = 0;
 	virtual void Start() = 0;
@@ -55,10 +71,44 @@ public:
 		return Owner;
 	}
 
+	EObjectType GetObjectType()
+	{
+		return ObjectType;
+	}
+
 protected:
+	void SetHasTransform(bool _bHasTransform)
+	{
+		if (bHasTransform != -1)
+		{
+			return;
+		}
+
+		bHasTransform = _bHasTransform;
+	}
+
+	void SetObjectType(EObjectType _ObjectType)
+	{
+		if (_ObjectType == EObjectType::Null)
+		{
+			EngineDebug::LogErrorMsg(L"ObjectType은 NULL일 수 없습니다.");
+			return;
+		}
+
+		if (ObjectType != EObjectType::Null)
+		{
+			return;
+		}
+
+		ObjectType = _ObjectType;
+	}
 
 private:
 	unsigned int bIsActivated : 1 = false;
+	unsigned int bHasTransform = -1;
+
+	EObjectType ObjectType = EObjectType::Null;
+
 	std::shared_ptr<EngineObjectBase> Owner = nullptr;
 };
 

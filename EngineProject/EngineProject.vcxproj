@@ -256,6 +256,10 @@
     <ClInclude Include="..\Library\STB\stb_truetype.h" />
     <ClInclude Include="..\Library\STB\stb_voxel_render.h" />
     <ClInclude Include="BaseHeader.h" />
+    <ClInclude Include="CameraComponent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="DirectXHeader.h" />
     <ClInclude Include="DynamicActor.h">
       <SubType>
@@ -389,6 +393,10 @@
     <ClCompile Include="..\Library\IMGUI\imgui_tables.cpp" />
     <ClCompile Include="..\Library\IMGUI\imgui_widgets.cpp" />
     <ClCompile Include="..\Library\STB\stb_vorbis.c" />
+    <ClCompile Include="CameraComponent.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="DynamicActor.cpp">
       <SubType>
       </SubType>

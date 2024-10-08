@@ -31,7 +31,6 @@ public:
 
 		std::shared_ptr<CompType> NewComp = std::make_shared<CompType>();
 		NewComp->SetOwner(shared_from_this());
-
 		NewComp->Init();
 		NewComp->SetActivate(true);
 
@@ -44,6 +43,7 @@ public:
 protected:
 
 private:
+	void Init() override final;
 	void Start() override final;
 	void Update(float _DeltaTime) override final;
 	void Render() override final;

@@ -14,6 +14,7 @@ void EngineComponent::Destroy()
 
 void EngineComponent::Init()
 {
+	SetObjectType(EObjectType::Component);
 }
 
 void EngineComponent::Render()

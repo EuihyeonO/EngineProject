@@ -14,6 +14,7 @@ EngineLevel::~EngineLevel()
 
 void EngineLevel::Init()
 {
+	SetObjectType(EObjectType::Level);
 	OnCreated();
 }
 

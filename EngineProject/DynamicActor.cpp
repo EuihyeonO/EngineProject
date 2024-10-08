@@ -80,4 +80,6 @@ void DynamicActor::CreateTransformComponent()
 	
 	Transform->OnCreated();
 	Transform->SetActivate(true);
+
+	SetHasTransform(true);
 }

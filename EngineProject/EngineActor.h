@@ -26,7 +26,6 @@ public:
 	std::shared_ptr<EngineComponent> GetComponent(std::string_view _Name);
 	
 	void Destroy() override;
-
 protected:
 	void Init() override;
 	void Start() override;

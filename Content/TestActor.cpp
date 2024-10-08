@@ -1,6 +1,7 @@
 #include "TestActor.h"
 #include "SkeletalMeshComponent.h"
 #include "TransformComponent.h"
+#include "CameraComponent.h"
 
 #include <iostream>
 
@@ -17,11 +18,14 @@ void TestActor::OnCreated()
 }
 
 std::shared_ptr<SkeletalMeshComponent> Comp;
+std::shared_ptr<CameraComponent> Camera;
 std::shared_ptr<TransformComponent> MyTransform;
 
 void TestActor::OnStart()
 {
 	Comp = CreateComponent<SkeletalMeshComponent>("Body");
+	Camera = CreateComponent<CameraComponent>("MainCamera");
+	std::shared_ptr<EngineComponent> Test = std::dynamic_pointer_cast<EngineComponent>(Camera);
 
 	MyTransform = GetTransformComponent();
 	STransformConstantBuffer& _Transform = MyTransform->GetTransformBuffer();

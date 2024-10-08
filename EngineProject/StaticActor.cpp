@@ -8,6 +8,13 @@ StaticActor::~StaticActor()
 {
 }
 
+void StaticActor::Init()
+{
+	EngineActor::Init();
+	SetHasTransform(false);
+	OnCreated();
+}
+
 void StaticActor::Start()
 {
 	EngineActor::Start();

@@ -15,6 +15,13 @@ void StaticComponent::Destroy()
 	EngineComponent::Destroy();
 }
 
+void StaticComponent::Init()
+{
+	EngineComponent::Init();
+	SetHasTransform(false);
+	OnCreated();
+}
+
 void StaticComponent::Start()
 {
 	EngineComponent::Start();

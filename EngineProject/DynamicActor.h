@@ -7,6 +7,7 @@
 class DynamicActor : public EngineActor
 {
 	friend class EngineLevel;
+	friend class EngineComponent;
 
 public:
 	DynamicActor();
@@ -18,8 +19,6 @@ public:
 	DynamicActor& operator=(DynamicActor&& _Other) noexcept = delete;
 
 public:
-
-	//트랜스폼 컴포넌트는 만들 수 없습니다. 다이나믹 컴포넌트는 기본적으로 트랜스폼을 소유하고 있습니다.
 	template<Not_Trans_Component CompType>
 	std::shared_ptr<CompType> CreateComponent(std::string_view _CompName)
 	{
@@ -33,13 +32,7 @@ public:
 
 		std::shared_ptr<CompType> NewComp = std::make_shared<CompType>();
 		NewComp->SetOwner(shared_from_this());
-
-		if constexpr (std::is_base_of_v<DynamicComponent, CompType> == true)
-		{
-			NewComp->SetParent(&(Transform->GetTransform()));
-		}
-
-		NewComp->Init();
+		std::static_pointer_cast<EngineComponent>(NewComp)->Init();
 		NewComp->SetActivate(true);
 
 		Components[UpperName] = NewComp;

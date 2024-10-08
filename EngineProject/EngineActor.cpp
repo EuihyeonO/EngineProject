@@ -11,6 +11,7 @@ EngineActor::~EngineActor()
 
 void EngineActor::Init()
 {
+	SetObjectType(EObjectType::Actor);
 }
 
 void EngineActor::Start()

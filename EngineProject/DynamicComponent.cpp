@@ -1,5 +1,6 @@
 #include "EngineDebug.h"
 #include "DynamicComponent.h"
+#include "DynamicActor.h"
 
 DynamicComponent::DynamicComponent()
 {
@@ -13,6 +14,21 @@ void DynamicComponent::Init()
 {
 	EngineComponent::Init();
 	CreateTransformComponent();
+	
+	std::shared_ptr<EngineObjectBase> Owner = GetOwner();
+
+	if (Owner->hasTransform() == true)
+	{
+		if (Owner->GetObjectType() == EObjectType::Actor)
+		{
+			Transform->SetParent(&(std::dynamic_pointer_cast<DynamicActor>(Owner)->GetTransformComponent()->GetTransform()));
+		}
+		else if (GetOwner()->GetObjectType() == EObjectType::Component)
+		{
+			Transform->SetParent(&(std::dynamic_pointer_cast<DynamicComponent>(Owner)->GetTransformComponent()->GetTransform()));
+		}
+	}
+
 	OnCreated();
 }
 
@@ -79,4 +95,6 @@ void DynamicComponent::CreateTransformComponent()
 
 	Transform->OnCreated();
 	Transform->SetActivate(true);
+
+	SetHasTransform(true);
 }

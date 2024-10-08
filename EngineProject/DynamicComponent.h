@@ -17,7 +17,7 @@ public:
 public:
 	//트랜스폼 컴포넌트와 렌더링 컴포넌트는 생성할 수 없습니다.
 	//트랜스폼 컴포넌트는 DynamicComponent에 기본으로 포함되어 있으며, 렌더링 컴포넌트는 DynamicActor에만 생성 가능합니다.
-	template<Not_Trans_Render_Component CompType>
+	template<Not_Trans_Component CompType>
 	std::shared_ptr<CompType> CreateComponent(std::string_view _CompName)
 	{
 		std::string UpperName = EngineString::ToUpperReturn(_CompName.data());
@@ -30,12 +30,6 @@ public:
 
 		std::shared_ptr<CompType> NewComp = std::make_shared<CompType>();
 		NewComp->SetOwner(shared_from_this());
-
-		if constexpr (std::is_base_of_v<DynamicComponent, CompType> == true)
-		{
-			NewComp->SetParent(&(Transform->GetTransform()));
-		}
-
 		NewComp->Init();
 		NewComp->SetActivate(true);
 
@@ -47,6 +41,11 @@ public:
 	void SetParent(STransform* _Parent)
 	{
 		Transform->SetParent(_Parent);
+	}
+
+	std::shared_ptr<TransformComponent> GetTransformComponent()
+	{
+		return Transform;
 	}
 
 	void Destroy() override final;

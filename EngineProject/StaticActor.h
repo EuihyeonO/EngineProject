@@ -18,8 +18,7 @@ public:
 	StaticActor& operator=(StaticActor&& _Other) noexcept = delete;
 
 public:
-	//트랜스폼 컴포넌트는 만들 수 없습니다. 다이나믹 컴포넌트는 기본적으로 트랜스폼을 소유하고 있습니다.
-	template<Not_Trans_Component CompType>
+	template<Not_Trans_Render_Component CompType>
 	std::shared_ptr<CompType> CreateComponent(std::string_view _CompName)
 	{
 		std::string UpperName = EngineString::ToUpperReturn(_CompName.data());
@@ -32,7 +31,6 @@ public:
 
 		std::shared_ptr<CompType> NewComp = std::make_shared<CompType>();
 		NewComp->SetOwner(shared_from_this());
-
 		NewComp->Init();
 		NewComp->SetActivate(true);
 
@@ -51,6 +49,7 @@ public:
 protected:
 
 private:
+	void Init() override final;
 	void Start() override final;
 	void Update(float _DeltaTime) override final;
 	void Render() override final;

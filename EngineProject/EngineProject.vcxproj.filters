@@ -567,6 +567,9 @@
     <ClInclude Include="TransformComponent.h">
       <Filter>Source\Object\Component\Derived\Base</Filter>
     </ClInclude>
+    <ClInclude Include="CameraComponent.h">
+      <Filter>Source\Object\Component\Derived\Derived</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineWindow.cpp">
@@ -679,6 +682,9 @@
     </ClCompile>
     <ClCompile Include="TransformComponent.cpp">
       <Filter>Source\Object\Component\Derived\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraComponent.cpp">
+      <Filter>Source\Object\Component\Derived\Derived</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

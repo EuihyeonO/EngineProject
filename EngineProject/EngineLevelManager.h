@@ -45,7 +45,7 @@ public:
 protected:
 
 private:
-	void Init() override final{}
+	void Init() override final { SetObjectType(EObjectType::LevelManager); }
 	void End() override final { OnEnd(); }
 	void OnCreated() override final {}
 	void OnDestroyed() override final
